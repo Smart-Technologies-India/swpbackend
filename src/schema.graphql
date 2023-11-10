@@ -1,0 +1,3487 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  design_point_id: Int
+  name: String
+  email: String
+  password: String!
+  contact: String
+  otp: String
+  pic_url: String
+  access_kay: String
+  role: Role!
+  department: Department!
+  address: String
+  user_uid: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+enum Role {
+  NONE
+  SYSTEM
+  ADMIN
+  COLLECTOR
+  DYCOLLECTOR
+  ATP
+  JTP
+  MAMLATDAR
+  FIRE
+  LANDSUPTD
+  JE
+  SITESUPERVISOR
+  ARCHITECTASST
+  PLANNINGDRAUGHTSMAN
+  ARCHDRAUGHTSMANSP
+  ARCHDRAUGHTSMANST
+  SUPERINTENDENT
+  LDC
+  UDC
+  SHO
+  HEADCLERK
+  USER
+}
+
+enum Department {
+  NONE
+  PDA
+  EOCS
+  LAND
+  MAMLATDAR
+  COLLECTOR
+  DYCOLLECTOR
+  FIRE
+  COASTGUARD
+  EST
+  DMC
+  CRSR
+  PWD
+}
+
+enum Status {
+  NONE
+  ACTIVE
+  INACTIVE
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Petroleum {
+  id: Int
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  company_name: String
+  company_region: String
+  designation: String
+  location_address: String
+  noc_type: NocType
+  class_type: ClassType
+  outlet_type: OutletType
+  capacity: Int
+  survey_no: String
+  village_id: Int
+  sub_division: String
+  noc_fire_url: String
+  na_order_url: String
+  sanad_url: String
+  coastguard_url: String
+  plan_url: String
+  explosive_url: String
+  iagree: Agree
+  remarks: String
+  signature_url: String
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  status: Status
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+enum NocType {
+  NONE
+  NOCTYPEONE
+  NOCTYPETWO
+  NOCTYPETHREE
+}
+
+enum ClassType {
+  NONE
+  CLASSTYPEONE
+  CLASSTYPETWO
+  CLASSTYPETHREE
+}
+
+enum OutletType {
+  NONE
+  OUTLETTYPEONE
+  OUTLETTYPETWO
+  OUTLETTYPETHREE
+}
+
+enum Agree {
+  NONE
+  YES
+  NO
+}
+
+type Auth {
+  token: String!
+  id: Int!
+  design_point_id: Int
+  name: String
+  email: String
+  password: String!
+  contact: String
+  otp: String
+  pic_url: String
+  access_kay: String
+  role: Role!
+  department: Department!
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Common {
+  id: Int!
+  form_id: Int!
+  user_id: Int!
+  auth_user_id: String
+  focal_user_id: String
+  intra_user_id: String
+  inter_user_id: String
+  village: String!
+  name: String!
+  number: String!
+  event_date: DateTime
+  form_status: Int!
+  form_type: FormType!
+  query_status: queryStatus!
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+enum FormType {
+  NONE
+  PETROLEUM
+  RTI
+  ZONE
+  DEMOLITION
+  OLDCOPY
+  LANDRECORDS
+  UNAUTHORISED
+  CP
+  OC
+  PLINTH
+  MARRIAGE
+  RELIGIOUS
+  ROADSHOW
+  GENERIC
+  BIRTHCERT
+  BIRTHTEOR
+  DEATHCERT
+  DEATHTEOR
+  MARRIAGECERT
+  MARRIAGETEOR
+  MARRIAGEREGISTER
+  TEMPWATERCONNECT
+  TEMPWATERDISCONNECT
+  WATERSIZECHANGE
+  NEWWATERCONNECT
+  WATERRECONNECT
+  PERMANENTWATERDISCONNECT
+  DEATHREGISTER
+  BIRTHREGISTER
+}
+
+enum queryStatus {
+  NONE
+  SUBMIT
+  INPROCESS
+  PAYMENT
+  QUERYRAISED
+  APPROVED
+  REJCTED
+  CERTIFICATEGRANT
+  COMPLETED
+}
+
+type FileCount {
+  RTI: Int!
+  ZONE: Int!
+  OLDCOPY: Int!
+  PETROLEUM: Int!
+  UNAUTHORIZED: Int!
+  LANDRECORDS: Int!
+  MAMLATDAR: Int!
+  DEMOLITION: Int!
+  OC: Int!
+  CP: Int!
+  PLINTH: Int!
+}
+
+type VillageCount {
+  count: Int!
+  village: String!
+}
+
+type OfficerCount {
+  count: Int!
+  auth_user_id: String!
+}
+
+type FileProgressDetails {
+  pending: Int!
+  completed: Int!
+  rejected: Int!
+}
+
+type FileProgress {
+  RTI: FileProgressDetails!
+  ZONE: FileProgressDetails!
+  OLDCOPY: FileProgressDetails!
+  PETROLEUM: FileProgressDetails!
+  UNAUTHORIZED: FileProgressDetails!
+  LANDRECORDS: FileProgressDetails!
+  MAMLATDAR: FileProgressDetails!
+  DEMOLITION: FileProgressDetails!
+  OC: FileProgressDetails!
+  CP: FileProgressDetails!
+  PLINTH: FileProgressDetails!
+}
+
+type VillageProgressDetails {
+  formType: String!
+  count: Int!
+}
+
+type VillageProgress {
+  village: String!
+  fileCounts: [VillageProgressDetails!]!
+}
+
+type Village {
+  id: Int!
+  name: String!
+}
+
+type Survey {
+  id: Int!
+  villageId: Int!
+  survey_no: String!
+  sub_division: String
+  owner_name: String!
+  area: String!
+  zone: String!
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type QueryData {
+  id: Int!
+  stage: FormType!
+  form_id: Int!
+  form_status: Int!
+  from_user_id: Int!
+  to_user_id: Int!
+  query_type: QueryType!
+  query_status: QueryStatus!
+  remark: String!
+  doc_url: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  from_user: User
+  to_user: User
+}
+
+enum QueryType {
+  NONE
+  INTRA
+  INTER
+  PUBLIC
+}
+
+enum QueryStatus {
+  NONE
+  SENT
+  RECEIVED
+  REPLIED
+  RESOLVED
+}
+
+type Dealinghand {
+  id: Int!
+  file_type: String!
+  collector: Boolean!
+  dycollector: Boolean!
+  atp: Boolean!
+  jtp: Boolean!
+  je: Boolean!
+  fieldinspector: Boolean!
+  sitesupervisor: Boolean!
+  architectassistant: Boolean!
+  planningdraughtsman: Boolean!
+  spdraughtsman: Boolean!
+  stdraughtsman: Boolean!
+  landsupted: Boolean!
+  mamlatdar: Boolean!
+  eocs: Boolean!
+  dept1: Boolean!
+  dept2: Boolean!
+  dept3: Boolean!
+  dept4: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Payment {
+  id: Int!
+  form_id: Int!
+  deptuser_id: Int!
+  user_id: Int!
+  type1: Int
+  amount1: Int
+  type2: Int
+  amount2: Int
+  type3: Int
+  amount3: Int
+  daycount: Int
+  paymentamout: Int
+  reference: String
+  form_type: FormType!
+  paymentType: PaymentType!
+  paymentstatus: PaymentStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+enum PaymentType {
+  NONE
+  CASH
+  CHEQUE
+  NETBANKING
+  CCDC
+  UPI
+}
+
+enum PaymentStatus {
+  NONE
+  PENDING
+  PAID
+}
+
+type DeathRegiser {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  date_of_birth: DateTime
+  gender: Gender
+  name_of_deceased: String
+  date_of_death: DateTime!
+  father_name: String
+  mother_name: String
+  wife_name: String
+  death_place: BirthPlace
+  death_place_name: String
+  current_address: String
+  permanent_address: String
+  death_place_address: String
+  death_certified: Boolean
+  name_of_disease: Boolean
+  pregnancy_death: Boolean
+  smoker_death: Boolean
+  alcoholic_death: Boolean
+  religion_deceased: Religion
+  date_of_marriage: DateTime
+  attender_type: AttendentType
+  deceased_uid_url: String
+  father_uid_url: String
+  authority_letter_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum BirthPlace {
+  HOME
+  HOSPITAL
+  OTHER
+}
+
+enum Religion {
+  HINDU
+  MUSLIM
+  CHRISTIAN
+  OTHER
+}
+
+enum AttendentType {
+  DOCTOR
+  NURSE
+  DOMESTICEXPERT
+  OTHER
+}
+
+type BirthRegister {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  date_of_birth: DateTime
+  gender: Gender
+  name_of_child: String
+  father_name: String
+  mother_name: String
+  grandfather_name: String
+  grandmother_name: String
+  birth_place: BirthPlace
+  birth_place_name: String
+  current_address: String
+  permanent_address: String
+  religion_child: Religion
+  father_education: String
+  mother_education: String
+  father_occupation: String
+  mother_occupation: String
+  mother_date_of_birth: DateTime
+  date_of_marriage: DateTime
+  attender_type: AttendentType
+  delivery_method: DeliveryMethod
+  weight_of_child_at_birth: String
+  previous_child_count: Int
+  number_of_week_of_pregnency: Int
+  father_uid_url: String
+  mother_uid_url: String
+  authority_letter_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+enum DeliveryMethod {
+  NATURAL
+  CSECTION
+  VACCUM
+  OTHER
+}
+
+type Marriage {
+  id: Int!
+  userId: Int!
+  user_uid: String
+  name: String
+  email: String
+  address: String
+  mobile: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  relation: String
+  witness_1_url: String
+  witness_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: Status
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Roadshow {
+  id: Int!
+  userId: Int!
+  user_uid: String
+  name: String
+  email: String
+  address: String
+  mobile: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: Status
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Religious {
+  id: Int!
+  userId: Int!
+  user_uid: String
+  name: String
+  email: String
+  address: String
+  mobile: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: Status
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Rti {
+  id: Int!
+  userId: Int!
+  user_uid: String
+  name: String
+  email: String
+  address: String
+  mobile: Float
+  subject_info: String
+  from_date: DateTime
+  to_date: DateTime
+  description: String
+  information: String
+  proverty_line_url: String
+  iagree: Agree!
+  remarks: String
+  signature_url: String
+  attachments: String
+  rejection_reason: String
+  certificate_id: Status
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Zoneinfo {
+  id: Int!
+  userId: Int!
+  user_uid: String
+  name: String
+  email: String
+  address: String
+  mobile: String
+  village_id: Int
+  survey_no: String
+  sub_division: String
+  nakel_url_1_14: String
+  iagree: Agree!
+  remarks: String
+  signature_url: String
+  attachments: String
+  rejection_reason: String
+  certificate_id: Status
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Oldcopy {
+  id: Int!
+  userId: Int!
+  user_uid: String
+  name: String
+  email: String
+  address: String
+  mobile: String
+  village_id: Int
+  survey_no: String
+  sub_division: String
+  prev_application_date: DateTime
+  prev_application_number: String
+  type_of_information: TypeOfInfo!
+  information_needed: String
+  aadhar_url: String
+  iagree: Agree!
+  remarks: String
+  signature_url: String
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+enum TypeOfInfo {
+  NONE
+  CP
+  OC
+  MAPS
+}
+
+type Landsection {
+  id: Int
+  userId: Int
+  name: String
+  address: String
+  mobile: String
+  email: String
+  survey_no: String
+  village_id: Int
+  area: String
+  na_type: String
+  zone: String
+  road_access: String
+  no_road_access: String
+  width_adequate: String
+  is_dimension_plot_adequate: String
+  is_crz: String
+  is_monument: String
+  other_remark: String
+  atp_recommendation: String
+  comments_dept: String
+  condition_to_follow: String
+  land_formid: String
+  land_stageid: String
+  illegal_sqmt: String
+  attachments: String
+  recommend: Boolean
+  status: Status!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Cp {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  survey_no: String
+  village_id: Int
+  sub_division: String
+  architect_name: String
+  architect_license: String
+  valid_upto: DateTime
+  applicant_uid: String
+  annexure_two: String
+  annexure_three: String
+  annexure_four: String
+  annexure_five: String
+  na_copoy: String
+  map_copy: String
+  nakal_1_14: String
+  building_plan: String
+  scrutiny_fees: String
+  coast_guard_noc: String
+  fire_noc: String
+  crz_noc: String
+  layout_plan: String
+  revised_plan: String
+  fsi: String
+  remarks: String
+  signature_url: String
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  iagree: Agree
+  status: Status
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Plinth {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  survey_no: String
+  village_id: Int
+  sub_division: String
+  permission_number: String
+  permission_date: DateTime
+  architect_name: String
+  architect_license: String
+  valid_upto: DateTime
+  architect_address: String
+  applicant_uid: String
+  annexure_eleven: String
+  copy_construcation_license: String
+  building_plan: String
+  architect_signature: String
+  remarks: String
+  signature_url: String
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  iagree: Agree
+  status: Status
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Oc {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  survey_no: String!
+  village_id: Int!
+  sub_division: String!
+  permission_number: String
+  permission_date: DateTime
+  architect_name: String
+  architect_license: String
+  valid_upto: DateTime
+  completion_date: DateTime
+  applicant_uid: String
+  completion_certificate: String
+  construction_permission: String
+  building_plan: String
+  annexure_fourteen: String
+  coast_guard_noc: String
+  fire_noc: String
+  rainwater_harvest: String
+  deviation_plan: String
+  indemnity: String
+  valuation_certificate: String
+  labour_cess: String
+  remarks: String
+  signature_url: String
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  iagree: Agree
+  status: Status
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type TempWaterConnect {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  diameter: String
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  from_date: DateTime
+  to_date: DateTime
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+enum OwnerShipType {
+  OWNERSHIP
+  TENANT
+}
+
+enum MuncipalType {
+  PANCHAYAT
+  DMC
+}
+
+enum EntityType {
+  RESIDENTIAL
+  COMMERCIAL
+  INDUSTRIAL
+}
+
+enum ConnectionType {
+  DOMESTIC
+  NONDOMESTIC
+}
+
+type NewWaterConnect {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  diameter: String
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  from_date: DateTime
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type TempWaterDisconnect {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  meter_number: String
+  to_date: DateTime
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type PermanentWaterDisconnect {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  meter_number: String
+  to_date: DateTime
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type WaterSizeChange {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  old_diameter: String
+  new_diameter: String
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  meter_number: String
+  to_date: DateTime
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type WaterReconnect {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  purpose_of_disconnection: String
+  purpose_of_reconection: String
+  meter_number: String
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type BirthCertificate {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  gender: Gender
+  date_of_birth: DateTime
+  father_name: String
+  mother_name: String
+  registration_number: String
+  date_of_registration: String
+  applicant_uid_url: String
+  father_uid_url: String
+  mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type BirthTeor {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  gender: Gender
+  date_of_birth: DateTime
+  father_name: String
+  mother_name: String
+  registration_number: String
+  date_of_registration: String
+  applicant_uid_url: String
+  father_uid_url: String
+  mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type DeathCertificate {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  gender: Gender
+  date_of_birth: DateTime
+  date_of_death: DateTime
+  father_name: String
+  mother_name: String
+  husband_name: String
+  registration_number: String
+  date_of_registration: String
+  applicant_uid_url: String
+  father_uid_url: String
+  mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type DeathTeor {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  gender: Gender
+  date_of_birth: DateTime
+  date_of_death: DateTime
+  father_name: String
+  mother_name: String
+  husband_name: String
+  registration_number: String
+  date_of_registration: String
+  applicant_uid_url: String
+  father_uid_url: String
+  mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type MarriageCertificate {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  groom_father_name: String
+  groom_mother_name: String
+  bride_name: String
+  bride_father_name: String
+  bride_mother_name: String
+  registration_number: String
+  date_of_registration: DateTime
+  applicant_uid_url: String
+  groom_father_uid_url: String
+  groom_mother_uid_url: String
+  bride_uid_url: String
+  bride_father_uid_url: String
+  bride_mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type MarriageTeor {
+  id: Int!
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  groom_father_name: String
+  groom_mother_name: String
+  bride_name: String
+  bride_father_name: String
+  bride_mother_name: String
+  registration_number: String
+  date_of_registration: DateTime
+  applicant_uid_url: String
+  groom_father_uid_url: String
+  groom_mother_uid_url: String
+  bride_uid_url: String
+  bride_father_uid_url: String
+  bride_mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type MarriageRegister {
+  id: Int!
+  userId: Int
+  user_uid: String
+  mobile: String
+  email: String
+  village_id: Int
+  groom_name: String
+  groom_address: String
+  groom_date_of_birth: DateTime
+  religion_groom: Religion
+  groom_father_name: String
+  groom_mother_name: String
+  bride_name: String
+  bride_address: String
+  bride_date_of_birth: DateTime
+  religion_bride: Religion
+  bride_father_name: String
+  bride_mother_name: String
+  date_of_marriage: DateTime
+  witness_one_details: String
+  witness_two_details: String
+  witness_three_details: String
+  joint_bride_groom_photo_url: String
+  applicant_uid_url: String
+  bride_uid_url: String
+  bride_url: String
+  witness_one_signature_url: String
+  witness_two_signature_url: String
+  witness_three_signature_url: String
+  undertaking_url: String
+  groom_signature_url: String
+  bride_signature_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  status: Status
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type Query {
+  getAllRti: [Rti!]!
+  getAllRtiById(id: Int!): Rti!
+  getUserById(id: Int!): User!
+  getAllPetroleum: [Petroleum!]!
+  getPetroleumById(id: Int!): Petroleum!
+  getAllZone: [Zoneinfo!]!
+  getAllZoneById(id: Int!): Zoneinfo!
+  getAllOldCopy: [Oldcopy!]!
+  getOldCopyById(id: Int!): Oldcopy!
+  signin(loginUserInput: LoginUserInput!): Auth!
+  verifyOtp(mobileLoginInput: MobileLoginInput!): Auth!
+  getAllCommon: [Common!]!
+  getAllCommonById(id: Int!): Common!
+  searchCommon(searchCommonInput: SearchCommonInput!): [Common!]!
+  filterCommon(filterCommonInput: FilterCommonInput!): [Common!]!
+  getFileCount: FileCount!
+  villageFileCount: [VillageCount!]!
+  officerFileCount: [OfficerCount!]!
+  officerFileProgress: FileProgress!
+  villageFileProgress: [VillageProgress!]!
+  getAllLand: [Landsection!]!
+  getAllLandById(id: Int!): Landsection!
+  sendFileOutside(sendFileLandsectionInput: SendFileLandsectionInput!): Boolean!
+  sendFileOutsideillegal(sendFileLandsectionInput: SendFileLandsectionInput!): Boolean!
+  getAllDealingHand: [Dealinghand!]!
+  getDealingHandById(id: Int!): Dealinghand!
+  searchDealingHand(searchDealinghandInput: SearchDealinghandInput!): [Dealinghand!]!
+  getuserid(filetype: String!): Int!
+  getAllVillage: [Village!]!
+  getAllVillageById(id: Int!): Village!
+  getAllSurvey: [Survey!]!
+  getAllSurveyById(id: Int!): Survey!
+  getSurveyNumber(searchSurveyInput: SearchSurveyInput!): [Survey!]!
+  getSubDivision(searchSurveyInput: SearchSurveyInput!): [Survey!]!
+  getAllQuery: [QueryData!]!
+  getQueryById(id: Int!): QueryData!
+  searchQuery(searchQueryInput: SearchQueryInput!): [QueryData!]!
+  getAllPayment: [Payment!]!
+  getAllPaymentById(id: Int!): Payment!
+  searchPayment(searchPaymentInput: SearchPaymentInput!): [Payment!]!
+  getAllCp: [Cp!]!
+  getCpById(id: Int!): Cp!
+  getAllPlinth: [Plinth!]!
+  getPlinthById(id: Int!): Plinth!
+  getAllOc: [Oc!]!
+  getOcById(id: Int!): Oc!
+  getAllMarriage: [Marriage!]!
+  getMarriageById(id: Int!): Marriage!
+  getAllRoadshow: [Roadshow!]!
+  getRoadshowById(id: Int!): Roadshow!
+  getAllReligious: [Religious!]!
+  getReligiousById(id: Int!): Religious!
+  getAllBirthRegister: [BirthRegister!]!
+  getBirthRegisterById(id: Int!): BirthRegister!
+  getAllDeathRegister: [DeathRegiser!]!
+  getDeathRegisterById(id: Int!): DeathRegiser!
+  getAllTempWaterConnect: [TempWaterConnect!]!
+  getTempWaterConnectById(id: Int!): TempWaterConnect!
+  getAllNewWaterConnect: [NewWaterConnect!]!
+  getNewWaterConnectById(id: Int!): NewWaterConnect!
+  getAllTempWaterDisconnect: [TempWaterDisconnect!]!
+  getTempWaterDisconnectById(id: Int!): TempWaterDisconnect!
+  getAllPermanentWaterDisconnect: [PermanentWaterDisconnect!]!
+  getPermanentWaterDisconnectById(id: Int!): PermanentWaterDisconnect!
+  getAllWaterSizeChange: [WaterSizeChange!]!
+  getWaterSizeChangeById(id: Int!): WaterSizeChange!
+  getAllWaterReconnect: [WaterReconnect!]!
+  getWaterReconnectById(id: Int!): WaterReconnect!
+  getAllBirthCertificate: [BirthCertificate!]!
+  getBirthCertificateById(id: Int!): BirthCertificate!
+  getAllBirthTeor: [BirthTeor!]!
+  getBirthTeorById(id: Int!): BirthTeor!
+  getAllDeathCertificate: [DeathCertificate!]!
+  getDeathCertificateById(id: Int!): DeathCertificate!
+  getAllDeathTeor: [DeathTeor!]!
+  getDeathTeorById(id: Int!): DeathTeor!
+  getAllMarriageCertificate: [MarriageCertificate!]!
+  getMarriageCertificateById(id: Int!): MarriageCertificate!
+  getAllMarriageTeor: [MarriageTeor!]!
+  getMarriageTeorById(id: Int!): MarriageTeor!
+  getAllMarriageRegister: [MarriageRegister!]!
+  getMarriageRegisterById(id: Int!): MarriageRegister!
+}
+
+input LoginUserInput {
+  contact: String!
+  password: String!
+}
+
+input MobileLoginInput {
+  contact: String
+  name: String
+  otp: String
+}
+
+input SearchCommonInput {
+  form_id: Int
+  user_id: Int
+  auth_user_id: String
+  focal_user_id: String
+  intra_user_id: String
+  inter_user_id: String
+  village: String
+  name: String
+  number: String
+  event_date: DateTime
+  form_status: Int
+  form_type: FormType
+  query_status: queryStatus
+  status: Status
+  id: Int
+  deletedAt: DateTime
+}
+
+input FilterCommonInput {
+  user_type: UserType
+  user_id: Int!
+  form_type: FormType
+}
+
+enum UserType {
+  USER
+  DEPARTMENT
+}
+
+input SendFileLandsectionInput {
+  stageId: String!
+  formRefId: String!
+  documentUrl: String!
+}
+
+input SearchDealinghandInput {
+  file_type: String!
+  collector: Boolean!
+  dycollector: Boolean!
+  atp: Boolean!
+  jtp: Boolean!
+  je: Boolean!
+  fieldinspector: Boolean!
+  sitesupervisor: Boolean!
+  architectassistant: Boolean!
+  planningdraughtsman: Boolean!
+  spdraughtsman: Boolean!
+  stdraughtsman: Boolean!
+  landsupted: Boolean!
+  mamlatdar: Boolean!
+  eocs: Boolean!
+  dept1: Boolean!
+  dept2: Boolean!
+  dept3: Boolean!
+  dept4: Boolean!
+}
+
+input SearchSurveyInput {
+  villageId: Int
+  survey_no: String
+  sub_division: String
+  owner_name: String
+}
+
+input SearchQueryInput {
+  stage: FormType!
+  form_id: Int!
+  user_id: Int
+  status: Status
+  query_type: QueryType
+}
+
+input SearchPaymentInput {
+  form_id: Int
+  deptuser_id: Int
+  user_id: Int
+  type1: Int
+  amount1: Int
+  type2: Int
+  amount2: Int
+  type3: Int
+  amount3: Int
+  daycount: Int
+  paymentamout: Int
+  form_type: FormType
+  paymentstatus: PaymentStatus
+  id: Int
+  reference: String
+  paymentType: PaymentType
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type Mutation {
+  createRti(createRtiInput: CreateRtiInput!): Rti!
+  updateRtiById(updateRtiInput: UpdateRtiInput!): Rti!
+  deleteRtiById(updateRtiInput: UpdateRtiInput!): Rti!
+  updateUserById(updateUserInput: UpdateUserInput!): User!
+  createPetroleum(createPetroleumInput: CreatePetroleumInput!): Petroleum!
+  updatePetroleumById(updatePetroleumInput: UpdatePetroleumInput!): Petroleum!
+  deletePetroleumById(updatePetroleumInput: UpdatePetroleumInput!): Petroleum!
+  createZone(createZoneinfoInput: CreateZoneinfoInput!): Zoneinfo!
+  updateZoneById(updateZoneinfoInput: UpdateZoneinfoInput!): Zoneinfo!
+  deleteZoneById(updateZoneinfoInput: UpdateZoneinfoInput!): Zoneinfo!
+  createOldCopy(createOldcopyInput: CreateOldcopyInput!): Oldcopy!
+  updateOldCopyById(updateOldcopyInput: UpdateOldcopyInput!): Oldcopy!
+  deleteOldCopyById(updateOldcopyInput: UpdateOldcopyInput!): Oldcopy!
+  signup(signUpUserInput: SignUpUserInput!): Auth!
+  mobileLogin(mobileLoginInput: MobileLoginInput!): Auth!
+  createCommon(createCommonInput: CreateCommonInput!): Common!
+  updateCommonById(updateCommonInput: UpdateCommonInput!): Common!
+  deleteCommonById(updateCommonInput: UpdateCommonInput!): Common!
+  createLand(createLandsectionInput: CreateLandsectionInput!): Landsection!
+  updateLandById(updateLandsectionInput: UpdateLandsectionInput!): Landsection!
+  deleteLandById(updateLandsectionInput: UpdateLandsectionInput!): Landsection!
+  getFromOutside(outsideLandsectionInput: OutsideLandsectionInput!): Common!
+  createDealingHand(createDealinghandInput: CreateDealinghandInput!): Dealinghand!
+  updateDealingHandById(updateDealinghandInput: UpdateDealinghandInput!): Dealinghand!
+  createQuery(createQueryInput: CreateQueryInput!): QueryData!
+  updateQueryById(updateQueryInput: UpdateQueryInput!): QueryData!
+  deleteQueryById(updateQueryInput: UpdateQueryInput!): QueryData!
+  createPayment(createPaymentInput: CreatePaymentInput!): Payment!
+  updatePaymentById(updatePaymentInput: UpdatePaymentInput!): Payment!
+  deletePaymentById(updatePaymentInput: UpdatePaymentInput!): Payment!
+  createCp(createCpInput: CreateCpInput!): Cp!
+  updateCpById(updateCpInput: UpdateCpInput!): Cp!
+  deleteCpById(updateCpInput: UpdateCpInput!): Cp!
+  createPlinth(createPlinthInput: CreatePlinthInput!): Plinth!
+  updatePlinthById(updatePlinthInput: UpdatePlinthInput!): Plinth!
+  deletePlinthById(updatePlinthInput: UpdatePlinthInput!): Plinth!
+  createOc(createOcInput: CreateOcInput!): Oc!
+  updateOcById(updateOcInput: UpdateOcInput!): Oc!
+  deleteOcById(updateOcInput: UpdateOcInput!): Oc!
+  createMarriage(createMarriageInput: CreateMarriageInput!): Marriage!
+  updateMarriageById(updateMarriageInput: UpdateMarriageInput!): Marriage!
+  deleteMarriageById(updateMarriageInput: UpdateMarriageInput!): Marriage!
+  createRoadshow(createRoadshowInput: CreateRoadshowInput!): Roadshow!
+  updateRoadshowById(updateRoadshowInput: UpdateRoadshowInput!): Roadshow!
+  deleteRoadshowById(updateRoadshowInput: UpdateRoadshowInput!): Roadshow!
+  createReligious(createReligiousInput: CreateReligiousInput!): Religious!
+  updateReligiousById(updateReligiousInput: UpdateReligiousInput!): Religious!
+  deleteReligiousById(updateReligiousInput: UpdateReligiousInput!): Religious!
+  createBirthRegister(createBirthRegisterInput: CreateBirthRegisterInput!): BirthRegister!
+  updateBirthRegisterById(updateBirthRegisterInput: UpdateBirthRegisterInput!): BirthRegister!
+  deleteBirthRegisterById(updateBirthRegisterInput: UpdateBirthRegisterInput!): BirthRegister!
+  createDeathRegister(createDeathRegiserInput: CreateDeathRegiserInput!): DeathRegiser!
+  updateDeathRegisterById(updateDeathRegiserInput: UpdateDeathRegiserInput!): DeathRegiser!
+  deleteDeathRegisterById(updateDeathRegiserInput: UpdateDeathRegiserInput!): DeathRegiser!
+  createTempWaterConnect(createTempWaterConnectInput: CreateTempWaterConnectInput!): TempWaterConnect!
+  updateTempWaterConnectById(updateTempWaterConnectInput: UpdateTempWaterConnectInput!): TempWaterConnect!
+  deleteTempWaterConnectById(updateTempWaterConnectInput: UpdateTempWaterConnectInput!): TempWaterConnect!
+  createNewWaterConnect(createNewWaterConnectInput: CreateNewWaterConnectInput!): NewWaterConnect!
+  updateNewWaterConnectById(updateNewWaterConnectInput: UpdateNewWaterConnectInput!): NewWaterConnect!
+  deleteNewWaterConnectById(updateNewWaterConnectInput: UpdateNewWaterConnectInput!): NewWaterConnect!
+  createTempWaterDisconnect(createTempWaterDisconnectInput: CreateTempWaterDisconnectInput!): TempWaterDisconnect!
+  updateTempWaterDisconnectById(updateTempWaterDisconnectInput: UpdateTempWaterDisconnectInput!): TempWaterDisconnect!
+  deleteTempWaterDisconnectById(updateTempWaterDisconnectInput: UpdateTempWaterDisconnectInput!): TempWaterDisconnect!
+  createPermanentWaterDisconnect(createPermanentWaterDisconnectInput: CreatePermanentWaterDisconnectInput!): PermanentWaterDisconnect!
+  updatePermanentWaterDisconnectById(updatePermanentWaterDisconnectInput: UpdatePermanentWaterDisconnectInput!): PermanentWaterDisconnect!
+  deletePermanentWaterDisconnectById(updatePermanentWaterDisconnectInput: UpdatePermanentWaterDisconnectInput!): PermanentWaterDisconnect!
+  createWaterSizeChange(createWaterSizeChangeInput: CreateWaterSizeChangeInput!): WaterSizeChange!
+  updateWaterSizeChangeById(updateWaterSizeChangeInput: UpdateWaterSizeChangeInput!): WaterSizeChange!
+  deleteWaterSizeChangeById(updateWaterSizeChangeInput: UpdateWaterSizeChangeInput!): WaterSizeChange!
+  createWaterReconnect(createWaterReconnectInput: CreateWaterReconnectInput!): WaterReconnect!
+  updateWaterReconnectById(updateWaterReconnectInput: UpdateWaterReconnectInput!): WaterReconnect!
+  deleteWaterReconnectById(updateWaterReconnectInput: UpdateWaterReconnectInput!): WaterReconnect!
+  createBirthCertificate(createBirthCertificateInput: CreateBirthCertificateInput!): BirthCertificate!
+  updateBirthCertificateById(updateBirthCertificateInput: UpdateBirthCertificateInput!): BirthCertificate!
+  deleteBirthCertificateById(updateBirthCertificateInput: UpdateBirthCertificateInput!): BirthCertificate!
+  createBirthTeor(createBirthTeorInput: CreateBirthTeorInput!): BirthTeor!
+  updateBirthTeorById(updateBirthTeorInput: UpdateBirthTeorInput!): BirthTeor!
+  deleteBirthTeorById(updateBirthTeorInput: UpdateBirthTeorInput!): BirthTeor!
+  createDeathCertificate(createDeathCertificateInput: CreateDeathCertificateInput!): DeathCertificate!
+  updateDeathCertificateById(updateDeathCertificateInput: UpdateDeathCertificateInput!): DeathCertificate!
+  deleteDeathCertificateById(updateDeathCertificateInput: UpdateDeathCertificateInput!): DeathCertificate!
+  createDeathTeor(createDeathTeorInput: CreateDeathTeorInput!): DeathTeor!
+  updateDeathTeorById(updateDeathTeorInput: UpdateDeathTeorInput!): DeathTeor!
+  deleteDeathTeorById(updateDeathTeorInput: UpdateDeathTeorInput!): DeathTeor!
+  createMarriageCertificate(createMarriageCertificateInput: CreateMarriageCertificateInput!): MarriageCertificate!
+  updateMarriageCertificateById(updateMarriageCertificateInput: UpdateMarriageCertificateInput!): MarriageCertificate!
+  deleteMarriageCertificateById(updateMarriageCertificateInput: UpdateMarriageCertificateInput!): MarriageCertificate!
+  createMarriageTeor(createMarriageTeorInput: CreateMarriageTeorInput!): MarriageTeor!
+  updateMarriageTeorById(updateMarriageTeorInput: UpdateMarriageTeorInput!): MarriageTeor!
+  deleteMarriageTeorById(updateMarriageTeorInput: UpdateMarriageTeorInput!): MarriageTeor!
+  createMarriageRegister(createMarriageRegisterInput: CreateMarriageRegisterInput!): MarriageRegister!
+  updateMarriageRegisterById(updateMarriageRegisterInput: UpdateMarriageRegisterInput!): MarriageRegister!
+  deleteMarriageRegisterById(updateMarriageRegisterInput: UpdateMarriageRegisterInput!): MarriageRegister!
+}
+
+input CreateRtiInput {
+  userId: Int!
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  user_uid: String
+  subject_info: String!
+  from_date: DateTime
+  to_date: DateTime
+  description: String!
+  information: String
+  proverty_line_url: String
+  iagree: Agree
+  signature_url: String
+  remarks: String
+  attachments: String
+  status: Status
+}
+
+input UpdateRtiInput {
+  userId: Int
+  name: String
+  address: String
+  mobile: String
+  email: String
+  user_uid: String
+  subject_info: String
+  from_date: DateTime
+  to_date: DateTime
+  description: String
+  information: String
+  proverty_line_url: String
+  iagree: Agree
+  signature_url: String
+  remarks: String
+  attachments: String
+  status: Status
+  id: Int!
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  deletedAt: DateTime
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+  design_point_id: Int
+  name: String
+  email: String
+  password: String
+  contact: String
+  pic_url: String
+  access_kay: String
+  role: Role
+  department: Department
+  address: String
+  otp: String
+  user_uid: String
+  status: Status
+  deletedAt: DateTime
+}
+
+input CreatePetroleumInput {
+  name: String!
+  userId: Int!
+  address: String!
+  mobile: String!
+  email: String
+  company_name: String
+  company_region: String
+  designation: String
+  noc_type: NocType
+  class_type: ClassType
+  outlet_type: OutletType
+  capacity: Int
+  survey_no: String!
+  village_id: Int!
+  sub_division: String!
+  noc_fire_url: String
+  na_order_url: String
+  sanad_url: String
+  coastguard_url: String
+  plan_url: String
+  explosive_url: String
+  iagree: Agree
+  status: Status
+}
+
+input UpdatePetroleumInput {
+  name: String
+  userId: Int
+  address: String
+  mobile: String
+  email: String
+  company_name: String
+  company_region: String
+  designation: String
+  noc_type: NocType
+  class_type: ClassType
+  outlet_type: OutletType
+  capacity: Int
+  survey_no: String
+  village_id: Int
+  sub_division: String
+  noc_fire_url: String
+  na_order_url: String
+  sanad_url: String
+  coastguard_url: String
+  plan_url: String
+  explosive_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  user_uid: String
+  location_address: String
+  remarks: String
+  signature_url: String
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  deletedAt: DateTime
+}
+
+input CreateZoneinfoInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  survey_no: String!
+  village_id: Int!
+  sub_division: String!
+  nakel_url_1_14: String!
+  remarks: String
+  nakal_url_1_14: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+}
+
+input UpdateZoneinfoInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  survey_no: String
+  village_id: Int
+  sub_division: String
+  nakel_url_1_14: String
+  remarks: String
+  nakal_url_1_14: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  deletedAt: DateTime
+}
+
+input CreateOldcopyInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  survey_no: String!
+  village_id: Int!
+  sub_division: String!
+  prev_application_date: DateTime
+  prev_application_number: String
+  type_of_information: TypeOfInfo
+  information_needed: String
+  aadhar_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+}
+
+input UpdateOldcopyInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  survey_no: String
+  village_id: Int
+  sub_division: String
+  prev_application_date: DateTime
+  prev_application_number: String
+  type_of_information: TypeOfInfo
+  information_needed: String
+  aadhar_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  deletedAt: DateTime
+}
+
+input SignUpUserInput {
+  name: String!
+  contact: String!
+  password: String!
+}
+
+input CreateCommonInput {
+  form_id: Int!
+  user_id: Int!
+  auth_user_id: String!
+  focal_user_id: String!
+  intra_user_id: String!
+  inter_user_id: String!
+  village: String!
+  name: String!
+  number: String!
+  event_date: DateTime
+  form_status: Int!
+  form_type: FormType
+  query_status: queryStatus
+  status: Status
+}
+
+input UpdateCommonInput {
+  form_id: Int
+  user_id: Int
+  auth_user_id: String
+  focal_user_id: String
+  intra_user_id: String
+  inter_user_id: String
+  village: String
+  name: String
+  number: String
+  event_date: DateTime
+  form_status: Int
+  form_type: FormType
+  query_status: queryStatus
+  status: Status
+  id: Int
+  deletedAt: DateTime
+}
+
+input CreateLandsectionInput {
+  userId: Int!
+  name: String
+  address: String
+  mobile: String
+  email: String
+  survey_no: String
+  village_id: Int
+  area: String
+  na_type: String
+  zone: String
+  road_access: String
+  no_road_access: String
+  width_adequate: String
+  is_dimension_plot_adequate: String
+  is_crz: String
+  is_monument: String
+  other_remark: String
+  atp_recommendation: String
+  comments_dept: String
+  condition_to_follow: String
+  status: Status
+}
+
+input UpdateLandsectionInput {
+  userId: Int
+  name: String
+  address: String
+  mobile: String
+  email: String
+  survey_no: String
+  village_id: Int
+  area: String
+  na_type: String
+  zone: String
+  road_access: String
+  no_road_access: String
+  width_adequate: String
+  is_dimension_plot_adequate: String
+  is_crz: String
+  is_monument: String
+  other_remark: String
+  atp_recommendation: String
+  comments_dept: String
+  condition_to_follow: String
+  status: Status
+  id: Int
+  is_mounment: String
+  illegal_sqmt: String
+  attachments: String
+  recommend: Boolean
+  deletedAt: DateTime
+}
+
+input OutsideLandsectionInput {
+  form_id: Int!
+  stage_id: Int!
+  village_id: Int!
+  name: String!
+  survey_no: String!
+  area: String!
+  purpose: String!
+  number: String!
+}
+
+input CreateDealinghandInput {
+  file_type: FormType!
+  collector: Boolean
+  dycollector: Boolean
+  atp: Boolean
+  jtp: Boolean
+  je: Boolean
+  fieldinspector: Boolean
+  sitesupervisor: Boolean
+  architectassistant: Boolean
+  planningdraughtsman: Boolean
+  spdraughtsman: Boolean
+  stdraughtsman: Boolean
+  landsupted: Boolean
+  mamlatdar: Boolean
+  eocs: Boolean
+  dept1: Boolean
+  dept2: Boolean
+  dept3: Boolean
+  dept4: Boolean
+}
+
+input UpdateDealinghandInput {
+  file_type: FormType
+  collector: Boolean
+  dycollector: Boolean
+  atp: Boolean
+  jtp: Boolean
+  je: Boolean
+  fieldinspector: Boolean
+  sitesupervisor: Boolean
+  architectassistant: Boolean
+  planningdraughtsman: Boolean
+  spdraughtsman: Boolean
+  stdraughtsman: Boolean
+  landsupted: Boolean
+  mamlatdar: Boolean
+  eocs: Boolean
+  dept1: Boolean
+  dept2: Boolean
+  dept3: Boolean
+  dept4: Boolean
+  id: Int!
+}
+
+input CreateQueryInput {
+  stage: FormType!
+  form_id: Int!
+  form_status: Int!
+  from_user_id: Int!
+  to_user_id: Int!
+  query_type: QueryType!
+  query_status: QueryStatus!
+  remark: String!
+  doc_url: String
+  status: Status
+}
+
+input UpdateQueryInput {
+  stage: FormType!
+  form_id: Int!
+  form_status: Int!
+  from_user_id: Int!
+  to_user_id: Int!
+  query_type: QueryType!
+  query_status: QueryStatus!
+  remark: String!
+  doc_url: String
+  status: Status
+  id: Int!
+  deletedAt: DateTime
+}
+
+input CreatePaymentInput {
+  form_id: Int!
+  deptuser_id: Int!
+  user_id: Int!
+  type1: Int
+  amount1: Int
+  type2: Int
+  amount2: Int
+  type3: Int
+  amount3: Int
+  daycount: Int
+  paymentamout: Int
+  form_type: FormType!
+  paymentstatus: PaymentStatus!
+}
+
+input UpdatePaymentInput {
+  form_id: Int
+  deptuser_id: Int
+  user_id: Int
+  type1: Int
+  amount1: Int
+  type2: Int
+  amount2: Int
+  type3: Int
+  amount3: Int
+  daycount: Int
+  paymentamout: Int
+  form_type: FormType
+  paymentstatus: PaymentStatus
+  id: Int!
+  reference: String
+  paymentType: PaymentType
+  deletedAt: DateTime
+}
+
+input CreateCpInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  survey_no: String!
+  village_id: Int!
+  sub_division: String!
+  architect_name: String
+  architect_license: String
+  valid_upto: DateTime
+  applicant_uid: String
+  annexure_two: String
+  annexure_three: String
+  annexure_four: String
+  annexure_five: String
+  na_copoy: String
+  map_copy: String
+  nakal_1_14: String
+  building_plan: String
+  scrutiny_fees: String
+  coast_guard_noc: String
+  fire_noc: String
+  crz_noc: String
+  layout_plan: String
+  revised_plan: String
+  fsi: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+}
+
+input UpdateCpInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  survey_no: String
+  village_id: Int
+  sub_division: String
+  architect_name: String
+  architect_license: String
+  valid_upto: DateTime
+  applicant_uid: String
+  annexure_two: String
+  annexure_three: String
+  annexure_four: String
+  annexure_five: String
+  na_copoy: String
+  map_copy: String
+  nakal_1_14: String
+  building_plan: String
+  scrutiny_fees: String
+  coast_guard_noc: String
+  fire_noc: String
+  crz_noc: String
+  layout_plan: String
+  revised_plan: String
+  fsi: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  deletedAt: DateTime
+}
+
+input CreatePlinthInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  survey_no: String!
+  village_id: Int!
+  sub_division: String!
+  permission_number: String
+  permission_date: DateTime
+  architect_name: String
+  architect_license: String
+  valid_upto: DateTime
+  architect_address: String
+  applicant_uid: String
+  annexure_eleven: String
+  copy_construcation_license: String
+  building_plan: String
+  architect_signature: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+}
+
+input UpdatePlinthInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  survey_no: String
+  village_id: Int
+  sub_division: String
+  permission_number: String
+  permission_date: DateTime
+  architect_name: String
+  architect_license: String
+  valid_upto: DateTime
+  architect_address: String
+  applicant_uid: String
+  annexure_eleven: String
+  copy_construcation_license: String
+  building_plan: String
+  architect_signature: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  deletedAt: DateTime
+}
+
+input CreateOcInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  survey_no: String!
+  village_id: Int!
+  sub_division: String!
+  permission_number: String
+  permission_date: DateTime
+  architect_name: String
+  architect_license: String
+  valid_upto: DateTime
+  completion_date: DateTime
+  applicant_uid: String
+  completion_certificate: String
+  construction_permission: String
+  building_plan: String
+  annexure_fourteen: String
+  coast_guard_noc: String
+  fire_noc: String
+  rainwater_harvest: String
+  deviation_plan: String
+  indemnity: String
+  valuation_certificate: String
+  labour_cess: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+}
+
+input UpdateOcInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  survey_no: String
+  village_id: Int
+  sub_division: String
+  permission_number: String
+  permission_date: DateTime
+  architect_name: String
+  architect_license: String
+  valid_upto: DateTime
+  completion_date: DateTime
+  applicant_uid: String
+  completion_certificate: String
+  construction_permission: String
+  building_plan: String
+  annexure_fourteen: String
+  coast_guard_noc: String
+  fire_noc: String
+  rainwater_harvest: String
+  deviation_plan: String
+  indemnity: String
+  valuation_certificate: String
+  labour_cess: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  comments_dept: String
+  condition_to_follow: String
+  payment_doc: String
+  deletedAt: DateTime
+}
+
+input CreateMarriageInput {
+  userId: Int!
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  from_date: DateTime!
+  to_date: DateTime
+  event_name: String!
+  event_address: String!
+  relation: String
+  witness_1_url: String
+  witness_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+}
+
+input UpdateMarriageInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  relation: String
+  witness_1_url: String
+  witness_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+  id: Int!
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  condition_to_follow: String
+  deletedAt: DateTime
+}
+
+input CreateRoadshowInput {
+  userId: Int!
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  from_date: DateTime!
+  to_date: DateTime
+  event_name: String!
+  event_address: String!
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+}
+
+input UpdateRoadshowInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+  id: Int!
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  condition_to_follow: String
+  deletedAt: DateTime
+}
+
+input CreateReligiousInput {
+  userId: Int!
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  from_date: DateTime!
+  to_date: DateTime
+  event_name: String!
+  event_address: String!
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+}
+
+input UpdateReligiousInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  from_date: DateTime
+  to_date: DateTime
+  event_name: String
+  event_address: String
+  route_info: String
+  relation: String
+  doc_1_url: String
+  doc_2_url: String
+  applicant_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+  id: Int!
+  rejection_reason: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  condition_to_follow: String
+  deletedAt: DateTime
+}
+
+input CreateBirthRegisterInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  date_of_birth: DateTime!
+  gender: Gender!
+  name_of_child: String!
+  father_name: String!
+  mother_name: String!
+  grandfather_name: String!
+  grandmother_name: String!
+  birth_place: BirthPlace!
+  birth_place_name: String!
+  current_address: String!
+  permanent_address: String!
+  religion_child: Religion!
+  father_education: String!
+  mother_education: String!
+  father_occupation: String!
+  mother_occupation: String!
+  mother_date_of_birth: DateTime!
+  date_of_marriage: DateTime!
+  attender_type: AttendentType!
+  delivery_method: DeliveryMethod!
+  weight_of_child_at_birth: String!
+  previous_child_count: Int!
+  number_of_week_of_pregnency: Int!
+  father_uid_url: String!
+  mother_uid_url: String!
+  authority_letter_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateBirthRegisterInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  date_of_birth: DateTime
+  gender: Gender
+  name_of_child: String
+  father_name: String
+  mother_name: String
+  grandfather_name: String
+  grandmother_name: String
+  birth_place: BirthPlace
+  birth_place_name: String
+  current_address: String
+  permanent_address: String
+  religion_child: Religion
+  father_education: String
+  mother_education: String
+  father_occupation: String
+  mother_occupation: String
+  mother_date_of_birth: DateTime
+  date_of_marriage: DateTime
+  attender_type: AttendentType
+  delivery_method: DeliveryMethod
+  weight_of_child_at_birth: String
+  previous_child_count: Int
+  number_of_week_of_pregnency: Int
+  father_uid_url: String
+  mother_uid_url: String
+  authority_letter_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateDeathRegiserInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  date_of_birth: DateTime!
+  gender: Gender!
+  name_of_deceased: String!
+  date_of_death: DateTime!
+  father_name: String!
+  mother_name: String!
+  wife_name: String!
+  death_place: BirthPlace!
+  death_place_name: String!
+  current_address: String!
+  permanent_address: String!
+  death_place_address: String!
+  death_certified: Boolean!
+  name_of_disease: Boolean!
+  pregnancy_death: Boolean!
+  smoker_death: Boolean!
+  alcoholic_death: Boolean!
+  religion_deceased: Religion!
+  date_of_marriage: DateTime!
+  attender_type: AttendentType!
+  deceased_uid_url: String!
+  father_uid_url: String!
+  authority_letter_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateDeathRegiserInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  date_of_birth: DateTime
+  gender: Gender
+  name_of_deceased: String
+  date_of_death: DateTime!
+  father_name: String
+  mother_name: String
+  wife_name: String
+  death_place: BirthPlace
+  death_place_name: String
+  current_address: String
+  permanent_address: String
+  death_place_address: String
+  death_certified: Boolean
+  name_of_disease: Boolean
+  pregnancy_death: Boolean
+  smoker_death: Boolean
+  alcoholic_death: Boolean
+  religion_deceased: Religion
+  date_of_marriage: DateTime
+  attender_type: AttendentType
+  deceased_uid_url: String
+  father_uid_url: String
+  authority_letter_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateTempWaterConnectInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  ownership_type: OwnerShipType!
+  ward_number: String!
+  muncipal_type: MuncipalType!
+  diameter: String!
+  entity_type: EntityType!
+  connection_type: ConnectionType!
+  purpose: String!
+  from_date: DateTime!
+  to_date: DateTime!
+  house_tax_url: String!
+  applicant_uid_url: String!
+  electric_bill_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateTempWaterConnectInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  diameter: String
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  from_date: DateTime
+  to_date: DateTime
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateNewWaterConnectInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  ownership_type: OwnerShipType!
+  ward_number: String!
+  muncipal_type: MuncipalType!
+  diameter: String!
+  entity_type: EntityType!
+  connection_type: ConnectionType!
+  purpose: String!
+  from_date: DateTime!
+  house_tax_url: String!
+  applicant_uid_url: String!
+  electric_bill_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateNewWaterConnectInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  diameter: String
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  from_date: DateTime
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateTempWaterDisconnectInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  ownership_type: OwnerShipType!
+  ward_number: String!
+  muncipal_type: MuncipalType!
+  entity_type: EntityType!
+  connection_type: ConnectionType!
+  purpose: String!
+  to_date: DateTime!
+  meter_number: String!
+  house_tax_url: String!
+  applicant_uid_url: String!
+  electric_bill_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateTempWaterDisconnectInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  to_date: DateTime
+  meter_number: String
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreatePermanentWaterDisconnectInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  ownership_type: OwnerShipType!
+  ward_number: String!
+  muncipal_type: MuncipalType!
+  entity_type: EntityType!
+  connection_type: ConnectionType!
+  purpose: String!
+  to_date: DateTime!
+  meter_number: String!
+  house_tax_url: String!
+  applicant_uid_url: String!
+  electric_bill_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdatePermanentWaterDisconnectInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  to_date: DateTime
+  meter_number: String
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateWaterSizeChangeInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  ownership_type: OwnerShipType!
+  ward_number: String!
+  muncipal_type: MuncipalType!
+  old_diameter: String!
+  new_diameter: String!
+  entity_type: EntityType!
+  connection_type: ConnectionType!
+  purpose: String!
+  to_date: DateTime!
+  meter_number: String!
+  house_tax_url: String!
+  applicant_uid_url: String!
+  electric_bill_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateWaterSizeChangeInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  old_diameter: String
+  new_diameter: String
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  to_date: DateTime
+  meter_number: String
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateWaterReconnectInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  ownership_type: OwnerShipType!
+  ward_number: String!
+  muncipal_type: MuncipalType!
+  entity_type: EntityType!
+  connection_type: ConnectionType!
+  purpose: String!
+  purpose_of_disconnection: String!
+  purpose_of_reconection: String!
+  meter_number: String!
+  house_tax_url: String!
+  applicant_uid_url: String!
+  electric_bill_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateWaterReconnectInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  ownership_type: OwnerShipType
+  ward_number: String
+  muncipal_type: MuncipalType
+  entity_type: EntityType
+  connection_type: ConnectionType
+  purpose: String
+  purpose_of_disconnection: String
+  purpose_of_reconection: String
+  meter_number: String
+  house_tax_url: String
+  applicant_uid_url: String
+  electric_bill_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateBirthCertificateInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  gender: Gender!
+  date_of_birth: DateTime!
+  father_name: String!
+  mother_name: String!
+  registration_number: String!
+  date_of_registration: String!
+  applicant_uid_url: String!
+  father_uid_url: String!
+  mother_uid_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateBirthCertificateInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  gender: Gender
+  date_of_birth: DateTime
+  father_name: String
+  mother_name: String
+  registration_number: String
+  date_of_registration: String
+  applicant_uid_url: String
+  father_uid_url: String
+  mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateBirthTeorInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  gender: Gender!
+  date_of_birth: DateTime!
+  father_name: String!
+  mother_name: String!
+  registration_number: String!
+  date_of_registration: String!
+  applicant_uid_url: String!
+  father_uid_url: String!
+  mother_uid_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateBirthTeorInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  gender: Gender
+  date_of_birth: DateTime
+  father_name: String
+  mother_name: String
+  registration_number: String
+  date_of_registration: String
+  applicant_uid_url: String
+  father_uid_url: String
+  mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateDeathCertificateInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  gender: Gender!
+  date_of_birth: DateTime!
+  date_of_death: DateTime!
+  place_of_death: String!
+  father_name: String!
+  mother_name: String!
+  husband_name: String!
+  registration_number: String!
+  date_of_registration: String!
+  applicant_uid_url: String!
+  father_uid_url: String!
+  mother_uid_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateDeathCertificateInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  gender: Gender
+  date_of_birth: DateTime
+  date_of_death: DateTime
+  place_of_death: String
+  father_name: String
+  mother_name: String
+  husband_name: String
+  registration_number: String
+  date_of_registration: String
+  applicant_uid_url: String
+  father_uid_url: String
+  mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateDeathTeorInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  gender: Gender!
+  date_of_birth: DateTime!
+  date_of_death: DateTime!
+  place_of_death: String!
+  father_name: String!
+  mother_name: String!
+  husband_name: String!
+  registration_number: String!
+  date_of_registration: String!
+  applicant_uid_url: String!
+  father_uid_url: String!
+  mother_uid_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateDeathTeorInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  gender: Gender
+  date_of_birth: DateTime
+  date_of_death: DateTime
+  place_of_death: String
+  father_name: String
+  mother_name: String
+  husband_name: String
+  registration_number: String
+  date_of_registration: String
+  applicant_uid_url: String
+  father_uid_url: String
+  mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateMarriageCertificateInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  groom_father_name: String!
+  groom_mother_name: String!
+  bride_name: String!
+  bride_father_name: String!
+  bride_mother_name: String!
+  registration_number: String!
+  date_of_registration: DateTime!
+  applicant_uid_url: String!
+  groom_father_uid_url: String!
+  groom_mother_uid_url: String!
+  bride_uid_url: String!
+  bride_father_uid_url: String!
+  bride_mother_uid_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateMarriageCertificateInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  groom_father_name: String
+  groom_mother_name: String
+  bride_name: String
+  bride_father_name: String
+  bride_mother_name: String
+  registration_number: String
+  date_of_registration: DateTime
+  applicant_uid_url: String
+  groom_father_uid_url: String
+  groom_mother_uid_url: String
+  bride_uid_url: String
+  bride_father_uid_url: String
+  bride_mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateMarriageTeorInput {
+  userId: Int
+  user_uid: String
+  name: String!
+  address: String!
+  mobile: String!
+  email: String
+  village_id: Int!
+  groom_father_name: String!
+  groom_mother_name: String!
+  bride_name: String!
+  bride_father_name: String!
+  bride_mother_name: String!
+  registration_number: String!
+  date_of_registration: DateTime!
+  applicant_uid_url: String!
+  groom_father_uid_url: String!
+  groom_mother_uid_url: String!
+  bride_uid_url: String!
+  bride_father_uid_url: String!
+  bride_mother_uid_url: String!
+  undertaking_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateMarriageTeorInput {
+  userId: Int
+  user_uid: String
+  name: String
+  address: String
+  mobile: String
+  email: String
+  village_id: Int
+  groom_father_name: String
+  groom_mother_name: String
+  bride_name: String
+  bride_father_name: String
+  bride_mother_name: String
+  registration_number: String
+  date_of_registration: DateTime
+  applicant_uid_url: String
+  groom_father_uid_url: String
+  groom_mother_uid_url: String
+  bride_uid_url: String
+  bride_father_uid_url: String
+  bride_mother_uid_url: String
+  undertaking_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateMarriageRegisterInput {
+  userId: Int
+  user_uid: String
+  mobile: String!
+  email: String
+  village_id: Int!
+  groom_name: String!
+  groom_address: String!
+  groom_date_of_birth: DateTime!
+  religion_groom: Religion!
+  groom_father_name: String!
+  groom_mother_name: String!
+  bride_name: String!
+  bride_address: String!
+  bride_date_of_birth: DateTime!
+  religion_bride: Religion!
+  bride_father_name: String!
+  bride_mother_name: String!
+  date_of_marriage: DateTime!
+  witness_one_details: String!
+  witness_two_details: String!
+  witness_three_details: String!
+  joint_bride_groom_photo_url: String!
+  applicant_uid_url: String!
+  bride_uid_url: String!
+  bride_url: String!
+  witness_one_signature_url: String!
+  witness_two_signature_url: String!
+  witness_three_signature_url: String!
+  undertaking_url: String!
+  groom_signature_url: String!
+  bride_signature_url: String!
+  signature_url: String!
+  iagree: Agree
+  status: Status
+}
+
+input UpdateMarriageRegisterInput {
+  userId: Int
+  user_uid: String
+  mobile: String
+  email: String
+  village_id: Int
+  groom_name: String
+  groom_address: String
+  groom_date_of_birth: DateTime
+  religion_groom: Religion
+  groom_father_name: String
+  groom_mother_name: String
+  bride_name: String
+  bride_address: String
+  bride_date_of_birth: DateTime
+  religion_bride: Religion
+  bride_father_name: String
+  bride_mother_name: String
+  date_of_marriage: DateTime
+  witness_one_details: String
+  witness_two_details: String
+  witness_three_details: String
+  joint_bride_groom_photo_url: String
+  applicant_uid_url: String
+  bride_uid_url: String
+  bride_url: String
+  witness_one_signature_url: String
+  witness_two_signature_url: String
+  witness_three_signature_url: String
+  undertaking_url: String
+  groom_signature_url: String
+  bride_signature_url: String
+  signature_url: String
+  iagree: Agree
+  status: Status
+  id: Int!
+  remarks: String
+  other_remarks: String
+  rejection_reason: String
+  condition_to_follow: String
+  certificate_id: String
+  certificate_date: DateTime
+  certificate_url: String
+  deletedAt: DateTime
+}

@@ -1,0 +1,1510 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  NONE
+  ACTIVE
+  INACTIVE
+}
+
+enum Role {
+  NONE
+  SYSTEM
+  ADMIN
+  COLLECTOR
+  DYCOLLECTOR
+  ATP
+  JTP
+  MAMLATDAR
+  FIRE
+  LANDSUPTD
+  JE
+  SITESUPERVISOR
+  ARCHITECTASST
+  PLANNINGDRAUGHTSMAN
+  ARCHDRAUGHTSMANSP
+  ARCHDRAUGHTSMANST
+  SUPERINTENDENT
+  LDC
+  UDC
+  SHO
+  HEADCLERK
+  USER
+}
+
+enum Department {
+  NONE
+  PDA
+  EOCS
+  LAND
+  MAMLATDAR
+  COLLECTOR
+  DYCOLLECTOR
+  FIRE
+  COASTGUARD
+  EST
+  DMC
+  CRSR
+  PWD
+}
+
+enum QueryType {
+  NONE
+  INTRA
+  INTER
+  PUBLIC
+}
+
+enum QueryStatus {
+  NONE
+  SENT
+  RECEIVED
+  REPLIED
+  RESOLVED
+}
+
+enum FormType {
+  NONE
+
+  // pda start here
+  PETROLEUM
+  RTI
+  ZONE
+  DEMOLITION
+  OLDCOPY
+  LANDRECORDS
+  UNAUTHORISED
+  CP
+  OC
+  PLINTH
+  // pda end here
+
+  // est start here
+  MARRIAGE
+  RELIGIOUS
+  ROADSHOW
+  GENERIC
+  // est end here
+
+  // crsr start here
+  BIRTHCERT
+  BIRTHTEOR
+  DEATHCERT
+  DEATHTEOR
+  MARRIAGECERT
+  MARRIAGETEOR
+  MARRIAGEREGISTER
+  // crsr end here
+
+  // pwd start here 
+  TEMPWATERCONNECT
+  TEMPWATERDISCONNECT
+  WATERSIZECHANGE
+  NEWWATERCONNECT
+  WATERRECONNECT
+  PERMANENTWATERDISCONNECT
+  // pwd end here
+
+  // dmc start here
+  DEATHREGISTER
+  BIRTHREGISTER
+  // dmc end here
+}
+
+enum Agree {
+  NONE
+  YES
+  NO
+}
+
+enum NocType {
+  NONE
+  NOCTYPEONE
+  NOCTYPETWO
+  NOCTYPETHREE
+}
+
+enum ClassType {
+  NONE
+  CLASSTYPEONE
+  CLASSTYPETWO
+  CLASSTYPETHREE
+}
+
+enum OutletType {
+  NONE
+  OUTLETTYPEONE
+  OUTLETTYPETWO
+  OUTLETTYPETHREE
+}
+
+enum TypeOfInfo {
+  NONE
+  CP
+  OC
+  MAPS
+}
+
+enum queryStatus {
+  NONE
+  SUBMIT
+  INPROCESS
+  PAYMENT
+  QUERYRAISED
+  APPROVED
+  REJCTED
+  CERTIFICATEGRANT
+  COMPLETED
+}
+
+enum PaymentType {
+  NONE
+  CASH
+  CHEQUE
+  NETBANKING
+  CCDC
+  UPI
+}
+
+enum PaymentStatus {
+  NONE
+  PENDING
+  PAID
+}
+
+model user {
+  id                         Int                          @id @default(autoincrement())
+  name                       String?
+  email                      String?
+  password                   String
+  contact                    String?
+  pic_url                    String?
+  department                 Department                   @default(NONE)
+  role                       Role                         @default(NONE)
+  otp                        String?
+  address                    String?
+  user_uid                   String?
+  status                     Status                       @default(NONE)
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  deletedAt                  DateTime?
+  to_user                    query[]                      @relation("touser")
+  from_user                  query[]                      @relation("fromuser")
+  common                     common[]
+  rti_form                   rti_form[]
+  zone_inof_form             zone_info_form[]
+  petroleum_form             petroleum_form[]
+  old_copy_form              old_copy_form[]
+  userpayment                payment[]                    @relation("user")
+  deptuserpayment            payment[]                    @relation("deptuser")
+  cp_form                    cp_form[]
+  oc_form                    oc_form[]
+  plinth_form                plinth_form[]
+  marriage_form              marriage_form[]
+  roadshow_form              roadshow_form[]
+  religious_form             religious_form[]
+  generic_form               generic_form[]
+  temp_water_connect_form    temp_water_connect_form[]
+  new_water_connection       new_water_connection[]
+  temp_water_disconnect      temp_water_disconnect[]
+  permanent_water_disconnect permanent_water_disconnect[]
+  water_size_change          water_size_change[]
+  water_reconnect            water_reconnect[]
+  birth_certificate          birth_certificate[]
+  birth_teor                 birth_teor[]
+  death_certificate          death_certificate[]
+  death_teor                 death_teor[]
+  marriage_certificate       marriage_certificate[]
+  marriage_teor              marriage_teor[]
+  marriage_register          marriage_register[]
+  birth_register             birth_register[]
+  death_regiser              death_regiser[]
+}
+
+model village {
+  id                         Int                          @id @default(autoincrement())
+  name                       String
+  zone_inof_form             zone_info_form[]
+  petroleum_form             petroleum_form[]
+  old_copy_form              old_copy_form[]
+  land_section_form          land_section_form[]
+  survey                     survey[]
+  cp_form                    cp_form[]
+  oc_form                    oc_form[]
+  plinth_form                plinth_form[]
+  marriage_form              marriage_form[]
+  roadshow_form              roadshow_form[]
+  religious_form             religious_form[]
+  generic_form               generic_form[]
+  temp_water_connect_form    temp_water_connect_form[]
+  new_water_connection       new_water_connection[]
+  temp_water_disconnect      temp_water_disconnect[]
+  permanent_water_disconnect permanent_water_disconnect[]
+  water_size_change          water_size_change[]
+  water_reconnect            water_reconnect[]
+  birth_certificate          birth_certificate[]
+  birth_teor                 birth_teor[]
+  death_certificate          death_certificate[]
+  death_teor                 death_teor[]
+  marriage_certificate       marriage_certificate[]
+  marriage_teor              marriage_teor[]
+  marriage_register          marriage_register[]
+  birth_register             birth_register[]
+  death_regiser              death_regiser[]
+}
+
+model survey {
+  id           Int       @id @default(autoincrement())
+  village      village   @relation(fields: [villageId], references: [id])
+  villageId    Int
+  survey_no    String
+  sub_division String?
+  owner_name   String
+  area         String
+  zone         String?
+  status       Status    @default(NONE)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model query {
+  id           Int         @id @default(autoincrement())
+  stage        FormType    @default(NONE)
+  form_id      Int
+  form_status  Int
+  to_user      user        @relation("touser", fields: [to_user_id], references: [id])
+  to_user_id   Int
+  from_user    user        @relation("fromuser", fields: [from_user_id], references: [id])
+  from_user_id Int
+  query_type   QueryType   @default(NONE)
+  doc_url      String?
+  remark       String
+  query_status QueryStatus @default(NONE)
+  status       Status      @default(NONE)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  deletedAt    DateTime?
+}
+
+model common {
+  id            Int         @id @default(autoincrement())
+  form_type     FormType    @default(NONE)
+  form_id       Int
+  user          user        @relation(fields: [user_id], references: [id])
+  user_id       Int
+  auth_user_id  String?
+  focal_user_id String?
+  intra_user_id String?
+  inter_user_id String?
+  village       String?
+  name          String
+  number        String
+  event_date    DateTime?
+  form_status   Int?
+  query_status  queryStatus @default(NONE)
+  status        Status      @default(NONE)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  deletedAt     DateTime?
+}
+
+model rti_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  subject_info        String?
+  from_date           DateTime?
+  to_date             DateTime?
+  description         String?   @db.MediumText
+  information         String?
+  proverty_line_url   String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  signature_url       String?
+  attachments         Json?
+  rejection_reason    String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  comments_dept       String?
+  condition_to_follow String?
+  payment_doc         String?
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model zone_info_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?  @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  survey_no           String?
+  sub_division        String?
+  nakel_url_1_14      String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  signature_url       String?
+  attachments         Json?
+  rejection_reason    String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  comments_dept       String?
+  condition_to_follow String?
+  payment_doc         String?
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model petroleum_form {
+  id                  Int        @id @default(autoincrement())
+  user                user       @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  company_name        String?
+  company_region      String?
+  designation         String?
+  location_address    String?
+  noc_type            NocType    @default(NONE)
+  class_type          ClassType  @default(NONE)
+  outlet_type         OutletType @default(NONE)
+  capacity            Decimal?
+  village             village?   @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  survey_no           String?
+  sub_division        String?
+  noc_fire_url        String?
+  na_order_url        String?
+  sanad_url           String?
+  coastguard_url      String?
+  plan_url            String?
+  explosive_url       String?
+  iagree              Agree      @default(NONE)
+  remarks             String?
+  signature_url       String?
+  attachments         Json?
+  rejection_reason    String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  comments_dept       String?
+  condition_to_follow String?
+  status              Status     @default(NONE)
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  deletedAt           DateTime?
+}
+
+model old_copy_form {
+  id                      Int        @id @default(autoincrement())
+  user                    user       @relation(fields: [userId], references: [id])
+  userId                  Int
+  user_uid                String?
+  name                    String?
+  address                 String?
+  mobile                  String?
+  email                   String?
+  village                 village?   @relation(fields: [village_id], references: [id])
+  village_id              Int?
+  survey_no               String?
+  sub_division            String?
+  prev_application_date   DateTime?
+  prev_application_number String?
+  information_needed      String?
+  type_of_information     TypeOfInfo @default(NONE)
+  iagree                  Agree      @default(NONE)
+  remarks                 String?
+  aadhar_url              String?
+  signature_url           String?
+  attachments             Json?
+  rejection_reason        String?
+  certificate_id          String?
+  certificate_date        DateTime?
+  certificate_url         String?
+  comments_dept           String?
+  condition_to_follow     String?
+  payment_doc             String?
+  status                  Status     @default(NONE)
+  createdAt               DateTime   @default(now())
+  updatedAt               DateTime   @updatedAt
+  deletedAt               DateTime?
+}
+
+model land_section_form {
+  id                         Int       @id @default(autoincrement())
+  user_id                    Int?
+  name                       String?
+  address                    String?
+  mobile                     String?
+  email                      String?
+  village                    village?  @relation(fields: [village_id], references: [id])
+  village_id                 Int?
+  survey_no                  String?
+  sub_division               String?
+  area                       String?
+  na_type                    String?
+  zone                       String?
+  road_access                String?
+  no_road_access             String?
+  width_adequate             String?
+  is_dimension_plot_adequate String?
+  is_crz                     String?
+  is_monument                String?
+  other_remark               String?
+  atp_recommendation         String?
+  attachments                String?
+  recommend                  Boolean?
+  comments_dept              String?
+  condition_to_follow        String?
+  illegal_sqmt               String?
+  land_formid                Int?
+  land_stageid               Int?
+  status                     Status    @default(NONE)
+  createdAt                  DateTime  @default(now())
+  updatedAt                  DateTime  @updatedAt
+  deletedAt                  DateTime?
+}
+
+model dealing_hand {
+  id                  Int       @id @default(autoincrement())
+  file_type           FormType  @default(NONE)
+  collector           Boolean   @default(false)
+  dycollector         Boolean   @default(false)
+  atp                 Boolean   @default(false)
+  jtp                 Boolean   @default(false)
+  je                  Boolean   @default(false)
+  fieldinspector      Boolean   @default(false)
+  sitesupervisor      Boolean   @default(false)
+  architectassistant  Boolean   @default(false)
+  planningdraughtsman Boolean   @default(false)
+  spdraughtsman       Boolean   @default(false)
+  stdraughtsman       Boolean   @default(false)
+  landsupted          Boolean   @default(false)
+  mamlatdar           Boolean   @default(false)
+  eocs                Boolean   @default(false)
+  dept1               Boolean   @default(false)
+  dept2               Boolean   @default(false)
+  dept3               Boolean   @default(false)
+  dept4               Boolean   @default(false)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model payment {
+  id            Int           @id @default(autoincrement())
+  form_type     FormType      @default(NONE)
+  form_id       Int
+  deptuser      user          @relation("deptuser", fields: [deptuser_id], references: [id])
+  deptuser_id   Int
+  user          user          @relation("user", fields: [user_id], references: [id])
+  user_id       Int
+  type1         Int?
+  amount1       Int?
+  type2         Int?
+  amount2       Int?
+  type3         Int?
+  amount3       Int?
+  daycount      Int?
+  paymentamout  Int?
+  reference     String?
+  paymentType   PaymentType   @default(NONE)
+  paymentstatus PaymentStatus @default(NONE)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  deletedAt     DateTime?
+}
+
+// pda table start from here
+model cp_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?  @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  survey_no           String?
+  sub_division        String?
+  architect_name      String?
+  architect_license   String?
+  valid_upto          DateTime?
+  applicant_uid       String?
+  annexure_two        String?
+  annexure_three      String?
+  annexure_four       String?
+  annexure_five       String?
+  na_copoy            String?
+  map_copy            String?
+  nakal_1_14          String?
+  building_plan       String?
+  scrutiny_fees       String?
+  coast_guard_noc     String?
+  fire_noc            String?
+  crz_noc             String?
+  layout_plan         String?
+  revised_plan        String?
+  fsi                 String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  signature_url       String?
+  attachments         Json?
+  rejection_reason    String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  comments_dept       String?
+  condition_to_follow String?
+  payment_doc         String?
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model plinth_form {
+  id                         Int       @id @default(autoincrement())
+  user                       user      @relation(fields: [userId], references: [id])
+  userId                     Int
+  user_uid                   String?
+  name                       String?
+  address                    String?
+  mobile                     String?
+  email                      String?
+  village                    village?  @relation(fields: [village_id], references: [id])
+  village_id                 Int?
+  survey_no                  String?
+  sub_division               String?
+  permission_number          String?
+  permission_date            DateTime?
+  architect_name             String?
+  architect_license          String?
+  valid_upto                 DateTime?
+  architect_address          String?
+  applicant_uid              String?
+  annexure_eleven            String?
+  copy_construcation_license String?
+  building_plan              String?
+  architect_signature        String?
+  iagree                     Agree     @default(NONE)
+  remarks                    String?
+  signature_url              String?
+  attachments                Json?
+  rejection_reason           String?
+  certificate_id             String?
+  certificate_date           DateTime?
+  certificate_url            String?
+  comments_dept              String?
+  condition_to_follow        String?
+  payment_doc                String?
+  status                     Status    @default(NONE)
+  createdAt                  DateTime  @default(now())
+  updatedAt                  DateTime  @updatedAt
+  deletedAt                  DateTime?
+}
+
+model oc_form {
+  id                      Int       @id @default(autoincrement())
+  user                    user      @relation(fields: [userId], references: [id])
+  userId                  Int
+  user_uid                String?
+  name                    String?
+  address                 String?
+  mobile                  String?
+  email                   String?
+  village                 village?  @relation(fields: [village_id], references: [id])
+  village_id              Int?
+  survey_no               String?
+  sub_division            String?
+  permission_number       String?
+  permission_date         DateTime?
+  architect_name          String?
+  architect_license       String?
+  valid_upto              DateTime?
+  completion_date         DateTime?
+  applicant_uid           String?
+  completion_certificate  String?
+  construction_permission String?
+  building_plan           String?
+  annexure_fourteen       String?
+  coast_guard_noc         String?
+  fire_noc                String?
+  rainwater_harvest       String?
+  deviation_plan          String?
+  indemnity               String?
+  valuation_certificate   String?
+  labour_cess             String?
+  iagree                  Agree     @default(NONE)
+  remarks                 String?
+  signature_url           String?
+  attachments             Json?
+  rejection_reason        String?
+  certificate_id          String?
+  certificate_date        DateTime?
+  certificate_url         String?
+  comments_dept           String?
+  condition_to_follow     String?
+  payment_doc             String?
+  status                  Status    @default(NONE)
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+  deletedAt               DateTime?
+}
+
+// pda table end from here
+// est table start from here
+
+model marriage_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?  @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  from_date           DateTime?
+  to_date             DateTime?
+  event_name          String?
+  event_address       String?
+  relation            String?
+  witness_1_url       String?
+  witness_2_url       String?
+  applicant_uid_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?   @db.LongText
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model roadshow_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?  @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  from_date           DateTime?
+  to_date             DateTime?
+  event_name          String?
+  event_address       String?
+  route_info          String?
+  relation            String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  doc_1_url           String?
+  doc_2_url           String?
+  applicant_uid_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?   @db.LongText
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model religious_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?  @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  from_date           DateTime?
+  to_date             DateTime?
+  event_name          String?
+  event_address       String?
+  route_info          String?
+  relation            String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  doc_1_url           String?
+  doc_2_url           String?
+  applicant_uid_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?   @db.LongText
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+model generic_form {
+  id                  Int       @id @default(autoincrement())
+  user                user      @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?  @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  from_date           DateTime?
+  to_date             DateTime?
+  event_name          String?
+  event_address       String?
+  route_info          String?
+  relation            String?
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  doc_1_url           String?
+  doc_2_url           String?
+  applicant_uid_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree     @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?   @db.LongText
+  status              Status    @default(NONE)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
+
+// est table start from here
+
+// pwd table start from here
+
+enum OwnerShipType {
+  OWNERSHIP
+  TENANT
+}
+
+enum MuncipalType {
+  PANCHAYAT
+  DMC
+}
+
+enum EntityType {
+  RESIDENTIAL
+  COMMERCIAL
+  INDUSTRIAL
+}
+
+enum ConnectionType {
+  DOMESTIC
+  NONDOMESTIC
+}
+
+model temp_water_connect_form {
+  id                  Int            @id @default(autoincrement())
+  user                user           @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?       @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  ownership_type      OwnerShipType  @default(OWNERSHIP)
+  ward_number         String?
+  muncipal_type       MuncipalType   @default(DMC)
+  diameter            String?
+  entity_type         EntityType     @default(RESIDENTIAL)
+  connection_type     ConnectionType @default(DOMESTIC)
+  purpose             String?
+  from_date           DateTime?
+  to_date             DateTime?
+  house_tax_url       String?
+  applicant_uid_url   String?
+  electric_bill_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree          @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?        @db.LongText
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  status              Status         @default(NONE)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  deletedAt           DateTime?
+}
+
+model new_water_connection {
+  id                  Int            @id @default(autoincrement())
+  user                user           @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?       @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  ownership_type      OwnerShipType  @default(OWNERSHIP)
+  ward_number         String?
+  muncipal_type       MuncipalType   @default(DMC)
+  diameter            String?
+  entity_type         EntityType     @default(RESIDENTIAL)
+  connection_type     ConnectionType @default(DOMESTIC)
+  purpose             String?
+  from_date           DateTime?
+  house_tax_url       String?
+  applicant_uid_url   String?
+  electric_bill_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree          @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?        @db.LongText
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  status              Status         @default(NONE)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  deletedAt           DateTime?
+}
+
+model temp_water_disconnect {
+  id                  Int            @id @default(autoincrement())
+  user                user           @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?       @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  ownership_type      OwnerShipType  @default(OWNERSHIP)
+  ward_number         String?
+  muncipal_type       MuncipalType   @default(DMC)
+  entity_type         EntityType     @default(RESIDENTIAL)
+  connection_type     ConnectionType @default(DOMESTIC)
+  purpose             String?
+  meter_number        String?
+  to_date             DateTime?
+  house_tax_url       String?
+  applicant_uid_url   String?
+  electric_bill_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree          @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?        @db.LongText
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  status              Status         @default(NONE)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  deletedAt           DateTime?
+}
+
+model permanent_water_disconnect {
+  id                  Int            @id @default(autoincrement())
+  user                user           @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?       @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  ownership_type      OwnerShipType  @default(OWNERSHIP)
+  ward_number         String?
+  muncipal_type       MuncipalType   @default(DMC)
+  entity_type         EntityType     @default(RESIDENTIAL)
+  connection_type     ConnectionType @default(DOMESTIC)
+  purpose             String?
+  meter_number        String?
+  to_date             DateTime?
+  house_tax_url       String?
+  applicant_uid_url   String?
+  electric_bill_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree          @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?        @db.LongText
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  status              Status         @default(NONE)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  deletedAt           DateTime?
+}
+
+model water_size_change {
+  id                  Int            @id @default(autoincrement())
+  user                user           @relation(fields: [userId], references: [id])
+  userId              Int
+  user_uid            String?
+  name                String?
+  address             String?
+  mobile              String?
+  email               String?
+  village             village?       @relation(fields: [village_id], references: [id])
+  village_id          Int?
+  ownership_type      OwnerShipType  @default(OWNERSHIP)
+  ward_number         String?
+  muncipal_type       MuncipalType   @default(DMC)
+  old_diameter        String?
+  new_diameter        String?
+  entity_type         EntityType     @default(RESIDENTIAL)
+  connection_type     ConnectionType @default(DOMESTIC)
+  purpose             String?
+  meter_number        String?
+  house_tax_url       String?
+  applicant_uid_url   String?
+  electric_bill_url   String?
+  undertaking_url     String?
+  signature_url       String?
+  iagree              Agree          @default(NONE)
+  remarks             String?
+  other_remarks       String?
+  rejection_reason    String?
+  condition_to_follow String?        @db.LongText
+  certificate_id      String?
+  certificate_date    DateTime?
+  certificate_url     String?
+  status              Status         @default(NONE)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  deletedAt           DateTime?
+}
+
+model water_reconnect {
+  id                       Int            @id @default(autoincrement())
+  user                     user           @relation(fields: [userId], references: [id])
+  userId                   Int
+  user_uid                 String?
+  name                     String?
+  address                  String?
+  mobile                   String?
+  email                    String?
+  village                  village?       @relation(fields: [village_id], references: [id])
+  village_id               Int?
+  ownership_type           OwnerShipType  @default(OWNERSHIP)
+  ward_number              String?
+  muncipal_type            MuncipalType   @default(DMC)
+  entity_type              EntityType     @default(RESIDENTIAL)
+  connection_type          ConnectionType @default(DOMESTIC)
+  purpose_of_disconnection String?
+  purpose_of_reconection   String?
+  meter_number             String?
+  house_tax_url            String?
+  applicant_uid_url        String?
+  electric_bill_url        String?
+  undertaking_url          String?
+  signature_url            String?
+  iagree                   Agree          @default(NONE)
+  remarks                  String?
+  other_remarks            String?
+  rejection_reason         String?
+  condition_to_follow      String?        @db.LongText
+  certificate_id           String?
+  certificate_date         DateTime?
+  certificate_url          String?
+  status                   Status         @default(NONE)
+  createdAt                DateTime       @default(now())
+  updatedAt                DateTime       @updatedAt
+  deletedAt                DateTime?
+}
+
+// pwd table end from here
+
+// crsr start from here
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+model birth_certificate {
+  id                   Int       @id @default(autoincrement())
+  user                 user      @relation(fields: [userId], references: [id])
+  userId               Int
+  user_uid             String?
+  name                 String?
+  address              String?
+  mobile               String?
+  email                String?
+  village              village?  @relation(fields: [village_id], references: [id])
+  village_id           Int?
+  gender               Gender    @default(MALE)
+  date_of_birth        DateTime?
+  father_name          String?
+  mother_name          String?
+  registration_number  String?
+  date_of_registration DateTime?
+  applicant_uid_url    String?
+  father_uid_url       String?
+  mother_uid_url       String?
+  undertaking_url      String?
+  signature_url        String?
+  iagree               Agree     @default(NONE)
+  remarks              String?
+  other_remarks        String?
+  rejection_reason     String?
+  condition_to_follow  String?   @db.LongText
+  certificate_id       String?
+  certificate_date     DateTime?
+  certificate_url      String?
+  status               Status    @default(NONE)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  deletedAt            DateTime?
+}
+
+model birth_teor {
+  id                   Int       @id @default(autoincrement())
+  user                 user      @relation(fields: [userId], references: [id])
+  userId               Int
+  user_uid             String?
+  name                 String?
+  address              String?
+  mobile               String?
+  email                String?
+  village              village?  @relation(fields: [village_id], references: [id])
+  village_id           Int?
+  gender               Gender    @default(MALE)
+  date_of_birth        DateTime?
+  father_name          String?
+  mother_name          String?
+  registration_number  String?
+  date_of_registration DateTime?
+  applicant_uid_url    String?
+  father_uid_url       String?
+  mother_uid_url       String?
+  undertaking_url      String?
+  signature_url        String?
+  iagree               Agree     @default(NONE)
+  remarks              String?
+  other_remarks        String?
+  rejection_reason     String?
+  condition_to_follow  String?   @db.LongText
+  certificate_id       String?
+  certificate_date     DateTime?
+  certificate_url      String?
+  status               Status    @default(NONE)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  deletedAt            DateTime?
+}
+
+model death_certificate {
+  id                   Int       @id @default(autoincrement())
+  user                 user      @relation(fields: [userId], references: [id])
+  userId               Int
+  user_uid             String?
+  name                 String?
+  address              String?
+  mobile               String?
+  email                String?
+  village              village?  @relation(fields: [village_id], references: [id])
+  village_id           Int?
+  gender               Gender    @default(MALE)
+  date_of_birth        DateTime?
+  date_of_death        DateTime?
+  place_of_death       String?
+  father_name          String?
+  mother_name          String?
+  husband_name         String?
+  registration_number  String?
+  date_of_registration DateTime?
+  applicant_uid_url    String?
+  father_uid_url       String?
+  mother_uid_url       String?
+  undertaking_url      String?
+  signature_url        String?
+  iagree               Agree     @default(NONE)
+  remarks              String?
+  other_remarks        String?
+  rejection_reason     String?
+  condition_to_follow  String?   @db.LongText
+  certificate_id       String?
+  certificate_date     DateTime?
+  certificate_url      String?
+  status               Status    @default(NONE)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  deletedAt            DateTime?
+}
+
+model death_teor {
+  id                   Int       @id @default(autoincrement())
+  user                 user      @relation(fields: [userId], references: [id])
+  userId               Int
+  user_uid             String?
+  name                 String?
+  address              String?
+  mobile               String?
+  email                String?
+  village              village?  @relation(fields: [village_id], references: [id])
+  village_id           Int?
+  gender               Gender    @default(MALE)
+  date_of_birth        DateTime?
+  date_of_death        DateTime?
+  place_of_death       String?
+  father_name          String?
+  mother_name          String?
+  husband_name         String?
+  registration_number  String?
+  date_of_registration DateTime?
+  applicant_uid_url    String?
+  father_uid_url       String?
+  mother_uid_url       String?
+  undertaking_url      String?
+  signature_url        String?
+  iagree               Agree     @default(NONE)
+  remarks              String?
+  other_remarks        String?
+  rejection_reason     String?
+  condition_to_follow  String?   @db.LongText
+  certificate_id       String?
+  certificate_date     DateTime?
+  certificate_url      String?
+  status               Status    @default(NONE)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  deletedAt            DateTime?
+}
+
+model marriage_certificate {
+  id                   Int       @id @default(autoincrement())
+  user                 user      @relation(fields: [userId], references: [id])
+  userId               Int
+  user_uid             String?
+  name                 String?
+  address              String?
+  mobile               String?
+  email                String?
+  village              village?  @relation(fields: [village_id], references: [id])
+  village_id           Int?
+  groom_father_name    String?
+  groom_mother_name    String?
+  bride_name           String?
+  bride_father_name    String?
+  bride_mother_name    String?
+  registration_number  String?
+  date_of_registration DateTime?
+  applicant_uid_url    String?
+  groom_father_uid_url String?
+  groom_mother_uid_url String?
+  bride_uid_url        String?
+  bride_father_uid_url String?
+  bride_mother_uid_url String?
+  undertaking_url      String?
+  signature_url        String?
+  iagree               Agree     @default(NONE)
+  remarks              String?
+  other_remarks        String?
+  rejection_reason     String?
+  condition_to_follow  String?   @db.LongText
+  certificate_id       String?
+  certificate_date     DateTime?
+  certificate_url      String?
+  status               Status    @default(NONE)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  deletedAt            DateTime?
+}
+
+model marriage_teor {
+  id                   Int       @id @default(autoincrement())
+  user                 user      @relation(fields: [userId], references: [id])
+  userId               Int
+  user_uid             String?
+  name                 String?
+  address              String?
+  mobile               String?
+  email                String?
+  village              village?  @relation(fields: [village_id], references: [id])
+  village_id           Int?
+  groom_father_name    String?
+  groom_mother_name    String?
+  bride_name           String?
+  bride_father_name    String?
+  bride_mother_name    String?
+  registration_number  String?
+  date_of_registration DateTime?
+  applicant_uid_url    String?
+  groom_father_uid_url String?
+  groom_mother_uid_url String?
+  bride_uid_url        String?
+  bride_father_uid_url String?
+  bride_mother_uid_url String?
+  undertaking_url      String?
+  signature_url        String?
+  iagree               Agree     @default(NONE)
+  remarks              String?
+  other_remarks        String?
+  rejection_reason     String?
+  condition_to_follow  String?   @db.LongText
+  certificate_id       String?
+  certificate_date     DateTime?
+  certificate_url      String?
+  status               Status    @default(NONE)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  deletedAt            DateTime?
+}
+
+enum Religion {
+  HINDU
+  MUSLIM
+  CHRISTIAN
+  OTHER
+}
+
+model marriage_register {
+  id                          Int       @id @default(autoincrement())
+  user                        user      @relation(fields: [userId], references: [id])
+  userId                      Int
+  user_uid                    String?
+  mobile                      String?
+  email                       String?
+  village                     village?  @relation(fields: [village_id], references: [id])
+  village_id                  Int?
+  groom_name                  String?
+  groom_address               String?
+  groom_date_of_birth         DateTime?
+  religion_groom              Religion  @default(HINDU)
+  groom_father_name           String?
+  groom_mother_name           String?
+  bride_name                  String?
+  bride_address               String?
+  bride_date_of_birth         DateTime?
+  religion_bride              Religion  @default(HINDU)
+  bride_father_name           String?
+  bride_mother_name           String?
+  date_of_marriage            DateTime?
+  witness_one_details         String?
+  witness_two_details         String?
+  witness_three_details       String?
+  joint_bride_groom_photo_url String?
+  applicant_uid_url           String?
+  bride_uid_url               String?
+  groom_uid_url               String?
+  witness_one_signature_url   String?
+  witness_two_signature_url   String?
+  witness_three_signature_url String?
+  undertaking_url             String?
+  groom_signature_url         String?
+  bride_signature_url         String?
+  iagree                      Agree     @default(NONE)
+  remarks                     String?
+  other_remarks               String?
+  rejection_reason            String?
+  condition_to_follow         String?   @db.LongText
+  certificate_id              String?
+  certificate_date            DateTime?
+  certificate_url             String?
+  status                      Status    @default(NONE)
+  createdAt                   DateTime  @default(now())
+  updatedAt                   DateTime  @updatedAt
+  deletedAt                   DateTime?
+}
+
+// crsr end from here
+
+// dmc start from here
+enum BirthPlace {
+  HOME
+  HOSPITAL
+  OTHER
+}
+
+enum AttendentType {
+  DOCTOR
+  NURSE
+  DOMESTICEXPERT
+  OTHER
+}
+
+enum DeliveryMethod {
+  NATURAL
+  CSECTION
+  VACCUM
+  OTHER
+}
+
+model birth_register {
+  id                          Int            @id @default(autoincrement())
+  user                        user           @relation(fields: [userId], references: [id])
+  userId                      Int
+  name                        String?
+  address                     String?
+  user_uid                    String?
+  mobile                      String?
+  email                       String?
+  village                     village?       @relation(fields: [village_id], references: [id])
+  village_id                  Int?
+  date_of_birth               DateTime?
+  gender                      Gender         @default(MALE)
+  name_of_child               String?
+  father_name                 String?
+  mother_name                 String?
+  grandfather_name            String?
+  grandmother_name            String?
+  birth_place                 BirthPlace     @default(HOSPITAL)
+  birth_place_name            String?
+  current_address             String?
+  permanent_address           String?
+  religion_child              Religion       @default(HINDU)
+  father_education            String?
+  mother_education            String?
+  father_occupation           String?
+  mother_occupation           String?
+  mother_date_of_birth        DateTime?
+  date_of_marriage            DateTime?
+  attender_type               AttendentType  @default(DOCTOR)
+  delivery_method             DeliveryMethod @default(NATURAL)
+  weight_of_child_at_birth    String?
+  previous_child_count        Int            @default(0)
+  number_of_week_of_pregnency Int?
+  father_uid_url              String?
+  mother_uid_url              String?
+  authority_letter_url        String?
+  undertaking_url             String?
+  signature_url               String?
+  iagree                      Agree          @default(NONE)
+  remarks                     String?
+  other_remarks               String?
+  rejection_reason            String?
+  condition_to_follow         String?        @db.LongText
+  certificate_id              String?
+  certificate_date            DateTime?
+  certificate_url             String?
+  status                      Status         @default(NONE)
+  createdAt                   DateTime       @default(now())
+  updatedAt                   DateTime       @updatedAt
+  deletedAt                   DateTime?
+}
+
+model death_regiser {
+  id                   Int           @id @default(autoincrement())
+  user                 user          @relation(fields: [userId], references: [id])
+  name                 String?
+  address              String?
+  userId               Int
+  user_uid             String?
+  mobile               String?
+  email                String?
+  village              village?      @relation(fields: [village_id], references: [id])
+  village_id           Int?
+  name_of_deceased     String?
+  deceased_uid         String?
+  gender               Gender        @default(MALE)
+  date_of_birth        DateTime?
+  father_name          String?
+  mother_name          String?
+  wife_name            String?
+  religion_deceased    Religion      @default(HINDU)
+  current_address      String?
+  permanent_address    String?
+  deceased_occupation  String?
+  date_of_death        DateTime?
+  death_place          BirthPlace    @default(HOSPITAL)
+  death_place_name     String?
+  death_place_address  String?
+  death_certified      Boolean?
+  name_of_disease      String?
+  attender_type        AttendentType @default(DOCTOR)
+  pregnancy_death      Boolean?
+  smoker_death         Boolean?
+  alcoholic_death      Boolean?
+  deceased_uid_url     String?
+  father_uid_url       String?
+  authority_letter_url String?
+  undertaking_url      String?
+  signature_url        String?
+  iagree               Agree         @default(NONE)
+  remarks              String?
+  other_remarks        String?
+  rejection_reason     String?
+  condition_to_follow  String?       @db.LongText
+  certificate_id       String?
+  certificate_date     DateTime?
+  certificate_url      String?
+  status               Status        @default(NONE)
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  deletedAt            DateTime?
+}
+
+// dmc end from here
