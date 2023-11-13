@@ -59,6 +59,10 @@ export class UpdateDeathRegiserInput extends PartialType(
   @Field(() => String, { nullable: true })
   name_of_deceased: string;
 
+  @IsOptional()
+  @Field(() => String, { nullable: true })
+  deceased_uid: string;
+
   @IsNotEmpty()
   @Field(() => Date)
   date_of_death: Date;
@@ -93,6 +97,10 @@ export class UpdateDeathRegiserInput extends PartialType(
 
   @IsOptional()
   @Field(() => String, { nullable: true })
+  deceased_occupation: string;
+
+  @IsOptional()
+  @Field(() => String, { nullable: true })
   death_place_address: string;
 
   @IsOptional()
@@ -100,8 +108,8 @@ export class UpdateDeathRegiserInput extends PartialType(
   death_certified: boolean;
 
   @IsOptional()
-  @Field(() => Boolean, { nullable: true })
-  name_of_disease: boolean;
+  @Field(() => String, { nullable: true })
+  name_of_disease: string;
 
   @IsOptional()
   @Field(() => Boolean, { nullable: true })
@@ -118,10 +126,6 @@ export class UpdateDeathRegiserInput extends PartialType(
   @IsOptional()
   @Field(() => Religion, { nullable: true })
   religion_deceased: Religion;
-
-  @IsOptional()
-  @Field(() => Date, { nullable: true })
-  date_of_marriage: Date;
 
   @IsOptional()
   @Field(() => AttendentType, { nullable: true })

@@ -83,10 +83,6 @@ export class UpdateWaterSizeChangeInput extends PartialType(
   meter_number: string;
 
   @IsOptional()
-  @Field(() => Date, { nullable: true })
-  to_date: Date;
-
-  @IsOptional()
   @Field(() => String, { nullable: true })
   house_tax_url: string;
 

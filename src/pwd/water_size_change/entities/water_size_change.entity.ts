@@ -54,9 +54,6 @@ export class WaterSizeChange {
   @Field(() => String, { nullable: true })
   meter_number: string;
 
-  @Field(() => Date, { nullable: true })
-  to_date: Date;
-
   @Field(() => String, { nullable: true })
   house_tax_url: string;
 

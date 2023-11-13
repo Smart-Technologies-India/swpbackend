@@ -1181,8 +1181,8 @@ export interface CreateBirthRegisterInput {
     attender_type: AttendentType;
     delivery_method: DeliveryMethod;
     weight_of_child_at_birth: string;
-    previous_child_count: number;
-    number_of_week_of_pregnency: number;
+    previous_child_count: string;
+    number_of_week_of_pregnency: string;
     father_uid_url: string;
     mother_uid_url: string;
     authority_letter_url: string;
@@ -1221,8 +1221,8 @@ export interface UpdateBirthRegisterInput {
     attender_type?: Nullable<AttendentType>;
     delivery_method?: Nullable<DeliveryMethod>;
     weight_of_child_at_birth?: Nullable<string>;
-    previous_child_count?: Nullable<number>;
-    number_of_week_of_pregnency?: Nullable<number>;
+    previous_child_count?: Nullable<string>;
+    number_of_week_of_pregnency?: Nullable<string>;
     father_uid_url?: Nullable<string>;
     mother_uid_url?: Nullable<string>;
     authority_letter_url?: Nullable<string>;
@@ -1252,6 +1252,7 @@ export interface CreateDeathRegiserInput {
     date_of_birth: DateTime;
     gender: Gender;
     name_of_deceased: string;
+    deceased_uid: string;
     date_of_death: DateTime;
     father_name: string;
     mother_name: string;
@@ -1260,14 +1261,14 @@ export interface CreateDeathRegiserInput {
     death_place_name: string;
     current_address: string;
     permanent_address: string;
+    deceased_occupation: string;
     death_place_address: string;
     death_certified: boolean;
-    name_of_disease: boolean;
+    name_of_disease: string;
     pregnancy_death: boolean;
     smoker_death: boolean;
     alcoholic_death: boolean;
     religion_deceased: Religion;
-    date_of_marriage: DateTime;
     attender_type: AttendentType;
     deceased_uid_url: string;
     father_uid_url: string;
@@ -1289,6 +1290,7 @@ export interface UpdateDeathRegiserInput {
     date_of_birth?: Nullable<DateTime>;
     gender?: Nullable<Gender>;
     name_of_deceased?: Nullable<string>;
+    deceased_uid?: Nullable<string>;
     date_of_death: DateTime;
     father_name?: Nullable<string>;
     mother_name?: Nullable<string>;
@@ -1297,14 +1299,14 @@ export interface UpdateDeathRegiserInput {
     death_place_name?: Nullable<string>;
     current_address?: Nullable<string>;
     permanent_address?: Nullable<string>;
+    deceased_occupation?: Nullable<string>;
     death_place_address?: Nullable<string>;
     death_certified?: Nullable<boolean>;
-    name_of_disease?: Nullable<boolean>;
+    name_of_disease?: Nullable<string>;
     pregnancy_death?: Nullable<boolean>;
     smoker_death?: Nullable<boolean>;
     alcoholic_death?: Nullable<boolean>;
     religion_deceased?: Nullable<Religion>;
-    date_of_marriage?: Nullable<DateTime>;
     attender_type?: Nullable<AttendentType>;
     deceased_uid_url?: Nullable<string>;
     father_uid_url?: Nullable<string>;
@@ -1458,6 +1460,7 @@ export interface CreateTempWaterDisconnectInput {
     entity_type: EntityType;
     connection_type: ConnectionType;
     purpose: string;
+    from_date: DateTime;
     to_date: DateTime;
     meter_number: string;
     house_tax_url: string;
@@ -1483,6 +1486,7 @@ export interface UpdateTempWaterDisconnectInput {
     entity_type?: Nullable<EntityType>;
     connection_type?: Nullable<ConnectionType>;
     purpose?: Nullable<string>;
+    from_date?: Nullable<DateTime>;
     to_date?: Nullable<DateTime>;
     meter_number?: Nullable<string>;
     house_tax_url?: Nullable<string>;
@@ -1578,7 +1582,6 @@ export interface CreateWaterSizeChangeInput {
     entity_type: EntityType;
     connection_type: ConnectionType;
     purpose: string;
-    to_date: DateTime;
     meter_number: string;
     house_tax_url: string;
     applicant_uid_url: string;
@@ -1605,7 +1608,6 @@ export interface UpdateWaterSizeChangeInput {
     entity_type?: Nullable<EntityType>;
     connection_type?: Nullable<ConnectionType>;
     purpose?: Nullable<string>;
-    to_date?: Nullable<DateTime>;
     meter_number?: Nullable<string>;
     house_tax_url?: Nullable<string>;
     applicant_uid_url?: Nullable<string>;
@@ -2069,7 +2071,7 @@ export interface CreateMarriageRegisterInput {
     joint_bride_groom_photo_url: string;
     applicant_uid_url: string;
     bride_uid_url: string;
-    bride_url: string;
+    groom_uid_url: string;
     witness_one_signature_url: string;
     witness_two_signature_url: string;
     witness_three_signature_url: string;
@@ -2106,7 +2108,7 @@ export interface UpdateMarriageRegisterInput {
     joint_bride_groom_photo_url?: Nullable<string>;
     applicant_uid_url?: Nullable<string>;
     bride_uid_url?: Nullable<string>;
-    bride_url?: Nullable<string>;
+    groom_uid_url?: Nullable<string>;
     witness_one_signature_url?: Nullable<string>;
     witness_two_signature_url?: Nullable<string>;
     witness_three_signature_url?: Nullable<string>;
@@ -2379,6 +2381,7 @@ export interface DeathRegiser {
     date_of_birth?: Nullable<DateTime>;
     gender?: Nullable<Gender>;
     name_of_deceased?: Nullable<string>;
+    deceased_uid?: Nullable<string>;
     date_of_death: DateTime;
     father_name?: Nullable<string>;
     mother_name?: Nullable<string>;
@@ -2387,14 +2390,14 @@ export interface DeathRegiser {
     death_place_name?: Nullable<string>;
     current_address?: Nullable<string>;
     permanent_address?: Nullable<string>;
+    deceased_occupation?: Nullable<string>;
     death_place_address?: Nullable<string>;
     death_certified?: Nullable<boolean>;
-    name_of_disease?: Nullable<boolean>;
+    name_of_disease?: Nullable<string>;
     pregnancy_death?: Nullable<boolean>;
     smoker_death?: Nullable<boolean>;
     alcoholic_death?: Nullable<boolean>;
     religion_deceased?: Nullable<Religion>;
-    date_of_marriage?: Nullable<DateTime>;
     attender_type?: Nullable<AttendentType>;
     deceased_uid_url?: Nullable<string>;
     father_uid_url?: Nullable<string>;
@@ -2445,8 +2448,8 @@ export interface BirthRegister {
     attender_type?: Nullable<AttendentType>;
     delivery_method?: Nullable<DeliveryMethod>;
     weight_of_child_at_birth?: Nullable<string>;
-    previous_child_count?: Nullable<number>;
-    number_of_week_of_pregnency?: Nullable<number>;
+    previous_child_count?: Nullable<string>;
+    number_of_week_of_pregnency?: Nullable<string>;
     father_uid_url?: Nullable<string>;
     mother_uid_url?: Nullable<string>;
     authority_letter_url?: Nullable<string>;
@@ -2910,6 +2913,7 @@ export interface TempWaterDisconnect {
     connection_type?: Nullable<ConnectionType>;
     purpose?: Nullable<string>;
     meter_number?: Nullable<string>;
+    from_date?: Nullable<DateTime>;
     to_date?: Nullable<DateTime>;
     house_tax_url?: Nullable<string>;
     applicant_uid_url?: Nullable<string>;
@@ -2984,7 +2988,6 @@ export interface WaterSizeChange {
     connection_type?: Nullable<ConnectionType>;
     purpose?: Nullable<string>;
     meter_number?: Nullable<string>;
-    to_date?: Nullable<DateTime>;
     house_tax_url?: Nullable<string>;
     applicant_uid_url?: Nullable<string>;
     electric_bill_url?: Nullable<string>;
@@ -3283,7 +3286,7 @@ export interface MarriageRegister {
     joint_bride_groom_photo_url?: Nullable<string>;
     applicant_uid_url?: Nullable<string>;
     bride_uid_url?: Nullable<string>;
-    bride_url?: Nullable<string>;
+    groom_uid_url?: Nullable<string>;
     witness_one_signature_url?: Nullable<string>;
     witness_two_signature_url?: Nullable<string>;
     witness_three_signature_url?: Nullable<string>;

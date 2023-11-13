@@ -65,10 +65,6 @@ export class CreateWaterSizeChangeInput {
   purpose: string;
 
   @IsNotEmpty()
-  @Field(() => Date)
-  to_date: Date;
-
-  @IsNotEmpty()
   @Field(() => String)
   meter_number: string;
 

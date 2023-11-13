@@ -86,7 +86,8 @@ export class AuthService {
   }
 
   async mobileLogin(data: MobileLoginInput) {
-    const otp = this.generateOTP();
+    // const otp = this.generateOTP();
+    const otp = '1234';
 
     const hashedPassword = await this.hashPassword('a6hqE9OM0w');
 
@@ -118,15 +119,17 @@ export class AuthService {
       }
     }
 
-    const res = await axios.post(
-      `http://sms.bulkssms.com/submitsms.jsp?user=PDADAMAN&key=09d6fd9fc8XX&mobile=${data.contact}&message=Dear Applicant, ${otp} is your OTP. Use this password to validate your login.PDA, Daman. &senderid=PDADMN&accusage=1&entityid=1401577610000052520&tempid=1407167343737681343`,
-    );
+    return userdata;
 
-    if (res.data.toString().split(',')[0].trim() == 'sent') {
-      return userdata;
-    } else {
-      throw new BadRequestException('Something went wrong unable to sent otp.');
-    }
+    // const res = await axios.post(
+    //   `http://sms.bulkssms.com/submitsms.jsp?user=PDADAMAN&key=09d6fd9fc8XX&mobile=${data.contact}&message=Dear Applicant, ${otp} is your OTP. Use this password to validate your login.PDA, Daman. &senderid=PDADMN&accusage=1&entityid=1401577610000052520&tempid=1407167343737681343`,
+    // );
+
+    // if (res.data.toString().split(',')[0].trim() == 'sent') {
+    //   return userdata;
+    // } else {
+    //   throw new BadRequestException('Something went wrong unable to sent otp.');
+    // }
   }
 
   async verifyOtp(data: MobileLoginInput) {

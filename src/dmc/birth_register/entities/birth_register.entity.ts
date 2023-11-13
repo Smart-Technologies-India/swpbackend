@@ -98,11 +98,11 @@ export class BirthRegister {
   @Field(() => String, { nullable: true })
   weight_of_child_at_birth: string;
 
-  @Field(() => Int, { nullable: true })
-  previous_child_count: number;
+  @Field(() => String, { nullable: true })
+  previous_child_count: string;
 
-  @Field(() => Int, { nullable: true })
-  number_of_week_of_pregnency: number;
+  @Field(() => String, { nullable: true })
+  number_of_week_of_pregnency: string;
 
   @Field(() => String, { nullable: true })
   father_uid_url: string;

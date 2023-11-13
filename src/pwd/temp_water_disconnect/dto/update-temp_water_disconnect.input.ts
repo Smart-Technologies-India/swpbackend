@@ -76,6 +76,10 @@ export class UpdateTempWaterDisconnectInput extends PartialType(
 
   @IsOptional()
   @Field(() => Date, { nullable: true })
+  from_date: Date;
+
+  @IsOptional()
+  @Field(() => Date, { nullable: true })
   to_date: Date;
 
   @IsOptional()

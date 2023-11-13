@@ -109,7 +109,7 @@ export class UpdateMarriageRegisterInput extends PartialType(
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  bride_url: string;
+  groom_uid_url: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })

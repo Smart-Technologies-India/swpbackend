@@ -132,12 +132,12 @@ export class UpdateBirthRegisterInput extends PartialType(
   weight_of_child_at_birth: string;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  previous_child_count: number;
+  @Field(() => String, { nullable: true })
+  previous_child_count: string;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  number_of_week_of_pregnency: number;
+  @Field(() => String, { nullable: true })
+  number_of_week_of_pregnency: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })

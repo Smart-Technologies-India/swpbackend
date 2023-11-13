@@ -56,6 +56,9 @@ export class TempWaterDisconnect {
   meter_number: string;
 
   @Field(() => Date, { nullable: true })
+  from_date: Date;
+
+  @Field(() => Date, { nullable: true })
   to_date: Date;
 
   @Field(() => String, { nullable: true })

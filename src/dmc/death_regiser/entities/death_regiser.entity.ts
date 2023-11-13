@@ -44,6 +44,9 @@ export class DeathRegiser {
   @Field(() => String, { nullable: true })
   name_of_deceased: string;
 
+  @Field(() => String, { nullable: true })
+  deceased_uid: string;
+
   @Field(() => Date)
   date_of_death: Date;
 
@@ -69,13 +72,16 @@ export class DeathRegiser {
   permanent_address: string;
 
   @Field(() => String, { nullable: true })
+  deceased_occupation: string;
+
+  @Field(() => String, { nullable: true })
   death_place_address: string;
 
   @Field(() => Boolean, { nullable: true })
   death_certified: boolean;
 
-  @Field(() => Boolean, { nullable: true })
-  name_of_disease: boolean;
+  @Field(() => String, { nullable: true })
+  name_of_disease: string;
 
   @Field(() => Boolean, { nullable: true })
   pregnancy_death: boolean;
@@ -88,9 +94,6 @@ export class DeathRegiser {
 
   @Field(() => Religion, { nullable: true })
   religion_deceased: Religion;
-
-  @Field(() => Date, { nullable: true })
-  date_of_marriage: Date;
 
   @Field(() => AttendentType, { nullable: true })
   attender_type: AttendentType;

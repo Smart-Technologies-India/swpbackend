@@ -79,7 +79,7 @@ export class MarriageRegister {
   bride_uid_url: string;
 
   @Field(() => String, { nullable: true })
-  bride_url: string;
+  groom_uid_url: string;
 
   @Field(() => String, { nullable: true })
   witness_one_signature_url: string;

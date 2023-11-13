@@ -144,12 +144,12 @@ export class CreateBirthRegisterInput {
   weight_of_child_at_birth: string;
 
   @IsNotEmpty()
-  @Field(() => Int)
-  previous_child_count: number;
+  @Field(() => String)
+  previous_child_count: string;
 
   @IsNotEmpty()
-  @Field(() => Int)
-  number_of_week_of_pregnency: number;
+  @Field(() => String)
+  number_of_week_of_pregnency: string;
 
   @IsNotEmpty()
   @Field(() => String)

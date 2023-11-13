@@ -53,6 +53,10 @@ export class CreateDeathRegiserInput {
   name_of_deceased: string;
 
   @IsNotEmpty()
+  @Field(() => String)
+  deceased_uid: string;
+
+  @IsNotEmpty()
   @Field(() => Date)
   date_of_death: Date;
 
@@ -86,6 +90,10 @@ export class CreateDeathRegiserInput {
 
   @IsNotEmpty()
   @Field(() => String)
+  deceased_occupation: string;
+
+  @IsNotEmpty()
+  @Field(() => String)
   death_place_address: string;
 
   @IsNotEmpty()
@@ -93,8 +101,8 @@ export class CreateDeathRegiserInput {
   death_certified: boolean;
 
   @IsNotEmpty()
-  @Field(() => Boolean)
-  name_of_disease: boolean;
+  @Field(() => String)
+  name_of_disease: string;
 
   @IsNotEmpty()
   @Field(() => Boolean)
@@ -111,10 +119,6 @@ export class CreateDeathRegiserInput {
   @IsNotEmpty()
   @Field(() => Religion)
   religion_deceased: Religion;
-
-  @IsNotEmpty()
-  @Field(() => Date)
-  date_of_marriage: Date;
 
   @IsNotEmpty()
   @Field(() => AttendentType)

@@ -65,6 +65,10 @@ export class CreateTempWaterDisconnectInput {
 
   @IsNotEmpty()
   @Field(() => Date)
+  from_date: Date;
+
+  @IsNotEmpty()
+  @Field(() => Date)
   to_date: Date;
 
   @IsNotEmpty()

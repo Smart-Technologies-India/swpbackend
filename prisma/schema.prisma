@@ -949,6 +949,7 @@ model temp_water_disconnect {
   connection_type     ConnectionType @default(DOMESTIC)
   purpose             String?
   meter_number        String?
+  from_date           DateTime?
   to_date             DateTime?
   house_tax_url       String?
   applicant_uid_url   String?
@@ -1435,8 +1436,8 @@ model birth_register {
   attender_type               AttendentType  @default(DOCTOR)
   delivery_method             DeliveryMethod @default(NATURAL)
   weight_of_child_at_birth    String?
-  previous_child_count        Int            @default(0)
-  number_of_week_of_pregnency Int?
+  previous_child_count        String?
+  number_of_week_of_pregnency String?
   father_uid_url              String?
   mother_uid_url              String?
   authority_letter_url        String?

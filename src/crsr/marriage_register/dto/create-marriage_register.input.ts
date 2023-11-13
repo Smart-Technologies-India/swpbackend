@@ -102,7 +102,7 @@ export class CreateMarriageRegisterInput {
 
   @IsNotEmpty()
   @Field(() => String)
-  bride_url: string;
+  groom_uid_url: string;
 
   @IsNotEmpty()
   @Field(() => String)

@@ -408,6 +408,7 @@ type DeathRegiser {
   date_of_birth: DateTime
   gender: Gender
   name_of_deceased: String
+  deceased_uid: String
   date_of_death: DateTime!
   father_name: String
   mother_name: String
@@ -416,14 +417,14 @@ type DeathRegiser {
   death_place_name: String
   current_address: String
   permanent_address: String
+  deceased_occupation: String
   death_place_address: String
   death_certified: Boolean
-  name_of_disease: Boolean
+  name_of_disease: String
   pregnancy_death: Boolean
   smoker_death: Boolean
   alcoholic_death: Boolean
   religion_deceased: Religion
-  date_of_marriage: DateTime
   attender_type: AttendentType
   deceased_uid_url: String
   father_uid_url: String
@@ -500,8 +501,8 @@ type BirthRegister {
   attender_type: AttendentType
   delivery_method: DeliveryMethod
   weight_of_child_at_birth: String
-  previous_child_count: Int
-  number_of_week_of_pregnency: Int
+  previous_child_count: String
+  number_of_week_of_pregnency: String
   father_uid_url: String
   mother_uid_url: String
   authority_letter_url: String
@@ -1000,6 +1001,7 @@ type TempWaterDisconnect {
   connection_type: ConnectionType
   purpose: String
   meter_number: String
+  from_date: DateTime
   to_date: DateTime
   house_tax_url: String
   applicant_uid_url: String
@@ -1074,7 +1076,6 @@ type WaterSizeChange {
   connection_type: ConnectionType
   purpose: String
   meter_number: String
-  to_date: DateTime
   house_tax_url: String
   applicant_uid_url: String
   electric_bill_url: String
@@ -1373,7 +1374,7 @@ type MarriageRegister {
   joint_bride_groom_photo_url: String
   applicant_uid_url: String
   bride_uid_url: String
-  bride_url: String
+  groom_uid_url: String
   witness_one_signature_url: String
   witness_two_signature_url: String
   witness_three_signature_url: String
@@ -2540,8 +2541,8 @@ input CreateBirthRegisterInput {
   attender_type: AttendentType!
   delivery_method: DeliveryMethod!
   weight_of_child_at_birth: String!
-  previous_child_count: Int!
-  number_of_week_of_pregnency: Int!
+  previous_child_count: String!
+  number_of_week_of_pregnency: String!
   father_uid_url: String!
   mother_uid_url: String!
   authority_letter_url: String!
@@ -2580,8 +2581,8 @@ input UpdateBirthRegisterInput {
   attender_type: AttendentType
   delivery_method: DeliveryMethod
   weight_of_child_at_birth: String
-  previous_child_count: Int
-  number_of_week_of_pregnency: Int
+  previous_child_count: String
+  number_of_week_of_pregnency: String
   father_uid_url: String
   mother_uid_url: String
   authority_letter_url: String
@@ -2611,6 +2612,7 @@ input CreateDeathRegiserInput {
   date_of_birth: DateTime!
   gender: Gender!
   name_of_deceased: String!
+  deceased_uid: String!
   date_of_death: DateTime!
   father_name: String!
   mother_name: String!
@@ -2619,14 +2621,14 @@ input CreateDeathRegiserInput {
   death_place_name: String!
   current_address: String!
   permanent_address: String!
+  deceased_occupation: String!
   death_place_address: String!
   death_certified: Boolean!
-  name_of_disease: Boolean!
+  name_of_disease: String!
   pregnancy_death: Boolean!
   smoker_death: Boolean!
   alcoholic_death: Boolean!
   religion_deceased: Religion!
-  date_of_marriage: DateTime!
   attender_type: AttendentType!
   deceased_uid_url: String!
   father_uid_url: String!
@@ -2648,6 +2650,7 @@ input UpdateDeathRegiserInput {
   date_of_birth: DateTime
   gender: Gender
   name_of_deceased: String
+  deceased_uid: String
   date_of_death: DateTime!
   father_name: String
   mother_name: String
@@ -2656,14 +2659,14 @@ input UpdateDeathRegiserInput {
   death_place_name: String
   current_address: String
   permanent_address: String
+  deceased_occupation: String
   death_place_address: String
   death_certified: Boolean
-  name_of_disease: Boolean
+  name_of_disease: String
   pregnancy_death: Boolean
   smoker_death: Boolean
   alcoholic_death: Boolean
   religion_deceased: Religion
-  date_of_marriage: DateTime
   attender_type: AttendentType
   deceased_uid_url: String
   father_uid_url: String
@@ -2817,6 +2820,7 @@ input CreateTempWaterDisconnectInput {
   entity_type: EntityType!
   connection_type: ConnectionType!
   purpose: String!
+  from_date: DateTime!
   to_date: DateTime!
   meter_number: String!
   house_tax_url: String!
@@ -2842,6 +2846,7 @@ input UpdateTempWaterDisconnectInput {
   entity_type: EntityType
   connection_type: ConnectionType
   purpose: String
+  from_date: DateTime
   to_date: DateTime
   meter_number: String
   house_tax_url: String
@@ -2937,7 +2942,6 @@ input CreateWaterSizeChangeInput {
   entity_type: EntityType!
   connection_type: ConnectionType!
   purpose: String!
-  to_date: DateTime!
   meter_number: String!
   house_tax_url: String!
   applicant_uid_url: String!
@@ -2964,7 +2968,6 @@ input UpdateWaterSizeChangeInput {
   entity_type: EntityType
   connection_type: ConnectionType
   purpose: String
-  to_date: DateTime
   meter_number: String
   house_tax_url: String
   applicant_uid_url: String
@@ -3428,7 +3431,7 @@ input CreateMarriageRegisterInput {
   joint_bride_groom_photo_url: String!
   applicant_uid_url: String!
   bride_uid_url: String!
-  bride_url: String!
+  groom_uid_url: String!
   witness_one_signature_url: String!
   witness_two_signature_url: String!
   witness_three_signature_url: String!
@@ -3465,7 +3468,7 @@ input UpdateMarriageRegisterInput {
   joint_bride_groom_photo_url: String
   applicant_uid_url: String
   bride_uid_url: String
-  bride_url: String
+  groom_uid_url: String
   witness_one_signature_url: String
   witness_two_signature_url: String
   witness_three_signature_url: String
