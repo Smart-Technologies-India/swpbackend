@@ -23,9 +23,6 @@ export class Auth {
   @Field(() => Int)
   id: number;
 
-  @Field(() => Int, { nullable: true })
-  design_point_id: number;
-
   @Field(() => String, { nullable: true })
   name: string;
 
@@ -43,9 +40,6 @@ export class Auth {
 
   @Field(() => String, { nullable: true })
   pic_url: string;
-
-  @Field(() => String, { nullable: true })
-  access_kay: string;
 
   @Field(() => Role)
   role: Role;

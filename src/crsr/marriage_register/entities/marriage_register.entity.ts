@@ -22,10 +22,10 @@ export class MarriageRegister {
   village_id: number;
 
   @Field(() => String, { nullable: true })
-  groom_name: string;
+  name: string;
 
   @Field(() => String, { nullable: true })
-  groom_address: string;
+  address: string;
 
   @Field(() => Date, { nullable: true })
   groom_date_of_birth: Date;

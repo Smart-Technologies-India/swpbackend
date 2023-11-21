@@ -4,18 +4,17 @@
 
 type User {
   id: Int!
-  design_point_id: Int
   name: String
   email: String
   password: String!
   contact: String
   otp: String
   pic_url: String
-  access_kay: String
   role: Role!
   department: Department!
   address: String
   user_uid: String
+  user_uid_four: String
   status: Status!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -144,14 +143,12 @@ enum Agree {
 type Auth {
   token: String!
   id: Int!
-  design_point_id: Int
   name: String
   email: String
   password: String!
   contact: String
   otp: String
   pic_url: String
-  access_kay: String
   role: Role!
   department: Department!
   status: Status!
@@ -227,17 +224,35 @@ enum queryStatus {
 }
 
 type FileCount {
-  RTI: Int!
-  ZONE: Int!
-  OLDCOPY: Int!
-  PETROLEUM: Int!
-  UNAUTHORIZED: Int!
-  LANDRECORDS: Int!
-  MAMLATDAR: Int!
-  DEMOLITION: Int!
-  OC: Int!
-  CP: Int!
-  PLINTH: Int!
+  RTI: Int
+  ZONE: Int
+  OLDCOPY: Int
+  PETROLEUM: Int
+  UNAUTHORIZED: Int
+  LANDRECORDS: Int
+  MAMLATDAR: Int
+  DEMOLITION: Int
+  OC: Int
+  CP: Int
+  PLINTH: Int
+  TEMPWATERCONNECT: Int
+  TEMPWATERDISCONNECT: Int
+  WATERSIZECHANGE: Int
+  NEWWATERCONNECT: Int
+  WATERRECONNECT: Int
+  PERMANENTWATERDISCONNECT: Int
+  BIRTHCERT: Int
+  BIRTHTEOR: Int
+  DEATHCERT: Int
+  DEATHTEOR: Int
+  MARRIAGECERT: Int
+  MARRIAGETEOR: Int
+  MARRIAGEREGISTER: Int
+  DEATHREGISTER: Int
+  BIRTHREGISTER: Int
+  MARRIAGE: Int
+  RELIGIOUS: Int
+  ROADSHOW: Int
 }
 
 type VillageCount {
@@ -257,17 +272,35 @@ type FileProgressDetails {
 }
 
 type FileProgress {
-  RTI: FileProgressDetails!
-  ZONE: FileProgressDetails!
-  OLDCOPY: FileProgressDetails!
-  PETROLEUM: FileProgressDetails!
-  UNAUTHORIZED: FileProgressDetails!
-  LANDRECORDS: FileProgressDetails!
-  MAMLATDAR: FileProgressDetails!
-  DEMOLITION: FileProgressDetails!
-  OC: FileProgressDetails!
-  CP: FileProgressDetails!
-  PLINTH: FileProgressDetails!
+  RTI: FileProgressDetails
+  ZONE: FileProgressDetails
+  OLDCOPY: FileProgressDetails
+  PETROLEUM: FileProgressDetails
+  UNAUTHORIZED: FileProgressDetails
+  LANDRECORDS: FileProgressDetails
+  MAMLATDAR: FileProgressDetails
+  DEMOLITION: FileProgressDetails
+  OC: FileProgressDetails
+  CP: FileProgressDetails
+  PLINTH: FileProgressDetails
+  DEATHREGISTER: FileProgressDetails
+  BIRTHREGISTER: FileProgressDetails
+  BIRTHCERT: FileProgressDetails
+  BIRTHTEOR: FileProgressDetails
+  DEATHCERT: FileProgressDetails
+  DEATHTEOR: FileProgressDetails
+  MARRIAGECERT: FileProgressDetails
+  MARRIAGETEOR: FileProgressDetails
+  MARRIAGEREGISTER: FileProgressDetails
+  ROADSHOW: FileProgressDetails
+  RELIGIOUS: FileProgressDetails
+  MARRIAGE: FileProgressDetails
+  PERMANENTWATERDISCONNECT: FileProgressDetails
+  WATERRECONNECT: FileProgressDetails
+  NEWWATERCONNECT: FileProgressDetails
+  WATERSIZECHANGE: FileProgressDetails
+  TEMPWATERDISCONNECT: FileProgressDetails
+  TEMPWATERCONNECT: FileProgressDetails
 }
 
 type VillageProgressDetails {
@@ -1146,7 +1179,7 @@ type BirthCertificate {
   father_name: String
   mother_name: String
   registration_number: String
-  date_of_registration: String
+  date_of_registration: DateTime
   applicant_uid_url: String
   father_uid_url: String
   mother_uid_url: String
@@ -1180,7 +1213,7 @@ type BirthTeor {
   father_name: String
   mother_name: String
   registration_number: String
-  date_of_registration: String
+  date_of_registration: DateTime
   applicant_uid_url: String
   father_uid_url: String
   mother_uid_url: String
@@ -1211,12 +1244,13 @@ type DeathCertificate {
   village_id: Int
   gender: Gender
   date_of_birth: DateTime
+  place_of_death: String
   date_of_death: DateTime
   father_name: String
   mother_name: String
   husband_name: String
   registration_number: String
-  date_of_registration: String
+  date_of_registration: DateTime
   applicant_uid_url: String
   father_uid_url: String
   mother_uid_url: String
@@ -1248,11 +1282,12 @@ type DeathTeor {
   gender: Gender
   date_of_birth: DateTime
   date_of_death: DateTime
+  place_of_death: String
   father_name: String
   mother_name: String
   husband_name: String
   registration_number: String
-  date_of_registration: String
+  date_of_registration: DateTime
   applicant_uid_url: String
   father_uid_url: String
   mother_uid_url: String
@@ -1355,8 +1390,8 @@ type MarriageRegister {
   mobile: String
   email: String
   village_id: Int
-  groom_name: String
-  groom_address: String
+  name: String
+  address: String
   groom_date_of_birth: DateTime
   religion_groom: Religion
   groom_father_name: String
@@ -1412,11 +1447,12 @@ type Query {
   getAllCommonById(id: Int!): Common!
   searchCommon(searchCommonInput: SearchCommonInput!): [Common!]!
   filterCommon(filterCommonInput: FilterCommonInput!): [Common!]!
-  getFileCount: FileCount!
-  villageFileCount: [VillageCount!]!
-  officerFileCount: [OfficerCount!]!
-  officerFileProgress: FileProgress!
-  villageFileProgress: [VillageProgress!]!
+  filterCommonDepartment(filterDepartmentCommonInput: FilterDepartmentCommonInput!): [Common!]!
+  getFileCount(department: String!): FileCount!
+  villageFileCount(department: String!): [VillageCount!]!
+  officerFileCount(department: String!): [OfficerCount!]!
+  officerFileProgress(department: String!): FileProgress!
+  villageFileProgress(department: String!): [VillageProgress!]!
   getAllLand: [Landsection!]!
   getAllLandById(id: Int!): Landsection!
   sendFileOutside(sendFileLandsectionInput: SendFileLandsectionInput!): Boolean!
@@ -1509,6 +1545,7 @@ input SearchCommonInput {
   status: Status
   id: Int
   deletedAt: DateTime
+  department: Department
 }
 
 input FilterCommonInput {
@@ -1520,6 +1557,12 @@ input FilterCommonInput {
 enum UserType {
   USER
   DEPARTMENT
+}
+
+input FilterDepartmentCommonInput {
+  user_type: UserType
+  user_id: Int!
+  department: Department
 }
 
 input SendFileLandsectionInput {
@@ -1736,18 +1779,17 @@ input UpdateUserInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
-  design_point_id: Int
   name: String
   email: String
   password: String
   contact: String
   pic_url: String
-  access_kay: String
   role: Role
   department: Department
   address: String
   otp: String
   user_uid: String
+  user_uid_four: String
   status: Status
   deletedAt: DateTime
 }
@@ -3061,7 +3103,7 @@ input CreateBirthCertificateInput {
   father_name: String!
   mother_name: String!
   registration_number: String!
-  date_of_registration: String!
+  date_of_registration: DateTime!
   applicant_uid_url: String!
   father_uid_url: String!
   mother_uid_url: String!
@@ -3084,7 +3126,7 @@ input UpdateBirthCertificateInput {
   father_name: String
   mother_name: String
   registration_number: String
-  date_of_registration: String
+  date_of_registration: DateTime
   applicant_uid_url: String
   father_uid_url: String
   mother_uid_url: String
@@ -3116,7 +3158,7 @@ input CreateBirthTeorInput {
   father_name: String!
   mother_name: String!
   registration_number: String!
-  date_of_registration: String!
+  date_of_registration: DateTime!
   applicant_uid_url: String!
   father_uid_url: String!
   mother_uid_url: String!
@@ -3139,7 +3181,7 @@ input UpdateBirthTeorInput {
   father_name: String
   mother_name: String
   registration_number: String
-  date_of_registration: String
+  date_of_registration: DateTime
   applicant_uid_url: String
   father_uid_url: String
   mother_uid_url: String
@@ -3174,7 +3216,7 @@ input CreateDeathCertificateInput {
   mother_name: String!
   husband_name: String!
   registration_number: String!
-  date_of_registration: String!
+  date_of_registration: DateTime!
   applicant_uid_url: String!
   father_uid_url: String!
   mother_uid_url: String!
@@ -3200,7 +3242,7 @@ input UpdateDeathCertificateInput {
   mother_name: String
   husband_name: String
   registration_number: String
-  date_of_registration: String
+  date_of_registration: DateTime
   applicant_uid_url: String
   father_uid_url: String
   mother_uid_url: String
@@ -3235,7 +3277,7 @@ input CreateDeathTeorInput {
   mother_name: String!
   husband_name: String!
   registration_number: String!
-  date_of_registration: String!
+  date_of_registration: DateTime!
   applicant_uid_url: String!
   father_uid_url: String!
   mother_uid_url: String!
@@ -3261,7 +3303,7 @@ input UpdateDeathTeorInput {
   mother_name: String
   husband_name: String
   registration_number: String
-  date_of_registration: String
+  date_of_registration: DateTime
   applicant_uid_url: String
   father_uid_url: String
   mother_uid_url: String
@@ -3412,8 +3454,8 @@ input CreateMarriageRegisterInput {
   mobile: String!
   email: String
   village_id: Int!
-  groom_name: String!
-  groom_address: String!
+  name: String!
+  address: String!
   groom_date_of_birth: DateTime!
   religion_groom: Religion!
   groom_father_name: String!
@@ -3449,8 +3491,8 @@ input UpdateMarriageRegisterInput {
   mobile: String
   email: String
   village_id: Int
-  groom_name: String
-  groom_address: String
+  name: String
+  address: String
   groom_date_of_birth: DateTime
   religion_groom: Religion
   groom_father_name: String

@@ -1,13 +1,6 @@
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import { CreateCommonInput } from './create-common.input';
-import {
-  InputType,
-  Field,
-  Int,
-  PartialType,
-  registerEnumType,
-} from '@nestjs/graphql';
-import { FormType, Status, queryStatus } from '@prisma/client';
+import { InputType, Field, Int, registerEnumType } from '@nestjs/graphql';
+import { FormType } from '@prisma/client';
 
 enum UserType {
   USER,

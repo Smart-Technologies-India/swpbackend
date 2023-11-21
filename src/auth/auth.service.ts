@@ -28,6 +28,7 @@ export class AuthService {
         name: name,
         contact: contact,
         role: 'USER',
+        department: 'NONE',
       },
     });
 
@@ -111,6 +112,7 @@ export class AuthService {
           password: hashedPassword,
           contact: data.contact,
           role: 'USER',
+          department: 'NONE',
           otp: otp,
         },
       });

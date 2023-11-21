@@ -8,6 +8,8 @@ import { UpdateCommonInput } from './dto/update-common.input';
 import { PrismaService } from 'prisma/prisma.service';
 import { SearchCommonInput } from './dto/search-common.input';
 import { FilterCommonInput, UserType } from './dto/filter-common.input';
+import { common } from '@prisma/client';
+import { FilterDepartmentCommonInput } from './dto/filterdepartment-common.input';
 
 @Injectable()
 export class CommonService {
@@ -26,6 +28,7 @@ export class CommonService {
     if (common.name) {
       const search_name = common.name;
       delete common.name;
+      delete common.department;
       const results = await this.prisma.common.findMany({
         where: {
           ...common,
@@ -40,16 +43,116 @@ export class CommonService {
         throw new BadRequestException('There is no common');
       return results;
     } else {
-      const results = await this.prisma.common.findMany({
-        where: common,
-        include: {
-          user: true,
-        },
-      });
+      if (common.department == null || common.department == undefined) {
+        delete common.department;
+        const results = await this.prisma.common.findMany({
+          where: common,
+          include: {
+            user: true,
+          },
+        });
 
-      if (results.length == 0)
-        throw new BadRequestException('There is no common');
-      return results;
+        if (results.length == 0)
+          throw new BadRequestException('There is no common');
+        return results;
+      } else {
+        let results = [];
+
+        if (common.department == 'PDA') {
+          delete common.department;
+          results = await this.prisma.common.findMany({
+            where: {
+              ...common,
+              OR: [
+                { form_type: 'RTI' },
+                { form_type: 'OLDCOPY' },
+                { form_type: 'ZONE' },
+                { form_type: 'PETROLEUM' },
+                { form_type: 'LANDRECORDS' },
+                { form_type: 'DEMOLITION' },
+                { form_type: 'UNAUTHORISED' },
+                { form_type: 'PLINTH' },
+                { form_type: 'OC' },
+                { form_type: 'CP' },
+              ],
+            },
+            include: {
+              user: true,
+            },
+          });
+        } else if (common.department == 'EST') {
+          delete common.department;
+          results = await this.prisma.common.findMany({
+            where: {
+              ...common,
+              OR: [
+                { form_type: 'MARRIAGE' },
+                { form_type: 'RELIGIOUS' },
+                { form_type: 'ROADSHOW' },
+                { form_type: 'GENERIC' },
+              ],
+            },
+            include: {
+              user: true,
+            },
+          });
+        } else if (common.department == 'CRSR') {
+          delete common.department;
+          results = await this.prisma.common.findMany({
+            where: {
+              ...common,
+              OR: [
+                { form_type: 'BIRTHCERT' },
+                { form_type: 'BIRTHTEOR' },
+                { form_type: 'DEATHCERT' },
+                { form_type: 'DEATHTEOR' },
+                { form_type: 'MARRIAGECERT' },
+                { form_type: 'MARRIAGETEOR' },
+                { form_type: 'MARRIAGEREGISTER' },
+              ],
+            },
+            include: {
+              user: true,
+            },
+          });
+        } else if (common.department == 'PWD') {
+          delete common.department;
+          results = await this.prisma.common.findMany({
+            where: {
+              ...common,
+              OR: [
+                { form_type: 'TEMPWATERCONNECT' },
+                { form_type: 'TEMPWATERDISCONNECT' },
+                { form_type: 'WATERSIZECHANGE' },
+                { form_type: 'NEWWATERCONNECT' },
+                { form_type: 'WATERRECONNECT' },
+                { form_type: 'PERMANENTWATERDISCONNECT' },
+              ],
+            },
+            include: {
+              user: true,
+            },
+          });
+        } else if (common.department == 'DMC') {
+          delete common.department;
+          results = await this.prisma.common.findMany({
+            where: {
+              ...common,
+              OR: [
+                { form_type: 'DEATHREGISTER' },
+                { form_type: 'BIRTHREGISTER' },
+              ],
+            },
+            include: {
+              user: true,
+            },
+          });
+        }
+
+        if (results.length == 0)
+          throw new BadRequestException('There is no common');
+        return results;
+      }
     }
   }
 
@@ -82,6 +185,105 @@ export class CommonService {
       const result = await this.prisma.common.findMany({
         where: whereClause,
       });
+      if (result.length == 0)
+        throw new NotFoundException(`NO Common data found for this user. `);
+
+      return result;
+    }
+  }
+
+  async filterCommonDepartment(filter: FilterDepartmentCommonInput) {
+    if (filter.user_type == UserType.USER) {
+      const result = await this.prisma.common.findMany({
+        where: { user_id: filter.user_id },
+      });
+      if (result.length == 0)
+        throw new NotFoundException(`NO Common data found for this user. `);
+      return result;
+    } else {
+      const whereClause: any = [
+        { auth_user_id: { contains: filter.user_id.toString() } },
+        { focal_user_id: { contains: filter.user_id.toString() } },
+        { intra_user_id: { contains: filter.user_id.toString() } },
+        { inter_user_id: { contains: filter.user_id.toString() } },
+      ];
+
+      let result: common[] = [];
+
+      if (filter.department == 'CRSR') {
+        result = await this.prisma.common.findMany({
+          where: {
+            OR: [
+              { form_type: 'BIRTHCERT', OR: whereClause },
+              { form_type: 'BIRTHTEOR', OR: whereClause },
+              { form_type: 'DEATHCERT', OR: whereClause },
+              { form_type: 'DEATHTEOR', OR: whereClause },
+              { form_type: 'MARRIAGECERT', OR: whereClause },
+              { form_type: 'MARRIAGETEOR', OR: whereClause },
+              { form_type: 'MARRIAGEREGISTER', OR: whereClause },
+            ],
+          },
+        });
+      } else if (filter.department == 'PDA') {
+        result = await this.prisma.common.findMany({
+          where: {
+            OR: [
+              { form_type: 'PETROLEUM', OR: whereClause },
+              { form_type: 'RTI', OR: whereClause },
+              { form_type: 'ZONE', OR: whereClause },
+              { form_type: 'DEMOLITION', OR: whereClause },
+              { form_type: 'OLDCOPY', OR: whereClause },
+              { form_type: 'LANDRECORDS', OR: whereClause },
+              { form_type: 'UNAUTHORISED', OR: whereClause },
+              { form_type: 'PLINTH', OR: whereClause },
+              { form_type: 'OC', OR: whereClause },
+              { form_type: 'CP', OR: whereClause },
+            ],
+          },
+        });
+      } else if (filter.department == 'EST') {
+        result = await this.prisma.common.findMany({
+          where: {
+            OR: [
+              { form_type: 'MARRIAGE', OR: whereClause },
+              { form_type: 'RELIGIOUS', OR: whereClause },
+              { form_type: 'ROADSHOW', OR: whereClause },
+              { form_type: 'GENERIC', OR: whereClause },
+            ],
+          },
+        });
+      } else if (filter.department == 'PWD') {
+        result = await this.prisma.common.findMany({
+          where: {
+            OR: [
+              { form_type: 'TEMPWATERCONNECT', OR: whereClause },
+              { form_type: 'TEMPWATERDISCONNECT', OR: whereClause },
+              { form_type: 'WATERSIZECHANGE', OR: whereClause },
+              { form_type: 'NEWWATERCONNECT', OR: whereClause },
+              { form_type: 'WATERRECONNECT', OR: whereClause },
+              { form_type: 'PERMANENTWATERDISCONNECT', OR: whereClause },
+            ],
+          },
+        });
+      } else if (filter.department == 'DMC') {
+        console.log('dmc');
+        result = await this.prisma.common.findMany({
+          where: {
+            OR: [
+              { form_type: 'DEATHREGISTER', OR: whereClause },
+              { form_type: 'BIRTHREGISTER', OR: whereClause },
+            ],
+          },
+        });
+        console.log(result);
+      } else {
+        result = await this.prisma.common.findMany({
+          where: {
+            OR: [{ form_type: 'NONE', OR: whereClause }],
+          },
+        });
+      }
+
       if (result.length == 0)
         throw new NotFoundException(`NO Common data found for this user. `);
 
@@ -161,21 +363,50 @@ export class CommonService {
     return deleteCommon;
   }
 
-  async getFileCount() {
+  // custom dashboard apis
+  async getFileCount(department: string) {
     const countByFormType = {};
-    const formTypes = [
-      'RTI',
-      'ZONE',
-      'OLDCOPY',
-      'PETROLEUM',
-      'UNAUTHORIZED',
-      'LANDRECORDS',
-      'MAMLATDAR',
-      'DEMOLITION',
-      'OC',
-      'CP',
-      'PLINTH'
-    ];
+    let formTypes = [];
+    if (department == 'PDA') {
+      formTypes = [
+        'RTI',
+        'ZONE',
+        'OLDCOPY',
+        'PETROLEUM',
+        'UNAUTHORIZED',
+        'LANDRECORDS',
+        'MAMLATDAR',
+        'DEMOLITION',
+        'OC',
+        'CP',
+        'PLINTH',
+      ];
+    } else if (department == 'EST') {
+      formTypes = ['MARRIAGE', 'RELIGIOUS', 'ROADSHOW', 'GENERIC'];
+    } else if (department == 'CRSR') {
+      formTypes = [
+        'BIRTHCERT',
+        'BIRTHTEOR',
+        'DEATHCERT',
+        'DEATHTEOR',
+        'MARRIAGECERT',
+        'MARRIAGETEOR',
+        'MARRIAGEREGISTER',
+      ];
+    } else if (department == 'PWD') {
+      formTypes = [
+        'TEMPWATERCONNECT',
+        'TEMPWATERDISCONNECT',
+        'WATERSIZECHANGE',
+        'NEWWATERCONNECT',
+        'WATERRECONNECT',
+        'PERMANENTWATERDISCONNECT',
+      ];
+    } else if (department == 'DMC') {
+      formTypes = ['DEATHREGISTER', 'BIRTHREGISTER'];
+    } else {
+      formTypes = ['NONE'];
+    }
 
     const count = await this.prisma.common.groupBy({
       by: ['form_type'],
@@ -194,80 +425,235 @@ export class CommonService {
     return countByFormType;
   }
 
-  async villageFileCount() {
-    const count = await this.prisma.common.groupBy({
-      by: ['village'],
-      _count: {
-        _all: true,
-      },
-    });
-    const formattedResult = count.map((entry) => ({
-      village: entry.village,
-      count: entry._count._all,
-    }));
-    return formattedResult;
+  async villageFileCount(department: string) {
+    if (department == 'PDA') {
+      const count = await this.prisma.common.groupBy({
+        by: ['village'],
+        where: {
+          OR: [
+            { form_type: 'PETROLEUM' },
+            { form_type: 'RTI' },
+            { form_type: 'ZONE' },
+            { form_type: 'DEMOLITION' },
+            { form_type: 'OLDCOPY' },
+            { form_type: 'LANDRECORDS' },
+            { form_type: 'UNAUTHORISED' },
+            { form_type: 'PLINTH' },
+            { form_type: 'OC' },
+            { form_type: 'CP' },
+          ],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+      const formattedResult = count.map((entry) => ({
+        village: entry.village,
+        count: entry._count._all,
+      }));
+      return formattedResult;
+    } else if (department == 'EST') {
+      const count = await this.prisma.common.groupBy({
+        by: ['village'],
+        where: {
+          OR: [
+            { form_type: 'MARRIAGE' },
+            { form_type: 'RELIGIOUS' },
+            { form_type: 'ROADSHOW' },
+            { form_type: 'GENERIC' },
+          ],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+      const formattedResult = count.map((entry) => ({
+        village: entry.village,
+        count: entry._count._all,
+      }));
+      return formattedResult;
+    } else if (department == 'CRSR') {
+      const count = await this.prisma.common.groupBy({
+        by: ['village'],
+        where: {
+          OR: [
+            { form_type: 'BIRTHCERT' },
+            { form_type: 'BIRTHTEOR' },
+            { form_type: 'DEATHCERT' },
+            { form_type: 'DEATHTEOR' },
+            { form_type: 'MARRIAGECERT' },
+            { form_type: 'MARRIAGETEOR' },
+            { form_type: 'MARRIAGEREGISTER' },
+          ],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+      const formattedResult = count.map((entry) => ({
+        village: entry.village,
+        count: entry._count._all,
+      }));
+      return formattedResult;
+    } else if (department == 'PWD') {
+      const count = await this.prisma.common.groupBy({
+        by: ['village'],
+        where: {
+          OR: [
+            { form_type: 'TEMPWATERCONNECT' },
+            { form_type: 'TEMPWATERDISCONNECT' },
+            { form_type: 'WATERSIZECHANGE' },
+            { form_type: 'NEWWATERCONNECT' },
+            { form_type: 'WATERRECONNECT' },
+            { form_type: 'PERMANENTWATERDISCONNECT' },
+          ],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+      const formattedResult = count.map((entry) => ({
+        village: entry.village,
+        count: entry._count._all,
+      }));
+      return formattedResult;
+    } else if (department == 'DMC') {
+      const count = await this.prisma.common.groupBy({
+        by: ['village'],
+        where: {
+          OR: [{ form_type: 'DEATHREGISTER' }, { form_type: 'BIRTHREGISTER' }],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+      const formattedResult = count.map((entry) => ({
+        village: entry.village,
+        count: entry._count._all,
+      }));
+      return formattedResult;
+    } else {
+      const count = await this.prisma.common.groupBy({
+        by: ['village'],
+        where: {
+          OR: [{ form_type: 'NONE' }],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+      const formattedResult = count.map((entry) => ({
+        village: entry.village,
+        count: entry._count._all,
+      }));
+      return formattedResult;
+    }
   }
 
-  async officerFileCount() {
-    const count = await this.prisma.common.groupBy({
-      by: ['auth_user_id'],
-      _count: {
-        _all: true,
-      },
+  async officerFileCount(department: string) {
+    let count: any = [];
+    if (department == 'PDA') {
+      count = await this.prisma.common.groupBy({
+        by: ['auth_user_id'],
+        where: {
+          OR: [
+            { form_type: 'PETROLEUM' },
+            { form_type: 'RTI' },
+            { form_type: 'ZONE' },
+            { form_type: 'DEMOLITION' },
+            { form_type: 'OLDCOPY' },
+            { form_type: 'LANDRECORDS' },
+            { form_type: 'UNAUTHORISED' },
+            { form_type: 'PLINTH' },
+            { form_type: 'OC' },
+            { form_type: 'CP' },
+          ],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+    } else if (department == 'EST') {
+      count = await this.prisma.common.groupBy({
+        by: ['auth_user_id'],
+        where: {
+          OR: [
+            { form_type: 'MARRIAGE' },
+            { form_type: 'RELIGIOUS' },
+            { form_type: 'ROADSHOW' },
+            { form_type: 'GENERIC' },
+          ],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+    } else if (department == 'CRSR') {
+      count = await this.prisma.common.groupBy({
+        by: ['auth_user_id'],
+        where: {
+          OR: [
+            { form_type: 'BIRTHCERT' },
+            { form_type: 'BIRTHTEOR' },
+            { form_type: 'DEATHCERT' },
+            { form_type: 'DEATHTEOR' },
+            { form_type: 'MARRIAGECERT' },
+            { form_type: 'MARRIAGETEOR' },
+            { form_type: 'MARRIAGEREGISTER' },
+          ],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+    } else if (department == 'PWD') {
+      count = await this.prisma.common.groupBy({
+        by: ['auth_user_id'],
+        where: {
+          OR: [
+            { form_type: 'TEMPWATERCONNECT' },
+            { form_type: 'TEMPWATERDISCONNECT' },
+            { form_type: 'WATERSIZECHANGE' },
+            { form_type: 'NEWWATERCONNECT' },
+            { form_type: 'WATERRECONNECT' },
+            { form_type: 'PERMANENTWATERDISCONNECT' },
+          ],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+    } else if (department == 'DMC') {
+      count = await this.prisma.common.groupBy({
+        by: ['auth_user_id'],
+        where: {
+          OR: [{ form_type: 'DEATHREGISTER' }, { form_type: 'BIRTHREGISTER' }],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+    } else {
+      count = await this.prisma.common.groupBy({
+        by: ['auth_user_id'],
+        where: {
+          OR: [{ form_type: 'NONE' }],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+    }
+
+    const user = await this.prisma.user.findMany({
+      take: 70,
+      select: { id: true, name: true },
     });
+
     const formattedCount = count.reduce((result, item) => {
-      let label;
-      switch (item.auth_user_id) {
-        case '1':
-          label = 'System';
-          break;
-        case '2':
-          label = 'Admin';
-          break;
-        case '3':
-          label = 'Collector';
-          break;
-        case '4':
-          label = 'Dy.Collector';
-          break;
-        case '5':
-          label = 'Atp';
-          break;
-        case '6':
-          label = 'Jtp';
-          break;
-        case '7':
-          label = 'Je';
-          break;
-        case '8':
-          label = 'Field Inspector';
-          break;
-        case '9':
-          label = 'Site Supervisor';
-          break;
-        case '10':
-          label = 'Architect Assistant';
-          break;
-        case '11':
-          label = 'Planning Draughtsman';
-          break;
-        case '12':
-          label = 'Sp Draughtsman';
-          break;
-        case '13':
-          label = 'St Draughtsman';
-          break;
-        case '14':
-          label = 'Land Suptd';
-          break;
-        case '15':
-          label = 'Mamaltdar';
-          break;
-        case '16':
-          label = 'Eocs';
-          break;
-        default:
-          label = item.auth_user_id;
+      let label: any = user[parseInt(item.auth_user_id) - 1].name;
+      if (label == undefined) {
+        label = 'No Name';
       }
       if (item.auth_user_id !== '0') {
         result.push({ count: item._count._all, auth_user_id: label });
@@ -277,27 +663,88 @@ export class CommonService {
     return formattedCount;
   }
 
-  async officerFileProgress() {
+  async officerFileProgress(department: string) {
     const countByFormType = {};
-    const formTypes = [
-      'RTI',
-      'ZONE',
-      'OLDCOPY',
-      'PETROLEUM',
-      'UNAUTHORIZED',
-      'LANDRECORDS',
-      'MAMLATDAR',
-      'DEMOLITION',
-      'OC',
-      'CP',
-      'PLINTH'
-    ];
+    let formTypes = [];
+    if (department == 'PDA') {
+      formTypes = [
+        'RTI',
+        'ZONE',
+        'OLDCOPY',
+        'PETROLEUM',
+        'UNAUTHORIZED',
+        'LANDRECORDS',
+        'MAMLATDAR',
+        'DEMOLITION',
+        'OC',
+        'CP',
+        'PLINTH',
+      ];
+    } else if (department == 'EST') {
+      formTypes = ['MARRIAGE', 'RELIGIOUS', 'ROADSHOW', 'GENERIC'];
+    } else if (department == 'CRSR') {
+      formTypes = [
+        'BIRTHCERT',
+        'BIRTHTEOR',
+        'DEATHCERT',
+        'DEATHTEOR',
+        'MARRIAGECERT',
+        'MARRIAGETEOR',
+        'MARRIAGEREGISTER',
+      ];
+    } else if (department == 'PWD') {
+      formTypes = [
+        'TEMPWATERCONNECT',
+        'TEMPWATERDISCONNECT',
+        'WATERSIZECHANGE',
+        'NEWWATERCONNECT',
+        'WATERRECONNECT',
+        'PERMANENTWATERDISCONNECT',
+      ];
+    } else if (department == 'DMC') {
+      formTypes = ['DEATHREGISTER', 'BIRTHREGISTER'];
+    } else {
+      formTypes = ['NONE'];
+    }
 
-    const queryStatus = [
-      ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
-      ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
-      ['REJCTED'],
-    ];
+    let queryStatus = [];
+    if (department == 'PDA') {
+      queryStatus = [
+        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
+        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
+        ['REJCTED'],
+      ];
+    } else if (department == 'EST') {
+      queryStatus = [
+        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
+        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
+        ['REJCTED'],
+      ];
+    } else if (department == 'CRSR') {
+      queryStatus = [
+        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
+        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
+        ['REJCTED'],
+      ];
+    } else if (department == 'PWD') {
+      queryStatus = [
+        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
+        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
+        ['REJCTED'],
+      ];
+    } else if (department == 'DMC') {
+      queryStatus = [
+        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
+        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
+        ['REJCTED'],
+      ];
+    } else {
+      queryStatus = [
+        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
+        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
+        ['REJCTED'],
+      ];
+    }
 
     const count = await this.prisma.common.groupBy({
       by: ['form_type', 'query_status'], // Group by form_type and query_status
@@ -336,21 +783,48 @@ export class CommonService {
     return countByFormType;
   }
 
-  async villageFileProgress() {
-    const formTypes = [
-      'RTI',
-      'ZONE',
-      'OLDCOPY',
-      'PETROLEUM',
-      'UNAUTHORIZED',
-      'LANDRECORDS',
-      'MAMLATDAR',
-      'DEMOLITION',
-      // 'OC',
-      // 'CP',
-      // 'PLINTH'
-    ];
-
+  async villageFileProgress(department: string) {
+    let formTypes = [];
+    if (department == 'PDA') {
+      formTypes = [
+        'RTI',
+        'ZONE',
+        'OLDCOPY',
+        'PETROLEUM',
+        'UNAUTHORIZED',
+        'LANDRECORDS',
+        'MAMLATDAR',
+        'DEMOLITION',
+        'OC',
+        'CP',
+        'PLINTH',
+      ];
+    } else if (department == 'EST') {
+      formTypes = ['MARRIAGE', 'RELIGIOUS', 'ROADSHOW', 'GENERIC'];
+    } else if (department == 'CRSR') {
+      formTypes = [
+        'BIRTHCERT',
+        'BIRTHTEOR',
+        'DEATHCERT',
+        'DEATHTEOR',
+        'MARRIAGECERT',
+        'MARRIAGETEOR',
+        'MARRIAGEREGISTER',
+      ];
+    } else if (department == 'PWD') {
+      formTypes = [
+        'TEMPWATERCONNECT',
+        'TEMPWATERDISCONNECT',
+        'WATERSIZECHANGE',
+        'NEWWATERCONNECT',
+        'WATERRECONNECT',
+        'PERMANENTWATERDISCONNECT',
+      ];
+    } else if (department == 'DMC') {
+      formTypes = ['DEATHREGISTER', 'BIRTHREGISTER'];
+    } else {
+      formTypes = ['NONE'];
+    }
     const village = await this.prisma.village.findMany({
       select: { name: true },
     });

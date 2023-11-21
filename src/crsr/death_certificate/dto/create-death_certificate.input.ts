@@ -65,8 +65,8 @@ export class CreateDeathCertificateInput {
   registration_number: String;
 
   @IsNotEmpty()
-  @Field(() => String)
-  date_of_registration: string;
+  @Field(() => Date)
+  date_of_registration: Date;
 
   @IsNotEmpty()
   @Field(() => String)

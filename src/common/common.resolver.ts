@@ -10,6 +10,7 @@ import { OfficerCount } from './entities/officercount.entity';
 import { FilterCommonInput } from './dto/filter-common.input';
 import { FileProgress } from './entities/process.entiry';
 import { VillageProgress } from './entities/villageprocess.entity';
+import { FilterDepartmentCommonInput } from './dto/filterdepartment-common.input';
 
 @Resolver(() => Common)
 export class CommonResolver {
@@ -39,6 +40,16 @@ export class CommonResolver {
     return this.commonService.filterCommon(filterCommonInput);
   }
 
+  @Query(() => [Common])
+  filterCommonDepartment(
+    @Args('filterDepartmentCommonInput')
+    filterDepartmentCommonInput: FilterDepartmentCommonInput,
+  ) {
+    return this.commonService.filterCommonDepartment(
+      filterDepartmentCommonInput,
+    );
+  }
+
   @Mutation(() => Common)
   createCommon(
     @Args('createCommonInput') createCommonInput: CreateCommonInput,
@@ -61,27 +72,35 @@ export class CommonResolver {
   }
 
   @Query(() => FileCount)
-  getFileCount() {
-    return this.commonService.getFileCount();
+  getFileCount(@Args('department', { type: () => String }) department: string) {
+    return this.commonService.getFileCount(department);
   }
 
   @Query(() => [VillageCount])
-  villageFileCount() {
-    return this.commonService.villageFileCount();
+  villageFileCount(
+    @Args('department', { type: () => String }) department: string,
+  ) {
+    return this.commonService.villageFileCount(department);
   }
 
   @Query(() => [OfficerCount])
-  officerFileCount() {
-    return this.commonService.officerFileCount();
+  officerFileCount(
+    @Args('department', { type: () => String }) department: string,
+  ) {
+    return this.commonService.officerFileCount(department);
   }
 
   @Query(() => FileProgress)
-  officerFileProgress() {
-    return this.commonService.officerFileProgress();
+  officerFileProgress(
+    @Args('department', { type: () => String }) department: string,
+  ) {
+    return this.commonService.officerFileProgress(department);
   }
 
   @Query(() => [VillageProgress])
-  villageFileProgress() {
-    return this.commonService.villageFileProgress();
+  villageFileProgress(
+    @Args('department', { type: () => String }) department: string,
+  ) {
+    return this.commonService.villageFileProgress(department);
   }
 }

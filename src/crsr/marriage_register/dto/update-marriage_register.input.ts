@@ -33,11 +33,11 @@ export class UpdateMarriageRegisterInput extends PartialType(
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  groom_name: string;
+  name: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  groom_address: string;
+  address: string;
 
   @IsOptional()
   @Field(() => Date, { nullable: true })

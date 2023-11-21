@@ -51,6 +51,10 @@ export class UpdateDeathTeorInput extends PartialType(CreateDeathTeorInput) {
 
   @IsOptional()
   @Field(() => String, { nullable: true })
+  place_of_death: string;
+
+  @IsOptional()
+  @Field(() => String, { nullable: true })
   father_name: string;
 
   @IsOptional()
@@ -66,8 +70,8 @@ export class UpdateDeathTeorInput extends PartialType(CreateDeathTeorInput) {
   registration_number: String;
 
   @IsOptional()
-  @Field(() => String, { nullable: true })
-  date_of_registration: string;
+  @Field(() => Date, { nullable: true })
+  date_of_registration: Date;
 
   @IsOptional()
   @Field(() => String, { nullable: true })

@@ -251,12 +251,19 @@ export interface SearchCommonInput {
     status?: Nullable<Status>;
     id?: Nullable<number>;
     deletedAt?: Nullable<DateTime>;
+    department?: Nullable<Department>;
 }
 
 export interface FilterCommonInput {
     user_type?: Nullable<UserType>;
     user_id: number;
     form_type?: Nullable<FormType>;
+}
+
+export interface FilterDepartmentCommonInput {
+    user_type?: Nullable<UserType>;
+    user_id: number;
+    department?: Nullable<Department>;
 }
 
 export interface SendFileLandsectionInput {
@@ -376,18 +383,17 @@ export interface UpdateRtiInput {
 export interface UpdateUserInput {
     exampleField?: Nullable<number>;
     id: number;
-    design_point_id?: Nullable<number>;
     name?: Nullable<string>;
     email?: Nullable<string>;
     password?: Nullable<string>;
     contact?: Nullable<string>;
     pic_url?: Nullable<string>;
-    access_kay?: Nullable<string>;
     role?: Nullable<Role>;
     department?: Nullable<Department>;
     address?: Nullable<string>;
     otp?: Nullable<string>;
     user_uid?: Nullable<string>;
+    user_uid_four?: Nullable<string>;
     status?: Nullable<Status>;
     deletedAt?: Nullable<DateTime>;
 }
@@ -1701,7 +1707,7 @@ export interface CreateBirthCertificateInput {
     father_name: string;
     mother_name: string;
     registration_number: string;
-    date_of_registration: string;
+    date_of_registration: DateTime;
     applicant_uid_url: string;
     father_uid_url: string;
     mother_uid_url: string;
@@ -1724,7 +1730,7 @@ export interface UpdateBirthCertificateInput {
     father_name?: Nullable<string>;
     mother_name?: Nullable<string>;
     registration_number?: Nullable<string>;
-    date_of_registration?: Nullable<string>;
+    date_of_registration?: Nullable<DateTime>;
     applicant_uid_url?: Nullable<string>;
     father_uid_url?: Nullable<string>;
     mother_uid_url?: Nullable<string>;
@@ -1756,7 +1762,7 @@ export interface CreateBirthTeorInput {
     father_name: string;
     mother_name: string;
     registration_number: string;
-    date_of_registration: string;
+    date_of_registration: DateTime;
     applicant_uid_url: string;
     father_uid_url: string;
     mother_uid_url: string;
@@ -1779,7 +1785,7 @@ export interface UpdateBirthTeorInput {
     father_name?: Nullable<string>;
     mother_name?: Nullable<string>;
     registration_number?: Nullable<string>;
-    date_of_registration?: Nullable<string>;
+    date_of_registration?: Nullable<DateTime>;
     applicant_uid_url?: Nullable<string>;
     father_uid_url?: Nullable<string>;
     mother_uid_url?: Nullable<string>;
@@ -1814,7 +1820,7 @@ export interface CreateDeathCertificateInput {
     mother_name: string;
     husband_name: string;
     registration_number: string;
-    date_of_registration: string;
+    date_of_registration: DateTime;
     applicant_uid_url: string;
     father_uid_url: string;
     mother_uid_url: string;
@@ -1840,7 +1846,7 @@ export interface UpdateDeathCertificateInput {
     mother_name?: Nullable<string>;
     husband_name?: Nullable<string>;
     registration_number?: Nullable<string>;
-    date_of_registration?: Nullable<string>;
+    date_of_registration?: Nullable<DateTime>;
     applicant_uid_url?: Nullable<string>;
     father_uid_url?: Nullable<string>;
     mother_uid_url?: Nullable<string>;
@@ -1875,7 +1881,7 @@ export interface CreateDeathTeorInput {
     mother_name: string;
     husband_name: string;
     registration_number: string;
-    date_of_registration: string;
+    date_of_registration: DateTime;
     applicant_uid_url: string;
     father_uid_url: string;
     mother_uid_url: string;
@@ -1901,7 +1907,7 @@ export interface UpdateDeathTeorInput {
     mother_name?: Nullable<string>;
     husband_name?: Nullable<string>;
     registration_number?: Nullable<string>;
-    date_of_registration?: Nullable<string>;
+    date_of_registration?: Nullable<DateTime>;
     applicant_uid_url?: Nullable<string>;
     father_uid_url?: Nullable<string>;
     mother_uid_url?: Nullable<string>;
@@ -2052,8 +2058,8 @@ export interface CreateMarriageRegisterInput {
     mobile: string;
     email?: Nullable<string>;
     village_id: number;
-    groom_name: string;
-    groom_address: string;
+    name: string;
+    address: string;
     groom_date_of_birth: DateTime;
     religion_groom: Religion;
     groom_father_name: string;
@@ -2089,8 +2095,8 @@ export interface UpdateMarriageRegisterInput {
     mobile?: Nullable<string>;
     email?: Nullable<string>;
     village_id?: Nullable<number>;
-    groom_name?: Nullable<string>;
-    groom_address?: Nullable<string>;
+    name?: Nullable<string>;
+    address?: Nullable<string>;
     groom_date_of_birth?: Nullable<DateTime>;
     religion_groom?: Nullable<Religion>;
     groom_father_name?: Nullable<string>;
@@ -2131,18 +2137,17 @@ export interface UpdateMarriageRegisterInput {
 
 export interface User {
     id: number;
-    design_point_id?: Nullable<number>;
     name?: Nullable<string>;
     email?: Nullable<string>;
     password: string;
     contact?: Nullable<string>;
     otp?: Nullable<string>;
     pic_url?: Nullable<string>;
-    access_kay?: Nullable<string>;
     role: Role;
     department: Department;
     address?: Nullable<string>;
     user_uid?: Nullable<string>;
+    user_uid_four?: Nullable<string>;
     status: Status;
     createdAt: DateTime;
     updatedAt: DateTime;
@@ -2192,14 +2197,12 @@ export interface Petroleum {
 export interface Auth {
     token: string;
     id: number;
-    design_point_id?: Nullable<number>;
     name?: Nullable<string>;
     email?: Nullable<string>;
     password: string;
     contact?: Nullable<string>;
     otp?: Nullable<string>;
     pic_url?: Nullable<string>;
-    access_kay?: Nullable<string>;
     role: Role;
     department: Department;
     status: Status;
@@ -2230,17 +2233,35 @@ export interface Common {
 }
 
 export interface FileCount {
-    RTI: number;
-    ZONE: number;
-    OLDCOPY: number;
-    PETROLEUM: number;
-    UNAUTHORIZED: number;
-    LANDRECORDS: number;
-    MAMLATDAR: number;
-    DEMOLITION: number;
-    OC: number;
-    CP: number;
-    PLINTH: number;
+    RTI?: Nullable<number>;
+    ZONE?: Nullable<number>;
+    OLDCOPY?: Nullable<number>;
+    PETROLEUM?: Nullable<number>;
+    UNAUTHORIZED?: Nullable<number>;
+    LANDRECORDS?: Nullable<number>;
+    MAMLATDAR?: Nullable<number>;
+    DEMOLITION?: Nullable<number>;
+    OC?: Nullable<number>;
+    CP?: Nullable<number>;
+    PLINTH?: Nullable<number>;
+    TEMPWATERCONNECT?: Nullable<number>;
+    TEMPWATERDISCONNECT?: Nullable<number>;
+    WATERSIZECHANGE?: Nullable<number>;
+    NEWWATERCONNECT?: Nullable<number>;
+    WATERRECONNECT?: Nullable<number>;
+    PERMANENTWATERDISCONNECT?: Nullable<number>;
+    BIRTHCERT?: Nullable<number>;
+    BIRTHTEOR?: Nullable<number>;
+    DEATHCERT?: Nullable<number>;
+    DEATHTEOR?: Nullable<number>;
+    MARRIAGECERT?: Nullable<number>;
+    MARRIAGETEOR?: Nullable<number>;
+    MARRIAGEREGISTER?: Nullable<number>;
+    DEATHREGISTER?: Nullable<number>;
+    BIRTHREGISTER?: Nullable<number>;
+    MARRIAGE?: Nullable<number>;
+    RELIGIOUS?: Nullable<number>;
+    ROADSHOW?: Nullable<number>;
 }
 
 export interface VillageCount {
@@ -2260,17 +2281,35 @@ export interface FileProgressDetails {
 }
 
 export interface FileProgress {
-    RTI: FileProgressDetails;
-    ZONE: FileProgressDetails;
-    OLDCOPY: FileProgressDetails;
-    PETROLEUM: FileProgressDetails;
-    UNAUTHORIZED: FileProgressDetails;
-    LANDRECORDS: FileProgressDetails;
-    MAMLATDAR: FileProgressDetails;
-    DEMOLITION: FileProgressDetails;
-    OC: FileProgressDetails;
-    CP: FileProgressDetails;
-    PLINTH: FileProgressDetails;
+    RTI?: Nullable<FileProgressDetails>;
+    ZONE?: Nullable<FileProgressDetails>;
+    OLDCOPY?: Nullable<FileProgressDetails>;
+    PETROLEUM?: Nullable<FileProgressDetails>;
+    UNAUTHORIZED?: Nullable<FileProgressDetails>;
+    LANDRECORDS?: Nullable<FileProgressDetails>;
+    MAMLATDAR?: Nullable<FileProgressDetails>;
+    DEMOLITION?: Nullable<FileProgressDetails>;
+    OC?: Nullable<FileProgressDetails>;
+    CP?: Nullable<FileProgressDetails>;
+    PLINTH?: Nullable<FileProgressDetails>;
+    DEATHREGISTER?: Nullable<FileProgressDetails>;
+    BIRTHREGISTER?: Nullable<FileProgressDetails>;
+    BIRTHCERT?: Nullable<FileProgressDetails>;
+    BIRTHTEOR?: Nullable<FileProgressDetails>;
+    DEATHCERT?: Nullable<FileProgressDetails>;
+    DEATHTEOR?: Nullable<FileProgressDetails>;
+    MARRIAGECERT?: Nullable<FileProgressDetails>;
+    MARRIAGETEOR?: Nullable<FileProgressDetails>;
+    MARRIAGEREGISTER?: Nullable<FileProgressDetails>;
+    ROADSHOW?: Nullable<FileProgressDetails>;
+    RELIGIOUS?: Nullable<FileProgressDetails>;
+    MARRIAGE?: Nullable<FileProgressDetails>;
+    PERMANENTWATERDISCONNECT?: Nullable<FileProgressDetails>;
+    WATERRECONNECT?: Nullable<FileProgressDetails>;
+    NEWWATERCONNECT?: Nullable<FileProgressDetails>;
+    WATERSIZECHANGE?: Nullable<FileProgressDetails>;
+    TEMPWATERDISCONNECT?: Nullable<FileProgressDetails>;
+    TEMPWATERCONNECT?: Nullable<FileProgressDetails>;
 }
 
 export interface VillageProgressDetails {
@@ -3058,7 +3097,7 @@ export interface BirthCertificate {
     father_name?: Nullable<string>;
     mother_name?: Nullable<string>;
     registration_number?: Nullable<string>;
-    date_of_registration?: Nullable<string>;
+    date_of_registration?: Nullable<DateTime>;
     applicant_uid_url?: Nullable<string>;
     father_uid_url?: Nullable<string>;
     mother_uid_url?: Nullable<string>;
@@ -3092,7 +3131,7 @@ export interface BirthTeor {
     father_name?: Nullable<string>;
     mother_name?: Nullable<string>;
     registration_number?: Nullable<string>;
-    date_of_registration?: Nullable<string>;
+    date_of_registration?: Nullable<DateTime>;
     applicant_uid_url?: Nullable<string>;
     father_uid_url?: Nullable<string>;
     mother_uid_url?: Nullable<string>;
@@ -3123,12 +3162,13 @@ export interface DeathCertificate {
     village_id?: Nullable<number>;
     gender?: Nullable<Gender>;
     date_of_birth?: Nullable<DateTime>;
+    place_of_death?: Nullable<string>;
     date_of_death?: Nullable<DateTime>;
     father_name?: Nullable<string>;
     mother_name?: Nullable<string>;
     husband_name?: Nullable<string>;
     registration_number?: Nullable<string>;
-    date_of_registration?: Nullable<string>;
+    date_of_registration?: Nullable<DateTime>;
     applicant_uid_url?: Nullable<string>;
     father_uid_url?: Nullable<string>;
     mother_uid_url?: Nullable<string>;
@@ -3160,11 +3200,12 @@ export interface DeathTeor {
     gender?: Nullable<Gender>;
     date_of_birth?: Nullable<DateTime>;
     date_of_death?: Nullable<DateTime>;
+    place_of_death?: Nullable<string>;
     father_name?: Nullable<string>;
     mother_name?: Nullable<string>;
     husband_name?: Nullable<string>;
     registration_number?: Nullable<string>;
-    date_of_registration?: Nullable<string>;
+    date_of_registration?: Nullable<DateTime>;
     applicant_uid_url?: Nullable<string>;
     father_uid_url?: Nullable<string>;
     mother_uid_url?: Nullable<string>;
@@ -3267,8 +3308,8 @@ export interface MarriageRegister {
     mobile?: Nullable<string>;
     email?: Nullable<string>;
     village_id?: Nullable<number>;
-    groom_name?: Nullable<string>;
-    groom_address?: Nullable<string>;
+    name?: Nullable<string>;
+    address?: Nullable<string>;
     groom_date_of_birth?: Nullable<DateTime>;
     religion_groom?: Nullable<Religion>;
     groom_father_name?: Nullable<string>;
@@ -3324,11 +3365,12 @@ export interface IQuery {
     getAllCommonById(id: number): Common | Promise<Common>;
     searchCommon(searchCommonInput: SearchCommonInput): Common[] | Promise<Common[]>;
     filterCommon(filterCommonInput: FilterCommonInput): Common[] | Promise<Common[]>;
-    getFileCount(): FileCount | Promise<FileCount>;
-    villageFileCount(): VillageCount[] | Promise<VillageCount[]>;
-    officerFileCount(): OfficerCount[] | Promise<OfficerCount[]>;
-    officerFileProgress(): FileProgress | Promise<FileProgress>;
-    villageFileProgress(): VillageProgress[] | Promise<VillageProgress[]>;
+    filterCommonDepartment(filterDepartmentCommonInput: FilterDepartmentCommonInput): Common[] | Promise<Common[]>;
+    getFileCount(department: string): FileCount | Promise<FileCount>;
+    villageFileCount(department: string): VillageCount[] | Promise<VillageCount[]>;
+    officerFileCount(department: string): OfficerCount[] | Promise<OfficerCount[]>;
+    officerFileProgress(department: string): FileProgress | Promise<FileProgress>;
+    villageFileProgress(department: string): VillageProgress[] | Promise<VillageProgress[]>;
     getAllLand(): Landsection[] | Promise<Landsection[]>;
     getAllLandById(id: number): Landsection | Promise<Landsection>;
     sendFileOutside(sendFileLandsectionInput: SendFileLandsectionInput): boolean | Promise<boolean>;

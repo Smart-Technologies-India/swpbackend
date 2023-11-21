@@ -37,6 +37,9 @@ export class DeathTeor {
   date_of_death: Date;
 
   @Field(() => String, { nullable: true })
+  place_of_death: string;
+
+  @Field(() => String, { nullable: true })
   father_name: string;
 
   @Field(() => String, { nullable: true })
@@ -48,8 +51,8 @@ export class DeathTeor {
   @Field(() => String, { nullable: true })
   registration_number: String;
 
-  @Field(() => String, { nullable: true })
-  date_of_registration: string;
+  @Field(() => Date, { nullable: true })
+  date_of_registration: Date;
 
   @Field(() => String, { nullable: true })
   applicant_uid_url: string;

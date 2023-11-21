@@ -35,7 +35,6 @@ export class Common {
 
   @Field(() => Date, { nullable: true })
   event_date: Date;
-  
 
   @Field(() => Int)
   form_status: number;

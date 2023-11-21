@@ -193,6 +193,7 @@ model user {
   otp                        String?
   address                    String?
   user_uid                   String?
+  user_uid_four              String?
   status                     Status                       @default(NONE)
   createdAt                  DateTime                     @default(now())
   updatedAt                  DateTime                     @updatedAt
@@ -1341,8 +1342,8 @@ model marriage_register {
   email                       String?
   village                     village?  @relation(fields: [village_id], references: [id])
   village_id                  Int?
-  groom_name                  String?
-  groom_address               String?
+  name                        String?
+  address                     String?
   groom_date_of_birth         DateTime?
   religion_groom              Religion  @default(HINDU)
   groom_father_name           String?

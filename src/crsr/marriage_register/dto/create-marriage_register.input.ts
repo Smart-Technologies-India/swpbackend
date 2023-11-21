@@ -26,11 +26,11 @@ export class CreateMarriageRegisterInput {
 
   @IsNotEmpty()
   @Field(() => String)
-  groom_name: string;
+  name: string;
 
   @IsNotEmpty()
   @Field(() => String)
-  groom_address: string;
+  address: string;
 
   @IsNotEmpty()
   @Field(() => Date)

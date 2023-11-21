@@ -1,7 +1,7 @@
 import { IsOptional } from 'class-validator';
 import { CreateCommonInput } from './create-common.input';
 import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
-import { FormType, Status, queryStatus } from '@prisma/client';
+import { Department, FormType, Status, queryStatus } from '@prisma/client';
 
 @InputType()
 export class SearchCommonInput extends PartialType(CreateCommonInput) {
@@ -68,4 +68,8 @@ export class SearchCommonInput extends PartialType(CreateCommonInput) {
   @IsOptional()
   @Field(() => Date, { nullable: true })
   deletedAt: Date;
+
+  @IsOptional()
+  @Field(() => Department, { nullable: true })
+  department: Department;
 }
