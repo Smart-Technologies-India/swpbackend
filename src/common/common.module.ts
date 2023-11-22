@@ -3,6 +3,6 @@ import { CommonService } from './common.service';
 import { CommonResolver } from './common.resolver';
 
 @Module({
-  providers: [CommonResolver, CommonService]
+  providers: [CommonResolver, CommonService],
 })
 export class CommonModule {}

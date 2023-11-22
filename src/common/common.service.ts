@@ -67,10 +67,6 @@ export class CommonService {
                 { form_type: 'RTI' },
                 { form_type: 'OLDCOPY' },
                 { form_type: 'ZONE' },
-                { form_type: 'PETROLEUM' },
-                { form_type: 'LANDRECORDS' },
-                { form_type: 'DEMOLITION' },
-                { form_type: 'UNAUTHORISED' },
                 { form_type: 'PLINTH' },
                 { form_type: 'OC' },
                 { form_type: 'CP' },
@@ -141,6 +137,38 @@ export class CommonService {
               OR: [
                 { form_type: 'DEATHREGISTER' },
                 { form_type: 'BIRTHREGISTER' },
+              ],
+            },
+            include: {
+              user: true,
+            },
+          });
+        } else if (
+          common.department == 'COLLECTOR' ||
+          common.department == 'DYCOLLECTOR'
+        ) {
+          delete common.department;
+          results = await this.prisma.common.findMany({
+            where: {
+              ...common,
+              OR: [
+                { form_type: 'BIRTHCERT' },
+                { form_type: 'BIRTHTEOR' },
+                { form_type: 'DEATHCERT' },
+                { form_type: 'DEATHTEOR' },
+                { form_type: 'MARRIAGECERT' },
+                { form_type: 'MARRIAGETEOR' },
+                { form_type: 'MARRIAGEREGISTER' },
+                { form_type: 'MARRIAGE' },
+                { form_type: 'RELIGIOUS' },
+                { form_type: 'ROADSHOW' },
+                { form_type: 'GENERIC' },
+                { form_type: 'RTI' },
+                { form_type: 'OLDCOPY' },
+                { form_type: 'ZONE' },
+                { form_type: 'PLINTH' },
+                { form_type: 'OC' },
+                { form_type: 'CP' },
               ],
             },
             include: {
@@ -228,13 +256,9 @@ export class CommonService {
         result = await this.prisma.common.findMany({
           where: {
             OR: [
-              { form_type: 'PETROLEUM', OR: whereClause },
               { form_type: 'RTI', OR: whereClause },
               { form_type: 'ZONE', OR: whereClause },
-              { form_type: 'DEMOLITION', OR: whereClause },
               { form_type: 'OLDCOPY', OR: whereClause },
-              { form_type: 'LANDRECORDS', OR: whereClause },
-              { form_type: 'UNAUTHORISED', OR: whereClause },
               { form_type: 'PLINTH', OR: whereClause },
               { form_type: 'OC', OR: whereClause },
               { form_type: 'CP', OR: whereClause },
@@ -276,6 +300,33 @@ export class CommonService {
           },
         });
         console.log(result);
+      } else if (
+        filter.department == 'COLLECTOR' ||
+        filter.department == 'DYCOLLECTOR'
+      ) {
+        result = await this.prisma.common.findMany({
+          where: {
+            OR: [
+              { form_type: 'BIRTHCERT', OR: whereClause },
+              { form_type: 'BIRTHTEOR', OR: whereClause },
+              { form_type: 'DEATHCERT', OR: whereClause },
+              { form_type: 'DEATHTEOR', OR: whereClause },
+              { form_type: 'MARRIAGECERT', OR: whereClause },
+              { form_type: 'MARRIAGETEOR', OR: whereClause },
+              { form_type: 'MARRIAGEREGISTER', OR: whereClause },
+              { form_type: 'MARRIAGE', OR: whereClause },
+              { form_type: 'RELIGIOUS', OR: whereClause },
+              { form_type: 'ROADSHOW', OR: whereClause },
+              { form_type: 'GENERIC', OR: whereClause },
+              { form_type: 'RTI', OR: whereClause },
+              { form_type: 'ZONE', OR: whereClause },
+              { form_type: 'OLDCOPY', OR: whereClause },
+              { form_type: 'PLINTH', OR: whereClause },
+              { form_type: 'OC', OR: whereClause },
+              { form_type: 'CP', OR: whereClause },
+            ],
+          },
+        });
       } else {
         result = await this.prisma.common.findMany({
           where: {
@@ -368,19 +419,7 @@ export class CommonService {
     const countByFormType = {};
     let formTypes = [];
     if (department == 'PDA') {
-      formTypes = [
-        'RTI',
-        'ZONE',
-        'OLDCOPY',
-        'PETROLEUM',
-        'UNAUTHORIZED',
-        'LANDRECORDS',
-        'MAMLATDAR',
-        'DEMOLITION',
-        'OC',
-        'CP',
-        'PLINTH',
-      ];
+      formTypes = ['RTI', 'ZONE', 'OLDCOPY', 'OC', 'CP', 'PLINTH'];
     } else if (department == 'EST') {
       formTypes = ['MARRIAGE', 'RELIGIOUS', 'ROADSHOW', 'GENERIC'];
     } else if (department == 'CRSR') {
@@ -404,6 +443,26 @@ export class CommonService {
       ];
     } else if (department == 'DMC') {
       formTypes = ['DEATHREGISTER', 'BIRTHREGISTER'];
+    } else if (department == 'COLLECTOR' || department == 'DYCOLLECTOR') {
+      formTypes = [
+        'BIRTHCERT',
+        'BIRTHTEOR',
+        'DEATHCERT',
+        'DEATHTEOR',
+        'MARRIAGECERT',
+        'MARRIAGETEOR',
+        'MARRIAGEREGISTER',
+        'MARRIAGE',
+        'RELIGIOUS',
+        'ROADSHOW',
+        'GENERIC',
+        'RTI',
+        'OLDCOPY',
+        'ZONE',
+        'OC',
+        'CP',
+        'PLINTH',
+      ];
     } else {
       formTypes = ['NONE'];
     }
@@ -431,13 +490,9 @@ export class CommonService {
         by: ['village'],
         where: {
           OR: [
-            { form_type: 'PETROLEUM' },
             { form_type: 'RTI' },
             { form_type: 'ZONE' },
-            { form_type: 'DEMOLITION' },
             { form_type: 'OLDCOPY' },
-            { form_type: 'LANDRECORDS' },
-            { form_type: 'UNAUTHORISED' },
             { form_type: 'PLINTH' },
             { form_type: 'OC' },
             { form_type: 'CP' },
@@ -522,6 +577,39 @@ export class CommonService {
         by: ['village'],
         where: {
           OR: [{ form_type: 'DEATHREGISTER' }, { form_type: 'BIRTHREGISTER' }],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+      const formattedResult = count.map((entry) => ({
+        village: entry.village,
+        count: entry._count._all,
+      }));
+      return formattedResult;
+    } else if (department == 'COLLECTOR' || department == 'DYCOLLECTOR') {
+      const count = await this.prisma.common.groupBy({
+        by: ['village'],
+        where: {
+          OR: [
+            { form_type: 'BIRTHCERT' },
+            { form_type: 'BIRTHTEOR' },
+            { form_type: 'DEATHCERT' },
+            { form_type: 'DEATHTEOR' },
+            { form_type: 'MARRIAGECERT' },
+            { form_type: 'MARRIAGETEOR' },
+            { form_type: 'MARRIAGEREGISTER' },
+            { form_type: 'MARRIAGE' },
+            { form_type: 'RELIGIOUS' },
+            { form_type: 'ROADSHOW' },
+            { form_type: 'GENERIC' },
+            { form_type: 'RTI' },
+            { form_type: 'ZONE' },
+            { form_type: 'OLDCOPY' },
+            { form_type: 'PLINTH' },
+            { form_type: 'OC' },
+            { form_type: 'CP' },
+          ],
         },
         _count: {
           _all: true,
@@ -557,13 +645,9 @@ export class CommonService {
         by: ['auth_user_id'],
         where: {
           OR: [
-            { form_type: 'PETROLEUM' },
             { form_type: 'RTI' },
             { form_type: 'ZONE' },
-            { form_type: 'DEMOLITION' },
             { form_type: 'OLDCOPY' },
-            { form_type: 'LANDRECORDS' },
-            { form_type: 'UNAUTHORISED' },
             { form_type: 'PLINTH' },
             { form_type: 'OC' },
             { form_type: 'CP' },
@@ -628,6 +712,34 @@ export class CommonService {
         by: ['auth_user_id'],
         where: {
           OR: [{ form_type: 'DEATHREGISTER' }, { form_type: 'BIRTHREGISTER' }],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+    } else if (department == 'COLLECTOR' || department == 'DYCOLLECTOR') {
+      count = await this.prisma.common.groupBy({
+        by: ['auth_user_id'],
+        where: {
+          OR: [
+            { form_type: 'BIRTHCERT' },
+            { form_type: 'BIRTHTEOR' },
+            { form_type: 'DEATHCERT' },
+            { form_type: 'DEATHTEOR' },
+            { form_type: 'MARRIAGECERT' },
+            { form_type: 'MARRIAGETEOR' },
+            { form_type: 'MARRIAGEREGISTER' },
+            { form_type: 'MARRIAGE' },
+            { form_type: 'RELIGIOUS' },
+            { form_type: 'ROADSHOW' },
+            { form_type: 'GENERIC' },
+            { form_type: 'RTI' },
+            { form_type: 'ZONE' },
+            { form_type: 'OLDCOPY' },
+            { form_type: 'PLINTH' },
+            { form_type: 'OC' },
+            { form_type: 'CP' },
+          ],
         },
         _count: {
           _all: true,
@@ -667,19 +779,7 @@ export class CommonService {
     const countByFormType = {};
     let formTypes = [];
     if (department == 'PDA') {
-      formTypes = [
-        'RTI',
-        'ZONE',
-        'OLDCOPY',
-        'PETROLEUM',
-        'UNAUTHORIZED',
-        'LANDRECORDS',
-        'MAMLATDAR',
-        'DEMOLITION',
-        'OC',
-        'CP',
-        'PLINTH',
-      ];
+      formTypes = ['RTI', 'ZONE', 'OLDCOPY', 'OC', 'CP', 'PLINTH'];
     } else if (department == 'EST') {
       formTypes = ['MARRIAGE', 'RELIGIOUS', 'ROADSHOW', 'GENERIC'];
     } else if (department == 'CRSR') {
@@ -703,48 +803,35 @@ export class CommonService {
       ];
     } else if (department == 'DMC') {
       formTypes = ['DEATHREGISTER', 'BIRTHREGISTER'];
+    } else if (department == 'COLLECTOR' || department == 'DYCOLLECTOR') {
+      formTypes = [
+        'BIRTHCERT',
+        'BIRTHTEOR',
+        'DEATHCERT',
+        'DEATHTEOR',
+        'MARRIAGECERT',
+        'MARRIAGETEOR',
+        'MARRIAGEREGISTER',
+        'MARRIAGE',
+        'RELIGIOUS',
+        'ROADSHOW',
+        'GENERIC',
+        'RTI',
+        'OLDCOPY',
+        'ZONE',
+        'OC',
+        'CP',
+        'PLINTH',
+      ];
     } else {
       formTypes = ['NONE'];
     }
 
-    let queryStatus = [];
-    if (department == 'PDA') {
-      queryStatus = [
-        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
-        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
-        ['REJCTED'],
-      ];
-    } else if (department == 'EST') {
-      queryStatus = [
-        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
-        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
-        ['REJCTED'],
-      ];
-    } else if (department == 'CRSR') {
-      queryStatus = [
-        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
-        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
-        ['REJCTED'],
-      ];
-    } else if (department == 'PWD') {
-      queryStatus = [
-        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
-        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
-        ['REJCTED'],
-      ];
-    } else if (department == 'DMC') {
-      queryStatus = [
-        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
-        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
-        ['REJCTED'],
-      ];
-    } else {
-      queryStatus = [
-        ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
-        ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
-        ['REJCTED'],
-      ];
-    }
+    const queryStatus = [
+      ['NONE', 'SUBMIT', 'INPROCESS', 'QUERYRAISED'],
+      ['APPROVED', 'CERTIFICATEGRANT', 'COMPLETED'],
+      ['REJCTED'],
+    ];
 
     const count = await this.prisma.common.groupBy({
       by: ['form_type', 'query_status'], // Group by form_type and query_status
@@ -786,19 +873,7 @@ export class CommonService {
   async villageFileProgress(department: string) {
     let formTypes = [];
     if (department == 'PDA') {
-      formTypes = [
-        'RTI',
-        'ZONE',
-        'OLDCOPY',
-        'PETROLEUM',
-        'UNAUTHORIZED',
-        'LANDRECORDS',
-        'MAMLATDAR',
-        'DEMOLITION',
-        'OC',
-        'CP',
-        'PLINTH',
-      ];
+      formTypes = ['RTI', 'ZONE', 'OLDCOPY', 'OC', 'CP', 'PLINTH'];
     } else if (department == 'EST') {
       formTypes = ['MARRIAGE', 'RELIGIOUS', 'ROADSHOW', 'GENERIC'];
     } else if (department == 'CRSR') {
@@ -822,6 +897,26 @@ export class CommonService {
       ];
     } else if (department == 'DMC') {
       formTypes = ['DEATHREGISTER', 'BIRTHREGISTER'];
+    } else if (department == 'COLLECTOR' || department == 'DYCOLLECTOR') {
+      formTypes = [
+        'BIRTHCERT',
+        'BIRTHTEOR',
+        'DEATHCERT',
+        'DEATHTEOR',
+        'MARRIAGECERT',
+        'MARRIAGETEOR',
+        'MARRIAGEREGISTER',
+        'MARRIAGE',
+        'RELIGIOUS',
+        'ROADSHOW',
+        'GENERIC',
+        'RTI',
+        'OLDCOPY',
+        'ZONE',
+        'OC',
+        'CP',
+        'PLINTH',
+      ];
     } else {
       formTypes = ['NONE'];
     }
