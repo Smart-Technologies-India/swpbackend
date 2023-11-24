@@ -763,7 +763,12 @@ export class CommonService {
     });
 
     const formattedCount = count.reduce((result, item) => {
-      let label: any = user[parseInt(item.auth_user_id) - 1].name;
+      let label = '';
+      if (parseInt(item.auth_user_id) == 0) {
+        label = 'No Name';
+      } else {
+        label = user[parseInt(item.auth_user_id) - 1].name;
+      }
       if (label == undefined) {
         label = 'No Name';
       }
