@@ -1368,6 +1368,7 @@ model marriage_register {
   undertaking_url             String?
   groom_signature_url         String?
   bride_signature_url         String?
+  signature_url               String?
   iagree                      Agree     @default(NONE)
   remarks                     String?
   other_remarks               String?
