@@ -69,9 +69,10 @@ export class PermanentWaterDisconnectService {
       }
     }
 
-    const existingUser = await this.prisma.permanent_water_disconnect.findUnique({
-      where: { id: permanentWaterDisconnect.id },
-    });
+    const existingUser =
+      await this.prisma.permanent_water_disconnect.findUnique({
+        where: { id: permanentWaterDisconnect.id },
+      });
 
     if (!existingUser) {
       throw new NotFoundException(

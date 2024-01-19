@@ -290,7 +290,6 @@ export class CommonService {
           },
         });
       } else if (filter.department == 'DMC') {
-        console.log('dmc');
         result = await this.prisma.common.findMany({
           where: {
             OR: [
@@ -299,7 +298,6 @@ export class CommonService {
             ],
           },
         });
-        console.log(result);
       } else if (
         filter.department == 'COLLECTOR' ||
         filter.department == 'DYCOLLECTOR'

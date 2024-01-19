@@ -28,7 +28,9 @@ export class TempWaterConnectService {
         where: { id, deletedAt: null },
       });
     if (!tempWaterConnect)
-      throw new BadRequestException('No Temp Water Connect exist with this id.');
+      throw new BadRequestException(
+        'No Temp Water Connect exist with this id.',
+      );
     return tempWaterConnect;
   }
 

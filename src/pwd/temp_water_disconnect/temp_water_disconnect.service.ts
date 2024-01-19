@@ -44,10 +44,9 @@ export class TempWaterDisconnectService {
       }
     }
 
-    const TempWaterDisconnect =
-      await this.prisma.temp_water_disconnect.create({
-        data: dataToCreate,
-      });
+    const TempWaterDisconnect = await this.prisma.temp_water_disconnect.create({
+      data: dataToCreate,
+    });
 
     if (!TempWaterDisconnect)
       throw new BadRequestException('Unable to create Temp Water Disconnect');
@@ -77,11 +76,12 @@ export class TempWaterDisconnectService {
       );
     }
 
-    const updatedtempWaterDisconnect =
-      this.prisma.temp_water_disconnect.update({
+    const updatedtempWaterDisconnect = this.prisma.temp_water_disconnect.update(
+      {
         where: { id: tempWaterDisconnect.id },
         data: dataToUpdate,
-      });
+      },
+    );
     if (!updatedtempWaterDisconnect)
       throw new BadRequestException('Unable to update Temp Water Disonnect.');
     return updatedtempWaterDisconnect;
@@ -100,11 +100,10 @@ export class TempWaterDisconnectService {
       );
     }
 
-    const deleteTempWaterDisconnect =
-      this.prisma.temp_water_disconnect.update({
-        where: { id: tempWaterDisconnect.id },
-        data: { deletedAt: tempWaterDisconnect.deletedAt },
-      });
+    const deleteTempWaterDisconnect = this.prisma.temp_water_disconnect.update({
+      where: { id: tempWaterDisconnect.id },
+      data: { deletedAt: tempWaterDisconnect.deletedAt },
+    });
 
     if (!deleteTempWaterDisconnect)
       throw new BadRequestException('Unable to update Temp Water Disconnect.');

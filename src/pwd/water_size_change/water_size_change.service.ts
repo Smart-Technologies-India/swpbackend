@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateWaterSizeChangeInput } from './dto/create-water_size_change.input';
 import { UpdateWaterSizeChangeInput } from './dto/update-water_size_change.input';
 import { PrismaService } from 'prisma/prisma.service';
@@ -8,30 +12,24 @@ export class WaterSizeChangeService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAllWaterSizeChange() {
-    const waterSizeChange =
-      await this.prisma.water_size_change.findMany({
-        where: { deletedAt: null },
-      });
+    const waterSizeChange = await this.prisma.water_size_change.findMany({
+      where: { deletedAt: null },
+    });
     if (waterSizeChange.length == 0)
       throw new BadRequestException('There is no Water Size Change.');
     return waterSizeChange;
   }
 
   async getWaterSizeChangeById(id: number) {
-    const waterSizeChange =
-      await this.prisma.water_size_change.findFirst({
-        where: { id, deletedAt: null },
-      });
+    const waterSizeChange = await this.prisma.water_size_change.findFirst({
+      where: { id, deletedAt: null },
+    });
     if (!waterSizeChange)
-      throw new BadRequestException(
-        'No Water Size Change exist with this id.',
-      );
+      throw new BadRequestException('No Water Size Change exist with this id.');
     return waterSizeChange;
   }
 
-  async createWaterSizeChange(
-    waterSizeChange: CreateWaterSizeChangeInput,
-  ) {
+  async createWaterSizeChange(waterSizeChange: CreateWaterSizeChangeInput) {
     const dataToCreate: any = {};
 
     for (const [key, value] of Object.entries(waterSizeChange)) {
@@ -40,21 +38,16 @@ export class WaterSizeChangeService {
       }
     }
 
-    const WaterSizeChange =
-      await this.prisma.water_size_change.create({
-        data: dataToCreate,
-      });
+    const WaterSizeChange = await this.prisma.water_size_change.create({
+      data: dataToCreate,
+    });
 
     if (!WaterSizeChange)
-      throw new BadRequestException(
-        'Unable to create Water Size Change',
-      );
+      throw new BadRequestException('Unable to create Water Size Change');
     return WaterSizeChange;
   }
 
-  async updateWaterSizeChangeById(
-    waterSizeChange: UpdateWaterSizeChangeInput,
-  ) {
+  async updateWaterSizeChangeById(waterSizeChange: UpdateWaterSizeChangeInput) {
     const dataToUpdate: {
       [key: string]: any;
     } = {};
@@ -75,11 +68,10 @@ export class WaterSizeChangeService {
       );
     }
 
-    const updatedwaterSizeChange =
-      this.prisma.water_size_change.update({
-        where: { id: waterSizeChange.id },
-        data: dataToUpdate,
-      });
+    const updatedwaterSizeChange = this.prisma.water_size_change.update({
+      where: { id: waterSizeChange.id },
+      data: dataToUpdate,
+    });
     if (!updatedwaterSizeChange)
       throw new BadRequestException(
         'Unable to update Permanent Water Disonnect.',
@@ -87,9 +79,7 @@ export class WaterSizeChangeService {
     return updatedwaterSizeChange;
   }
 
-  async deleteWaterSizeChangeById(
-    waterSizeChange: UpdateWaterSizeChangeInput,
-  ) {
+  async deleteWaterSizeChangeById(waterSizeChange: UpdateWaterSizeChangeInput) {
     const existing = await this.prisma.water_size_change.findUnique({
       where: { id: waterSizeChange.id },
     });
@@ -100,16 +90,13 @@ export class WaterSizeChangeService {
       );
     }
 
-    const deleteWaterSizeChange =
-      this.prisma.water_size_change.update({
-        where: { id: waterSizeChange.id },
-        data: { deletedAt: waterSizeChange.deletedAt },
-      });
+    const deleteWaterSizeChange = this.prisma.water_size_change.update({
+      where: { id: waterSizeChange.id },
+      data: { deletedAt: waterSizeChange.deletedAt },
+    });
 
     if (!deleteWaterSizeChange)
-      throw new BadRequestException(
-        'Unable to update Water Size Change.',
-      );
+      throw new BadRequestException('Unable to update Water Size Change.');
     return deleteWaterSizeChange;
   }
 }

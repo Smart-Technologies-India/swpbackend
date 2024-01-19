@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { jwtSecret } from 'src/utils/const';
 import { MobileLoginInput } from './dto/mobile-auth.input';
 import axios from 'axios';
-
+import { Agent } from 'https';
 @Injectable()
 export class AuthService {
   constructor(
@@ -22,7 +22,7 @@ export class AuthService {
       throw new BadRequestException('contact number already exist');
     const hashedPassword = await this.hashPassword(password);
 
-    let user = await this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         password: hashedPassword,
         name: name,
@@ -87,8 +87,8 @@ export class AuthService {
   }
 
   async mobileLogin(data: MobileLoginInput) {
-    // const otp = this.generateOTP();
-    const otp = '1234';
+    const otp = this.generateOTP();
+    // const otp = '1234';
 
     const hashedPassword = await this.hashPassword('a6hqE9OM0w');
 
@@ -121,17 +121,23 @@ export class AuthService {
       }
     }
 
-    return userdata;
+    // return userdata;
 
     // const res = await axios.post(
     //   `http://sms.bulkssms.com/submitsms.jsp?user=PDADAMAN&key=09d6fd9fc8XX&mobile=${data.contact}&message=Dear Applicant, ${otp} is your OTP. Use this password to validate your login.PDA, Daman. &senderid=PDADMN&accusage=1&entityid=1401577610000052520&tempid=1407167343737681343`,
     // );
 
-    // if (res.data.toString().split(',')[0].trim() == 'sent') {
-    //   return userdata;
-    // } else {
-    //   throw new BadRequestException('Something went wrong unable to sent otp.');
-    // }
+    const res = await axios.post(
+      `https://mobicomm.dove-sms.com//submitsms.jsp?user=SmartT&key=8b85ee3e9fXX&mobile=${data.contact}&message=OTP for Login is ${otp}. Please use this OTP to access your account. Thank you - DDD Gov.&senderid=DDDGOV&accusage=1&entityid=1401551570000053588&tempid=1407170486529658764`,
+      {},
+      { httpsAgent: new Agent({ rejectUnauthorized: false }) },
+    );
+
+    if (res.data.toString().split(',')[0].trim() == 'sent') {
+      return userdata;
+    } else {
+      throw new BadRequestException('Something went wrong unable to sent otp.');
+    }
   }
 
   async verifyOtp(data: MobileLoginInput) {
@@ -159,7 +165,7 @@ export class AuthService {
   }
 
   generateOTP(): string {
-    var digits = '0123456789';
+    const digits = '0123456789';
     let OTP = '';
     for (let i = 0; i < 4; i++) {
       OTP += digits[Math.floor(Math.random() * 10)];
