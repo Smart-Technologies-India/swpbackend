@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { FormType, PaymentStatus, PaymentType } from '@prisma/client';
+import { FormType, PaymentStatus } from '@prisma/client';
 
 @ObjectType()
 export class Payment {
@@ -40,13 +40,28 @@ export class Payment {
   paymentamout: number;
 
   @Field(() => String, { nullable: true })
-  reference: string;
+  bankreference: string;
+
+  @Field(() => String, { nullable: true })
+  orderid: string;
+
+  @Field(() => String, { nullable: true })
+  transactionid: string;
+
+  @Field(() => Date, { nullable: true })
+  reconcilation: Date;
+
+  @Field(() => Date, { nullable: true })
+  centraldeposit: Date;
+
+  @Field(() => String, { nullable: true })
+  depositrefnumber: string;
 
   @Field(() => FormType)
   form_type: FormType;
 
-  @Field(() => PaymentType)
-  paymentType: PaymentType;
+  @Field(() => String)
+  paymentType: string;
 
   @Field(() => PaymentStatus)
   paymentstatus: PaymentStatus;

@@ -522,27 +522,32 @@ model dealing_hand {
 }
 
 model payment {
-  id            Int           @id @default(autoincrement())
-  form_type     FormType      @default(NONE)
-  form_id       Int
-  deptuser      user          @relation("deptuser", fields: [deptuser_id], references: [id])
-  deptuser_id   Int
-  user          user          @relation("user", fields: [user_id], references: [id])
-  user_id       Int
-  type1         Int?
-  amount1       Int?
-  type2         Int?
-  amount2       Int?
-  type3         Int?
-  amount3       Int?
-  daycount      Int?
-  paymentamout  Int?
-  reference     String?
-  paymentType   PaymentType   @default(NONE)
-  paymentstatus PaymentStatus @default(NONE)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  deletedAt     DateTime?
+  id               Int           @id @default(autoincrement())
+  form_type        FormType      @default(NONE)
+  form_id          Int
+  deptuser         user          @relation("deptuser", fields: [deptuser_id], references: [id])
+  deptuser_id      Int
+  user             user          @relation("user", fields: [user_id], references: [id])
+  user_id          Int
+  type1            Int?
+  amount1          Int?
+  type2            Int?
+  amount2          Int?
+  type3            Int?
+  amount3          Int?
+  daycount         Int?
+  paymentamout     Int?
+  bankreference    String?
+  orderid          String?
+  transactionid    String?
+  reconcilation    DateTime?
+  centraldeposit   DateTime?
+  depositrefnumber String?
+  paymentType      String?
+  paymentstatus    PaymentStatus @default(NONE)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  deletedAt        DateTime?
 }
 
 // pda table start from here

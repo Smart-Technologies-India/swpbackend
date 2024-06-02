@@ -405,22 +405,18 @@ type Payment {
   amount3: Int
   daycount: Int
   paymentamout: Int
-  reference: String
+  bankreference: String
+  orderid: String
+  transactionid: String
+  reconcilation: DateTime
+  centraldeposit: DateTime
+  depositrefnumber: String
   form_type: FormType!
-  paymentType: PaymentType!
+  paymentType: String!
   paymentstatus: PaymentStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
-}
-
-enum PaymentType {
-  NONE
-  CASH
-  CHEQUE
-  NETBANKING
-  CCDC
-  UPI
 }
 
 enum PaymentStatus {
@@ -1623,8 +1619,13 @@ input SearchPaymentInput {
   form_type: FormType
   paymentstatus: PaymentStatus
   id: Int
-  reference: String
-  paymentType: PaymentType
+  bankreference: String
+  orderid: String
+  transactionid: String
+  reconcilation: DateTime
+  centraldeposit: DateTime
+  depositrefnumber: String
+  paymentType: String
   createdAt: DateTime
   updatedAt: DateTime
   deletedAt: DateTime
@@ -2164,8 +2165,13 @@ input UpdatePaymentInput {
   form_type: FormType
   paymentstatus: PaymentStatus
   id: Int!
-  reference: String
-  paymentType: PaymentType
+  bankreference: String
+  orderid: String
+  transactionid: String
+  reconcilation: DateTime
+  centraldeposit: DateTime
+  depositrefnumber: String
+  paymentType: String
   deletedAt: DateTime
 }
 

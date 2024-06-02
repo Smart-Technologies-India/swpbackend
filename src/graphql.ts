@@ -142,15 +142,6 @@ export enum QueryStatus {
     RESOLVED = "RESOLVED"
 }
 
-export enum PaymentType {
-    NONE = "NONE",
-    CASH = "CASH",
-    CHEQUE = "CHEQUE",
-    NETBANKING = "NETBANKING",
-    CCDC = "CCDC",
-    UPI = "UPI"
-}
-
 export enum PaymentStatus {
     NONE = "NONE",
     PENDING = "PENDING",
@@ -324,8 +315,13 @@ export interface SearchPaymentInput {
     form_type?: Nullable<FormType>;
     paymentstatus?: Nullable<PaymentStatus>;
     id?: Nullable<number>;
-    reference?: Nullable<string>;
-    paymentType?: Nullable<PaymentType>;
+    bankreference?: Nullable<string>;
+    orderid?: Nullable<string>;
+    transactionid?: Nullable<string>;
+    reconcilation?: Nullable<DateTime>;
+    centraldeposit?: Nullable<DateTime>;
+    depositrefnumber?: Nullable<string>;
+    paymentType?: Nullable<string>;
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
     deletedAt?: Nullable<DateTime>;
@@ -768,8 +764,13 @@ export interface UpdatePaymentInput {
     form_type?: Nullable<FormType>;
     paymentstatus?: Nullable<PaymentStatus>;
     id: number;
-    reference?: Nullable<string>;
-    paymentType?: Nullable<PaymentType>;
+    bankreference?: Nullable<string>;
+    orderid?: Nullable<string>;
+    transactionid?: Nullable<string>;
+    reconcilation?: Nullable<DateTime>;
+    centraldeposit?: Nullable<DateTime>;
+    depositrefnumber?: Nullable<string>;
+    paymentType?: Nullable<string>;
     deletedAt?: Nullable<DateTime>;
 }
 
@@ -2399,9 +2400,14 @@ export interface Payment {
     amount3?: Nullable<number>;
     daycount?: Nullable<number>;
     paymentamout?: Nullable<number>;
-    reference?: Nullable<string>;
+    bankreference?: Nullable<string>;
+    orderid?: Nullable<string>;
+    transactionid?: Nullable<string>;
+    reconcilation?: Nullable<DateTime>;
+    centraldeposit?: Nullable<DateTime>;
+    depositrefnumber?: Nullable<string>;
     form_type: FormType;
-    paymentType: PaymentType;
+    paymentType: string;
     paymentstatus: PaymentStatus;
     createdAt: DateTime;
     updatedAt: DateTime;
