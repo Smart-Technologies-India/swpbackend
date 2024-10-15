@@ -6,7 +6,9 @@ import { UpdateWaterSizeChangeInput } from './dto/update-water_size_change.input
 
 @Resolver(() => WaterSizeChange)
 export class WaterSizeChangeResolver {
-  constructor(private readonly waterSizeChangeService: WaterSizeChangeService) {}
+  constructor(
+    private readonly waterSizeChangeService: WaterSizeChangeService,
+  ) {}
 
   @Query(() => [WaterSizeChange])
   getAllWaterSizeChange() {

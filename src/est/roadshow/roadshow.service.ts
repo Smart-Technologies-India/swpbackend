@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateRoadshowInput } from './dto/create-roadshow.input';
 import { UpdateRoadshowInput } from './dto/update-roadshow.input';
 import { PrismaService } from 'prisma/prisma.service';
@@ -10,6 +14,9 @@ export class RoadshowService {
   async getAllRoadshow() {
     const roadshow = await this.prisma.roadshow_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (roadshow.length == 0)
       throw new BadRequestException('There is no roadshow.');

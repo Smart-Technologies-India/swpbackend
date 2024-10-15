@@ -15,6 +15,9 @@ export class QueryService {
   async getAllQuery() {
     const query = await this.prisma.query.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (query.length == 0) throw new BadRequestException('There is no query.');
     return query;
@@ -37,6 +40,9 @@ export class QueryService {
           query_type: 'PUBLIC',
         },
         include: { from_user: true, to_user: true },
+        orderBy: {
+          updatedAt: 'desc',
+        },
       });
 
       if (searchData.length == 0)
@@ -51,6 +57,9 @@ export class QueryService {
           OR: [{ query_type: 'PUBLIC' }, { query_type: 'INTRA' }],
         },
         include: { from_user: true, to_user: true },
+        orderBy: {
+          updatedAt: 'desc',
+        },
       });
 
       if (searchData.length == 0)
@@ -64,6 +73,9 @@ export class QueryService {
           stage: search.stage,
         },
         include: { from_user: true, to_user: true },
+        orderBy: {
+          updatedAt: 'desc',
+        },
       });
 
       if (searchData.length == 0)

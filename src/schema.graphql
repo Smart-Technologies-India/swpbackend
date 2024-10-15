@@ -60,6 +60,7 @@ enum Department {
   DMC
   CRSR
   PWD
+  FCS
 }
 
 enum Status {
@@ -209,6 +210,7 @@ enum FormType {
   PERMANENTWATERDISCONNECT
   DEATHREGISTER
   BIRTHREGISTER
+  NEWRATIONCARD
 }
 
 enum queryStatus {
@@ -301,6 +303,7 @@ type FileProgress {
   WATERSIZECHANGE: FileProgressDetails
   TEMPWATERDISCONNECT: FileProgressDetails
   TEMPWATERCONNECT: FileProgressDetails
+  NEWRATIONCARD: FileProgressDetails
 }
 
 type VillageProgressDetails {
@@ -417,6 +420,7 @@ type Payment {
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
+  user: User
 }
 
 enum PaymentStatus {
@@ -1427,6 +1431,93 @@ type MarriageRegister {
   deletedAt: DateTime
 }
 
+type Newrationcardmember {
+  id: Int!
+  userId: Int!
+  name: String
+  gender: Gender!
+  date_of_birth: DateTime
+  mother_name: String
+  father_name: String
+  spouse_name: String
+  option_to_life_commodity: Boolean!
+  age: String
+  eid: String
+  uid: String
+  relationship_with_head_of_family: String
+  status: Status
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Newrationcard {
+  id: Int!
+  userId: Int
+  mobile: String
+  email: String
+  card_type: CardType
+  user_uid: String
+  user_eid: String
+  name: String
+  mother_name: String
+  father_name: String
+  gender: Gender
+  spouse_name: String
+  date_of_birth: DateTime
+  age: String
+  occupation: String
+  annual_income: String
+  gasconnection: GasConnection
+  gas_company_name: String
+  gas_agency_name: String
+  consumer_no: String
+  address: String
+  village_id: Int
+  pin_code: String
+  mandal: String
+  district: String
+  paddress: String
+  pvillage_id: Int
+  ppin_code: String
+  pmandal: String
+  pdistrict: String
+  old_ration_card_number: String
+  informate_name: String
+  informant_relation: String
+  delivery_type: String
+  mobile_no: String
+  photo: String
+  proof_one: String
+  proof_one_name: String
+  proof_two: String
+  proof_two_name: String
+  proof_three: String
+  proof_three_name: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  members: [Newrationcardmember!]
+}
+
+enum CardType {
+  APL
+  BPL
+  AAY
+  AAP
+}
+
+enum GasConnection {
+  DEEPAM
+  DOUBLE
+  SINGLE
+  NOCYLINDER
+}
+
 type Query {
   getAllRti: [Rti!]!
   getAllRtiById(id: Int!): Rti!
@@ -1467,7 +1558,9 @@ type Query {
   getQueryById(id: Int!): QueryData!
   searchQuery(searchQueryInput: SearchQueryInput!): [QueryData!]!
   getAllPayment: [Payment!]!
+  getAllPaidPayment(department: String!): [Payment!]!
   getAllPaymentById(id: Int!): Payment!
+  getPaymentReceipt(id: Int!, type: String!): Payment!
   searchPayment(searchPaymentInput: SearchPaymentInput!): [Payment!]!
   getAllCp: [Cp!]!
   getCpById(id: Int!): Cp!
@@ -1511,6 +1604,10 @@ type Query {
   getMarriageTeorById(id: Int!): MarriageTeor!
   getAllMarriageRegister: [MarriageRegister!]!
   getMarriageRegisterById(id: Int!): MarriageRegister!
+  getAllRationCard: [Newrationcard!]!
+  getRationCardById(id: Int!): Newrationcard!
+  getAllNewRationMember: [Newrationcardmember!]!
+  getRattionMemberById(id: Int!): Newrationcardmember!
 }
 
 input LoginUserInput {
@@ -1725,6 +1822,13 @@ type Mutation {
   createMarriageRegister(createMarriageRegisterInput: CreateMarriageRegisterInput!): MarriageRegister!
   updateMarriageRegisterById(updateMarriageRegisterInput: UpdateMarriageRegisterInput!): MarriageRegister!
   deleteMarriageRegisterById(updateMarriageRegisterInput: UpdateMarriageRegisterInput!): MarriageRegister!
+  createRationCard(createNewrationcardInput: CreateNewrationcardInput!): Newrationcard!
+  updateRationCardById(updateNewrationcardInput: UpdateNewrationcardInput!): Newrationcard!
+  deleteRationCardById(updateNewrationcardInput: UpdateNewrationcardInput!): Newrationcard!
+  createRationMember(createNewrationcardmemberInput: CreateNewrationcardmemberInput!): Newrationcardmember!
+  createMultipalRationMember(createMultipalNewrationcardmemberInput: CreateMultipalNewrationcardmemberInput!): [Newrationcardmember!]!
+  updateRationMemberById(updateNewrationcardmemberInput: UpdateNewrationcardmemberInput!): Newrationcardmember!
+  deleteRationNumberById(updateNewrationcardmemberInput: UpdateNewrationcardmemberInput!): Newrationcardmember!
 }
 
 input CreateRtiInput {
@@ -3534,5 +3638,143 @@ input UpdateMarriageRegisterInput {
   certificate_id: String
   certificate_date: DateTime
   certificate_url: String
+  deletedAt: DateTime
+}
+
+input CreateNewrationcardInput {
+  userId: Int!
+  mobile: String!
+  email: String
+  card_type: CardType!
+  user_uid: String
+  user_eid: String
+  name: String!
+  mother_name: String!
+  father_name: String!
+  gender: Gender!
+  spouse_name: String
+  date_of_birth: DateTime!
+  age: String!
+  occupation: String!
+  annual_income: String!
+  gasconnection: GasConnection!
+  gas_company_name: String!
+  gas_agency_name: String!
+  consumer_no: String!
+  address: String!
+  village_id: Int!
+  pin_code: String!
+  mandal: String!
+  district: String!
+  paddress: String!
+  pvillage_id: Int!
+  ppin_code: String!
+  pmandal: String!
+  pdistrict: String!
+  old_ration_card_number: String!
+  informate_name: String!
+  informant_relation: String!
+  delivery_type: String!
+  mobile_no: String!
+  photo: String!
+  proof_one: String
+  proof_one_name: String
+  proof_two: String
+  proof_two_name: String
+  proof_three: String
+  proof_three_name: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+}
+
+input UpdateNewrationcardInput {
+  userId: Int
+  mobile: String
+  email: String
+  card_type: CardType
+  user_uid: String
+  user_eid: String
+  name: String
+  mother_name: String
+  father_name: String
+  gender: Gender
+  spouse_name: String
+  date_of_birth: DateTime
+  age: String
+  occupation: String
+  annual_income: String
+  gasconnection: GasConnection
+  gas_company_name: String
+  gas_agency_name: String
+  consumer_no: String
+  address: String
+  village_id: Int
+  pin_code: String
+  mandal: String
+  district: String
+  paddress: String
+  pvillage_id: Int
+  ppin_code: String
+  pmandal: String
+  pdistrict: String
+  old_ration_card_number: String
+  informate_name: String
+  informant_relation: String
+  delivery_type: String
+  mobile_no: String
+  photo: String
+  proof_one: String
+  proof_one_name: String
+  proof_two: String
+  proof_two_name: String
+  proof_three: String
+  proof_three_name: String
+  signature_url: String
+  iagree: Agree
+  remarks: String
+  other_remarks: String
+  status: Status
+  id: Int!
+  deletedAt: DateTime
+}
+
+input CreateNewrationcardmemberInput {
+  userId: Int!
+  name: String!
+  gender: Gender!
+  date_of_birth: DateTime!
+  mother_name: String!
+  father_name: String!
+  spouse_name: String
+  option_to_life_commodity: Boolean!
+  age: String!
+  eid: String
+  uid: String
+  relationship_with_head_of_family: String!
+  status: Status
+}
+
+input CreateMultipalNewrationcardmemberInput {
+  members: [CreateNewrationcardmemberInput!]!
+}
+
+input UpdateNewrationcardmemberInput {
+  userId: Int!
+  name: String
+  gender: Gender
+  date_of_birth: DateTime
+  mother_name: String
+  father_name: String
+  spouse_name: String
+  option_to_life_commodity: Boolean
+  age: String
+  eid: String
+  uid: String
+  relationship_with_head_of_family: String
+  status: Status
+  id: Int!
   deletedAt: DateTime
 }

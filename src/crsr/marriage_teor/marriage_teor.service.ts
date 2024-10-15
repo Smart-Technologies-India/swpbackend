@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateMarriageTeorInput } from './dto/create-marriage_teor.input';
 import { UpdateMarriageTeorInput } from './dto/update-marriage_teor.input';
 import { PrismaService } from 'prisma/prisma.service';
@@ -8,30 +12,27 @@ export class MarriageTeorService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAllMarriageTeor() {
-    const marriageTeor =
-      await this.prisma.marriage_teor.findMany({
-        where: { deletedAt: null },
-      });
+    const marriageTeor = await this.prisma.marriage_teor.findMany({
+      where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    });
     if (marriageTeor.length == 0)
       throw new BadRequestException('There is no Marriage Teor.');
     return marriageTeor;
   }
 
   async getMarriageTeorById(id: number) {
-    const marriageTeor =
-      await this.prisma.marriage_teor.findFirst({
-        where: { id, deletedAt: null },
-      });
+    const marriageTeor = await this.prisma.marriage_teor.findFirst({
+      where: { id, deletedAt: null },
+    });
     if (!marriageTeor)
-      throw new BadRequestException(
-        'No Marriage Teor exist with this id.',
-      );
+      throw new BadRequestException('No Marriage Teor exist with this id.');
     return marriageTeor;
   }
 
-  async createMarriageTeor(
-    marriageTeor: CreateMarriageTeorInput,
-  ) {
+  async createMarriageTeor(marriageTeor: CreateMarriageTeorInput) {
     const dataToCreate: any = {};
 
     for (const [key, value] of Object.entries(marriageTeor)) {
@@ -40,21 +41,16 @@ export class MarriageTeorService {
       }
     }
 
-    const MarriageTeor =
-      await this.prisma.marriage_teor.create({
-        data: dataToCreate,
-      });
+    const MarriageTeor = await this.prisma.marriage_teor.create({
+      data: dataToCreate,
+    });
 
     if (!MarriageTeor)
-      throw new BadRequestException(
-        'Unable to create Marriage Teor',
-      );
+      throw new BadRequestException('Unable to create Marriage Teor');
     return MarriageTeor;
   }
 
-  async updateMarriageTeorById(
-    marriageTeor: UpdateMarriageTeorInput,
-  ) {
+  async updateMarriageTeorById(marriageTeor: UpdateMarriageTeorInput) {
     const dataToUpdate: {
       [key: string]: any;
     } = {};
@@ -75,21 +71,16 @@ export class MarriageTeorService {
       );
     }
 
-    const updatedmarriageTeor =
-      this.prisma.marriage_teor.update({
-        where: { id: marriageTeor.id },
-        data: dataToUpdate,
-      });
+    const updatedmarriageTeor = this.prisma.marriage_teor.update({
+      where: { id: marriageTeor.id },
+      data: dataToUpdate,
+    });
     if (!updatedmarriageTeor)
-      throw new BadRequestException(
-        'Unable to update Marriage Teor.',
-      );
+      throw new BadRequestException('Unable to update Marriage Teor.');
     return updatedmarriageTeor;
   }
 
-  async deleteMarriageTeorById(
-    marriageTeor: UpdateMarriageTeorInput,
-  ) {
+  async deleteMarriageTeorById(marriageTeor: UpdateMarriageTeorInput) {
     const existing = await this.prisma.marriage_teor.findUnique({
       where: { id: marriageTeor.id },
     });
@@ -100,16 +91,13 @@ export class MarriageTeorService {
       );
     }
 
-    const deleteMarriageTeor =
-      this.prisma.marriage_teor.update({
-        where: { id: marriageTeor.id },
-        data: { deletedAt: marriageTeor.deletedAt },
-      });
+    const deleteMarriageTeor = this.prisma.marriage_teor.update({
+      where: { id: marriageTeor.id },
+      data: { deletedAt: marriageTeor.deletedAt },
+    });
 
     if (!deleteMarriageTeor)
-      throw new BadRequestException(
-        'Unable to update Marriage Teor.',
-      );
+      throw new BadRequestException('Unable to update Marriage Teor.');
     return deleteMarriageTeor;
   }
 }

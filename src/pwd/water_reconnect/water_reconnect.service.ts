@@ -14,6 +14,9 @@ export class WaterReconnectService {
   async getAllWaterReconnect() {
     const waterReconnect = await this.prisma.water_reconnect.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (waterReconnect.length == 0)
       throw new BadRequestException('There is no Water Reconnect.');

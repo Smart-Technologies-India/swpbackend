@@ -14,6 +14,9 @@ export class RtiService {
   async getAllRti() {
     const rti = await this.prisma.rti_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (rti.length == 0) throw new BadRequestException('There is no rti.');
     return rti;
@@ -36,11 +39,9 @@ export class RtiService {
       }
     }
 
-
     const Rti = await this.prisma.rti_form.create({
       data: dataToCreate,
     });
-
 
     if (!Rti) throw new BadRequestException('Unable to create rti');
     return Rti;

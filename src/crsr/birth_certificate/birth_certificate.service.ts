@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateBirthCertificateInput } from './dto/create-birth_certificate.input';
 import { UpdateBirthCertificateInput } from './dto/update-birth_certificate.input';
 import { PrismaService } from 'prisma/prisma.service';
@@ -8,30 +12,27 @@ export class BirthCertificateService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAllBirthCertificate() {
-    const birthCertificate =
-      await this.prisma.birth_certificate.findMany({
-        where: { deletedAt: null },
-      });
+    const birthCertificate = await this.prisma.birth_certificate.findMany({
+      where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    });
     if (birthCertificate.length == 0)
       throw new BadRequestException('There is no Birth Certificate.');
     return birthCertificate;
   }
 
   async getBirthCertificateById(id: number) {
-    const birthCertificate =
-      await this.prisma.birth_certificate.findFirst({
-        where: { id, deletedAt: null },
-      });
+    const birthCertificate = await this.prisma.birth_certificate.findFirst({
+      where: { id, deletedAt: null },
+    });
     if (!birthCertificate)
-      throw new BadRequestException(
-        'No Birth Certificate exist with this id.',
-      );
+      throw new BadRequestException('No Birth Certificate exist with this id.');
     return birthCertificate;
   }
 
-  async createBirthCertificate(
-    birthCertificate: CreateBirthCertificateInput,
-  ) {
+  async createBirthCertificate(birthCertificate: CreateBirthCertificateInput) {
     const dataToCreate: any = {};
 
     for (const [key, value] of Object.entries(birthCertificate)) {
@@ -40,15 +41,12 @@ export class BirthCertificateService {
       }
     }
 
-    const BirthCertificate =
-      await this.prisma.birth_certificate.create({
-        data: dataToCreate,
-      });
+    const BirthCertificate = await this.prisma.birth_certificate.create({
+      data: dataToCreate,
+    });
 
     if (!BirthCertificate)
-      throw new BadRequestException(
-        'Unable to create Birth Certificate',
-      );
+      throw new BadRequestException('Unable to create Birth Certificate');
     return BirthCertificate;
   }
 
@@ -75,15 +73,12 @@ export class BirthCertificateService {
       );
     }
 
-    const updatedbirthCertificate =
-      this.prisma.birth_certificate.update({
-        where: { id: birthCertificate.id },
-        data: dataToUpdate,
-      });
+    const updatedbirthCertificate = this.prisma.birth_certificate.update({
+      where: { id: birthCertificate.id },
+      data: dataToUpdate,
+    });
     if (!updatedbirthCertificate)
-      throw new BadRequestException(
-        'Unable to update Birth Certificate.',
-      );
+      throw new BadRequestException('Unable to update Birth Certificate.');
     return updatedbirthCertificate;
   }
 
@@ -100,16 +95,13 @@ export class BirthCertificateService {
       );
     }
 
-    const deleteBirthCertificate =
-      this.prisma.birth_certificate.update({
-        where: { id: birthCertificate.id },
-        data: { deletedAt: birthCertificate.deletedAt },
-      });
+    const deleteBirthCertificate = this.prisma.birth_certificate.update({
+      where: { id: birthCertificate.id },
+      data: { deletedAt: birthCertificate.deletedAt },
+    });
 
     if (!deleteBirthCertificate)
-      throw new BadRequestException(
-        'Unable to update Birth Certificate.',
-      );
+      throw new BadRequestException('Unable to update Birth Certificate.');
     return deleteBirthCertificate;
   }
 }

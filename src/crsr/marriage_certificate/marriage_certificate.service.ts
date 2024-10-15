@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateMarriageCertificateInput } from './dto/create-marriage_certificate.input';
 import { UpdateMarriageCertificateInput } from './dto/update-marriage_certificate.input';
 import { PrismaService } from 'prisma/prisma.service';
@@ -8,10 +12,14 @@ export class MarriageCertificateService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAllMarriageCertificate() {
-    const marriageCertificate =
-      await this.prisma.marriage_certificate.findMany({
+    const marriageCertificate = await this.prisma.marriage_certificate.findMany(
+      {
         where: { deletedAt: null },
-      });
+        orderBy: {
+          updatedAt: 'desc',
+        },
+      },
+    );
     if (marriageCertificate.length == 0)
       throw new BadRequestException('There is no Marriage Certificate.');
     return marriageCertificate;
@@ -40,15 +48,12 @@ export class MarriageCertificateService {
       }
     }
 
-    const MarriageCertificate =
-      await this.prisma.marriage_certificate.create({
-        data: dataToCreate,
-      });
+    const MarriageCertificate = await this.prisma.marriage_certificate.create({
+      data: dataToCreate,
+    });
 
     if (!MarriageCertificate)
-      throw new BadRequestException(
-        'Unable to create Marriage Certificate',
-      );
+      throw new BadRequestException('Unable to create Marriage Certificate');
     return MarriageCertificate;
   }
 
@@ -75,15 +80,12 @@ export class MarriageCertificateService {
       );
     }
 
-    const updatedmarriageCertificate =
-      this.prisma.marriage_certificate.update({
-        where: { id: marriageCertificate.id },
-        data: dataToUpdate,
-      });
+    const updatedmarriageCertificate = this.prisma.marriage_certificate.update({
+      where: { id: marriageCertificate.id },
+      data: dataToUpdate,
+    });
     if (!updatedmarriageCertificate)
-      throw new BadRequestException(
-        'Unable to update Marriage Certificate.',
-      );
+      throw new BadRequestException('Unable to update Marriage Certificate.');
     return updatedmarriageCertificate;
   }
 
@@ -100,16 +102,13 @@ export class MarriageCertificateService {
       );
     }
 
-    const deleteMarriageCertificate =
-      this.prisma.marriage_certificate.update({
-        where: { id: marriageCertificate.id },
-        data: { deletedAt: marriageCertificate.deletedAt },
-      });
+    const deleteMarriageCertificate = this.prisma.marriage_certificate.update({
+      where: { id: marriageCertificate.id },
+      data: { deletedAt: marriageCertificate.deletedAt },
+    });
 
     if (!deleteMarriageCertificate)
-      throw new BadRequestException(
-        'Unable to update Marriage Certificate.',
-      );
+      throw new BadRequestException('Unable to update Marriage Certificate.');
     return deleteMarriageCertificate;
   }
 }

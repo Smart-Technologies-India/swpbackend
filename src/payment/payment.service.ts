@@ -7,6 +7,7 @@ import { CreatePaymentInput } from './dto/create-payment.input';
 import { UpdatePaymentInput } from './dto/update-payment.input';
 import { PrismaService } from 'prisma/prisma.service';
 import { SearchPaymentInput } from './dto/search-payment.input';
+import { FormType } from '@prisma/client';
 
 @Injectable()
 export class PaymentService {
@@ -15,7 +16,26 @@ export class PaymentService {
   async getAllPayment() {
     const payment = await this.prisma.payment.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
+    if (payment.length == 0)
+      throw new BadRequestException('There is no payment.');
+    return payment;
+  }
+
+  async getAllPaidPayment(department: string) {
+    const payment = await this.prisma.payment.findMany({
+      where: { deletedAt: null, paymentstatus: 'PAID' },
+      include: {
+        user: true,
+      },
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    });
+
     if (payment.length == 0)
       throw new BadRequestException('There is no payment.');
     return payment;
@@ -26,6 +46,9 @@ export class PaymentService {
       where: payment,
       include: {
         user: true,
+      },
+      orderBy: {
+        updatedAt: 'desc',
       },
     });
 
@@ -38,6 +61,19 @@ export class PaymentService {
     const payment = await this.prisma.payment.findFirst({
       where: { id, deletedAt: null },
     });
+    if (!payment)
+      throw new BadRequestException('No payment exist with this id.');
+    return payment;
+  }
+
+  async getPaymentReceipt(id: number, type: string) {
+    const payment = await this.prisma.payment.findFirst({
+      where: { form_id: id, form_type: type as FormType, deletedAt: null },
+      include: {
+        user: true,
+      },
+    });
+    console.log(payment);
     if (!payment)
       throw new BadRequestException('No payment exist with this id.');
     return payment;

@@ -14,6 +14,9 @@ export class DeathCertificateService {
   async getAllDeathCertificate() {
     const deathCertificate = await this.prisma.death_certificate.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (deathCertificate.length == 0)
       throw new BadRequestException('There is no Death Certificate.');
@@ -75,9 +78,7 @@ export class DeathCertificateService {
       data: dataToUpdate,
     });
     if (!updateddeathCertificate)
-      throw new BadRequestException(
-        'Unable to update Death Certificate.',
-      );
+      throw new BadRequestException('Unable to update Death Certificate.');
     return updateddeathCertificate;
   }
 

@@ -15,6 +15,9 @@ export class TempWaterDisconnectService {
     const tempWaterDisconnect =
       await this.prisma.temp_water_disconnect.findMany({
         where: { deletedAt: null },
+        orderBy: {
+          updatedAt: 'desc',
+        },
       });
     if (tempWaterDisconnect.length == 0)
       throw new BadRequestException('There is no Temp Water Disconnect.');

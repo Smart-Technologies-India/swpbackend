@@ -46,7 +46,8 @@ export enum Department {
     EST = "EST",
     DMC = "DMC",
     CRSR = "CRSR",
-    PWD = "PWD"
+    PWD = "PWD",
+    FCS = "FCS"
 }
 
 export enum Status {
@@ -112,7 +113,8 @@ export enum FormType {
     WATERRECONNECT = "WATERRECONNECT",
     PERMANENTWATERDISCONNECT = "PERMANENTWATERDISCONNECT",
     DEATHREGISTER = "DEATHREGISTER",
-    BIRTHREGISTER = "BIRTHREGISTER"
+    BIRTHREGISTER = "BIRTHREGISTER",
+    NEWRATIONCARD = "NEWRATIONCARD"
 }
 
 export enum queryStatus {
@@ -207,6 +209,20 @@ export enum EntityType {
 export enum ConnectionType {
     DOMESTIC = "DOMESTIC",
     NONDOMESTIC = "NONDOMESTIC"
+}
+
+export enum CardType {
+    APL = "APL",
+    BPL = "BPL",
+    AAY = "AAY",
+    AAP = "AAP"
+}
+
+export enum GasConnection {
+    DEEPAM = "DEEPAM",
+    DOUBLE = "DOUBLE",
+    SINGLE = "SINGLE",
+    NOCYLINDER = "NOCYLINDER"
 }
 
 export enum UserType {
@@ -2136,6 +2152,144 @@ export interface UpdateMarriageRegisterInput {
     deletedAt?: Nullable<DateTime>;
 }
 
+export interface CreateNewrationcardInput {
+    userId: number;
+    mobile: string;
+    email?: Nullable<string>;
+    card_type: CardType;
+    user_uid?: Nullable<string>;
+    user_eid?: Nullable<string>;
+    name: string;
+    mother_name: string;
+    father_name: string;
+    gender: Gender;
+    spouse_name?: Nullable<string>;
+    date_of_birth: DateTime;
+    age: string;
+    occupation: string;
+    annual_income: string;
+    gasconnection: GasConnection;
+    gas_company_name: string;
+    gas_agency_name: string;
+    consumer_no: string;
+    address: string;
+    village_id: number;
+    pin_code: string;
+    mandal: string;
+    district: string;
+    paddress: string;
+    pvillage_id: number;
+    ppin_code: string;
+    pmandal: string;
+    pdistrict: string;
+    old_ration_card_number: string;
+    informate_name: string;
+    informant_relation: string;
+    delivery_type: string;
+    mobile_no: string;
+    photo: string;
+    proof_one?: Nullable<string>;
+    proof_one_name?: Nullable<string>;
+    proof_two?: Nullable<string>;
+    proof_two_name?: Nullable<string>;
+    proof_three?: Nullable<string>;
+    proof_three_name?: Nullable<string>;
+    signature_url?: Nullable<string>;
+    iagree?: Nullable<Agree>;
+    remarks?: Nullable<string>;
+    other_remarks?: Nullable<string>;
+    status?: Nullable<Status>;
+}
+
+export interface UpdateNewrationcardInput {
+    userId?: Nullable<number>;
+    mobile?: Nullable<string>;
+    email?: Nullable<string>;
+    card_type?: Nullable<CardType>;
+    user_uid?: Nullable<string>;
+    user_eid?: Nullable<string>;
+    name?: Nullable<string>;
+    mother_name?: Nullable<string>;
+    father_name?: Nullable<string>;
+    gender?: Nullable<Gender>;
+    spouse_name?: Nullable<string>;
+    date_of_birth?: Nullable<DateTime>;
+    age?: Nullable<string>;
+    occupation?: Nullable<string>;
+    annual_income?: Nullable<string>;
+    gasconnection?: Nullable<GasConnection>;
+    gas_company_name?: Nullable<string>;
+    gas_agency_name?: Nullable<string>;
+    consumer_no?: Nullable<string>;
+    address?: Nullable<string>;
+    village_id?: Nullable<number>;
+    pin_code?: Nullable<string>;
+    mandal?: Nullable<string>;
+    district?: Nullable<string>;
+    paddress?: Nullable<string>;
+    pvillage_id?: Nullable<number>;
+    ppin_code?: Nullable<string>;
+    pmandal?: Nullable<string>;
+    pdistrict?: Nullable<string>;
+    old_ration_card_number?: Nullable<string>;
+    informate_name?: Nullable<string>;
+    informant_relation?: Nullable<string>;
+    delivery_type?: Nullable<string>;
+    mobile_no?: Nullable<string>;
+    photo?: Nullable<string>;
+    proof_one?: Nullable<string>;
+    proof_one_name?: Nullable<string>;
+    proof_two?: Nullable<string>;
+    proof_two_name?: Nullable<string>;
+    proof_three?: Nullable<string>;
+    proof_three_name?: Nullable<string>;
+    signature_url?: Nullable<string>;
+    iagree?: Nullable<Agree>;
+    remarks?: Nullable<string>;
+    other_remarks?: Nullable<string>;
+    status?: Nullable<Status>;
+    id: number;
+    deletedAt?: Nullable<DateTime>;
+}
+
+export interface CreateNewrationcardmemberInput {
+    userId: number;
+    name: string;
+    gender: Gender;
+    date_of_birth: DateTime;
+    mother_name: string;
+    father_name: string;
+    spouse_name?: Nullable<string>;
+    option_to_life_commodity: boolean;
+    age: string;
+    eid?: Nullable<string>;
+    uid?: Nullable<string>;
+    relationship_with_head_of_family: string;
+    status?: Nullable<Status>;
+}
+
+export interface CreateMultipalNewrationcardmemberInput {
+    members: CreateNewrationcardmemberInput[];
+}
+
+export interface UpdateNewrationcardmemberInput {
+    userId: number;
+    name?: Nullable<string>;
+    gender?: Nullable<Gender>;
+    date_of_birth?: Nullable<DateTime>;
+    mother_name?: Nullable<string>;
+    father_name?: Nullable<string>;
+    spouse_name?: Nullable<string>;
+    option_to_life_commodity?: Nullable<boolean>;
+    age?: Nullable<string>;
+    eid?: Nullable<string>;
+    uid?: Nullable<string>;
+    relationship_with_head_of_family?: Nullable<string>;
+    status?: Nullable<Status>;
+    id: number;
+    deletedAt?: Nullable<DateTime>;
+}
+
 export interface User {
     id: number;
     name?: Nullable<string>;
@@ -2311,6 +2465,7 @@ export interface FileProgress {
     WATERSIZECHANGE?: Nullable<FileProgressDetails>;
     TEMPWATERDISCONNECT?: Nullable<FileProgressDetails>;
     TEMPWATERCONNECT?: Nullable<FileProgressDetails>;
+    NEWRATIONCARD?: Nullable<FileProgressDetails>;
 }
 
 export interface VillageProgressDetails {
@@ -2412,6 +2567,7 @@ export interface Payment {
     createdAt: DateTime;
     updatedAt: DateTime;
     deletedAt?: Nullable<DateTime>;
+    user?: Nullable<User>;
 }
 
 export interface DeathRegiser {
@@ -3355,6 +3511,79 @@ export interface MarriageRegister {
     deletedAt?: Nullable<DateTime>;
 }
 
+export interface Newrationcardmember {
+    id: number;
+    userId: number;
+    name?: Nullable<string>;
+    gender: Gender;
+    date_of_birth?: Nullable<DateTime>;
+    mother_name?: Nullable<string>;
+    father_name?: Nullable<string>;
+    spouse_name?: Nullable<string>;
+    option_to_life_commodity: boolean;
+    age?: Nullable<string>;
+    eid?: Nullable<string>;
+    uid?: Nullable<string>;
+    relationship_with_head_of_family?: Nullable<string>;
+    status?: Nullable<Status>;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+    deletedAt?: Nullable<DateTime>;
+}
+
+export interface Newrationcard {
+    id: number;
+    userId?: Nullable<number>;
+    mobile?: Nullable<string>;
+    email?: Nullable<string>;
+    card_type?: Nullable<CardType>;
+    user_uid?: Nullable<string>;
+    user_eid?: Nullable<string>;
+    name?: Nullable<string>;
+    mother_name?: Nullable<string>;
+    father_name?: Nullable<string>;
+    gender?: Nullable<Gender>;
+    spouse_name?: Nullable<string>;
+    date_of_birth?: Nullable<DateTime>;
+    age?: Nullable<string>;
+    occupation?: Nullable<string>;
+    annual_income?: Nullable<string>;
+    gasconnection?: Nullable<GasConnection>;
+    gas_company_name?: Nullable<string>;
+    gas_agency_name?: Nullable<string>;
+    consumer_no?: Nullable<string>;
+    address?: Nullable<string>;
+    village_id?: Nullable<number>;
+    pin_code?: Nullable<string>;
+    mandal?: Nullable<string>;
+    district?: Nullable<string>;
+    paddress?: Nullable<string>;
+    pvillage_id?: Nullable<number>;
+    ppin_code?: Nullable<string>;
+    pmandal?: Nullable<string>;
+    pdistrict?: Nullable<string>;
+    old_ration_card_number?: Nullable<string>;
+    informate_name?: Nullable<string>;
+    informant_relation?: Nullable<string>;
+    delivery_type?: Nullable<string>;
+    mobile_no?: Nullable<string>;
+    photo?: Nullable<string>;
+    proof_one?: Nullable<string>;
+    proof_one_name?: Nullable<string>;
+    proof_two?: Nullable<string>;
+    proof_two_name?: Nullable<string>;
+    proof_three?: Nullable<string>;
+    proof_three_name?: Nullable<string>;
+    signature_url?: Nullable<string>;
+    iagree?: Nullable<Agree>;
+    remarks?: Nullable<string>;
+    other_remarks?: Nullable<string>;
+    status: Status;
+    updatedAt: DateTime;
+    deletedAt?: Nullable<DateTime>;
+    members?: Nullable<Newrationcardmember[]>;
+}
+
 export interface IQuery {
     getAllRti(): Rti[] | Promise<Rti[]>;
     getAllRtiById(id: number): Rti | Promise<Rti>;
@@ -3395,7 +3624,9 @@ export interface IQuery {
     getQueryById(id: number): QueryData | Promise<QueryData>;
     searchQuery(searchQueryInput: SearchQueryInput): QueryData[] | Promise<QueryData[]>;
     getAllPayment(): Payment[] | Promise<Payment[]>;
+    getAllPaidPayment(department: string): Payment[] | Promise<Payment[]>;
     getAllPaymentById(id: number): Payment | Promise<Payment>;
+    getPaymentReceipt(id: number, type: string): Payment | Promise<Payment>;
     searchPayment(searchPaymentInput: SearchPaymentInput): Payment[] | Promise<Payment[]>;
     getAllCp(): Cp[] | Promise<Cp[]>;
     getCpById(id: number): Cp | Promise<Cp>;
@@ -3439,6 +3670,10 @@ export interface IQuery {
     getMarriageTeorById(id: number): MarriageTeor | Promise<MarriageTeor>;
     getAllMarriageRegister(): MarriageRegister[] | Promise<MarriageRegister[]>;
     getMarriageRegisterById(id: number): MarriageRegister | Promise<MarriageRegister>;
+    getAllRationCard(): Newrationcard[] | Promise<Newrationcard[]>;
+    getRationCardById(id: number): Newrationcard | Promise<Newrationcard>;
+    getAllNewRationMember(): Newrationcardmember[] | Promise<Newrationcardmember[]>;
+    getRattionMemberById(id: number): Newrationcardmember | Promise<Newrationcardmember>;
 }
 
 export interface IMutation {
@@ -3535,6 +3770,13 @@ export interface IMutation {
     createMarriageRegister(createMarriageRegisterInput: CreateMarriageRegisterInput): MarriageRegister | Promise<MarriageRegister>;
     updateMarriageRegisterById(updateMarriageRegisterInput: UpdateMarriageRegisterInput): MarriageRegister | Promise<MarriageRegister>;
     deleteMarriageRegisterById(updateMarriageRegisterInput: UpdateMarriageRegisterInput): MarriageRegister | Promise<MarriageRegister>;
+    createRationCard(createNewrationcardInput: CreateNewrationcardInput): Newrationcard | Promise<Newrationcard>;
+    updateRationCardById(updateNewrationcardInput: UpdateNewrationcardInput): Newrationcard | Promise<Newrationcard>;
+    deleteRationCardById(updateNewrationcardInput: UpdateNewrationcardInput): Newrationcard | Promise<Newrationcard>;
+    createRationMember(createNewrationcardmemberInput: CreateNewrationcardmemberInput): Newrationcardmember | Promise<Newrationcardmember>;
+    createMultipalRationMember(createMultipalNewrationcardmemberInput: CreateMultipalNewrationcardmemberInput): Newrationcardmember[] | Promise<Newrationcardmember[]>;
+    updateRationMemberById(updateNewrationcardmemberInput: UpdateNewrationcardmemberInput): Newrationcardmember | Promise<Newrationcardmember>;
+    deleteRationNumberById(updateNewrationcardmemberInput: UpdateNewrationcardmemberInput): Newrationcardmember | Promise<Newrationcardmember>;
 }
 
 export type DateTime = any;

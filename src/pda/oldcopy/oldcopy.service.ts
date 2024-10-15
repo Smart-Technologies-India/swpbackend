@@ -14,6 +14,9 @@ export class OldcopyService {
   async getAllOldCopy() {
     const oldcopy = await this.prisma.old_copy_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (oldcopy.length == 0)
       throw new BadRequestException('There is no oldcopy.');
@@ -88,7 +91,8 @@ export class OldcopyService {
       data: { deletedAt: oldcopy.deletedAt },
     });
 
-    if (!deleteOldcopy) throw new BadRequestException('Unable to update oldcopy.');
+    if (!deleteOldcopy)
+      throw new BadRequestException('Unable to update oldcopy.');
     return deleteOldcopy;
   }
 }

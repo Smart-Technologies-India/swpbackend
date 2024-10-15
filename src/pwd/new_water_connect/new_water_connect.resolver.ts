@@ -6,7 +6,9 @@ import { UpdateNewWaterConnectInput } from './dto/update-new_water_connect.input
 
 @Resolver(() => NewWaterConnect)
 export class NewWaterConnectResolver {
-  constructor(private readonly newWaterConnectService: NewWaterConnectService) {}
+  constructor(
+    private readonly newWaterConnectService: NewWaterConnectService,
+  ) {}
 
   @Query(() => [NewWaterConnect])
   getAllNewWaterConnect() {

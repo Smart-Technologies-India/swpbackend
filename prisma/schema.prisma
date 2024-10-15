@@ -55,6 +55,7 @@ enum Department {
   DMC
   CRSR
   PWD
+  FCS
 }
 
 enum QueryType {
@@ -117,6 +118,10 @@ enum FormType {
   // dmc start here
   DEATHREGISTER
   BIRTHREGISTER
+  // dmc end here
+
+  // fcs start here
+  NEWRATIONCARD
   // dmc end here
 }
 
@@ -229,6 +234,7 @@ model user {
   marriage_register          marriage_register[]
   birth_register             birth_register[]
   death_regiser              death_regiser[]
+  new_rationcard             new_rationcard[]
 }
 
 model village {
@@ -261,6 +267,8 @@ model village {
   marriage_register          marriage_register[]
   birth_register             birth_register[]
   death_regiser              death_regiser[]
+  residence_new_rationcard   new_rationcard[]             @relation("residence")
+  permanent_new_rationcard   new_rationcard[]             @relation("permanent")
 }
 
 model survey {
@@ -1516,3 +1524,101 @@ model death_regiser {
 }
 
 // dmc end from here
+
+enum CardType {
+  APL
+  BPL
+  AAY
+  AAP
+}
+
+enum GasConnection {
+  DEEPAM
+  DOUBLE
+  SINGLE
+  NOCYLINDER
+}
+
+model new_rationcard {
+  id                       Int           @id @default(autoincrement())
+  user                     user          @relation(fields: [userId], references: [id])
+  userId                   Int
+  mobile                   String?
+  email                    String?
+  card_type                CardType
+  user_uid                 String?
+  user_eid                 String?
+  name                     String?
+  mother_name              String?
+  father_name              String?
+  gender                   Gender        @default(MALE)
+  spouse_name              String?
+  date_of_birth            DateTime?
+  age                      String?
+  occupation               String?
+  annual_income            String?
+  gasconnection            GasConnection
+  gas_company_name         String?
+  gas_agency_name          String?
+  consumer_no              String?
+  address                  String?       @db.MediumText
+  village                  village?      @relation("residence", fields: [village_id], references: [id])
+  village_id               Int?
+  pin_code                 String?
+  mandal                   String?
+  district                 String?
+  paddress                 String?       @db.MediumText
+  pvillage                 village?      @relation("permanent", fields: [pvillage_id], references: [id])
+  pvillage_id              Int?
+  ppin_code                String?
+  pmandal                  String?
+  pdistrict                String?
+  old_ration_card_number   String?
+  informate_name           String?
+  informant_relation       String?
+  delivery_type            String?
+  mobile_no                String?
+  meeseva_application_form String?
+  photo                    String?
+  proof_one                String?
+  proof_two                String?
+  proof_three              String?
+  proof_one_name           String?
+  proof_two_name           String?
+  proof_three_name         String?
+  signature_url            String?
+  iagree                   Agree         @default(NONE)
+  remarks                  String?
+  other_remarks            String?
+  rejection_reason         String?
+  condition_to_follow      String?       @db.LongText
+  certificate_id           String?
+  certificate_date         DateTime?
+  certificate_url          String?
+  status                   Status        @default(NONE)
+  createdAt                DateTime      @default(now())
+  updatedAt                DateTime      @updatedAt
+  deletedAt                DateTime?
+  members                  members[]
+}
+
+model members {
+  id                               Int            @id @default(autoincrement())
+  user                             new_rationcard @relation(fields: [userId], references: [id])
+  userId                           Int
+  name                             String?
+  gender                           Gender         @default(MALE)
+  date_of_birth                    DateTime?
+  mother_name                      String?
+  father_name                      String?
+  spouse_name                      String?
+  option_to_life_commodity         Boolean
+  age                              String?
+  eid                              String?
+  uid                              String?
+  relationship_with_head_of_family String?
+  status                           Status         @default(NONE)
+  createdAt                        DateTime       @default(now())
+  updatedAt                        DateTime       @updatedAt
+  deletedAt                        DateTime?
+}

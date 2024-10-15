@@ -6,7 +6,7 @@ import {
 import { CreateDeathRegiserInput } from './dto/create-death_regiser.input';
 import { UpdateDeathRegiserInput } from './dto/update-death_regiser.input';
 import { PrismaService } from 'prisma/prisma.service';
-   
+
 @Injectable()
 export class DeathRegiserService {
   constructor(private readonly prisma: PrismaService) {}
@@ -14,6 +14,9 @@ export class DeathRegiserService {
   async getAllDeathRegister() {
     const deathbegister = await this.prisma.death_regiser.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (deathbegister.length == 0)
       throw new BadRequestException('There is no deathbegister.');

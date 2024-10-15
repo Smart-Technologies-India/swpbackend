@@ -14,6 +14,9 @@ export class PetroleumService {
   async getAllPetroleum() {
     const petroleum = await this.prisma.petroleum_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (petroleum.length == 0)
       throw new BadRequestException('There is no petroleum.');

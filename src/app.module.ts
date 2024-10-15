@@ -41,6 +41,8 @@ import { DeathTeorModule } from './crsr/death_teor/death_teor.module';
 import { MarriageCertificateModule } from './crsr/marriage_certificate/marriage_certificate.module';
 import { MarriageTeorModule } from './crsr/marriage_teor/marriage_teor.module';
 import { MarriageRegisterModule } from './crsr/marriage_register/marriage_register.module';
+import { NewrationcardModule } from './fcs/newrationcard/newrationcard.module';
+import { NewrationcardmembersModule } from './fcs/newrationcardmembers/newrationcardmembers.module';
 
 @Module({
   imports: [
@@ -92,6 +94,8 @@ import { MarriageRegisterModule } from './crsr/marriage_register/marriage_regist
     MarriageCertificateModule,
     MarriageTeorModule,
     MarriageRegisterModule,
+    NewrationcardModule,
+    NewrationcardmembersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

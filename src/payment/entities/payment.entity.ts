@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { FormType, PaymentStatus } from '@prisma/client';
+import { User } from 'src/user/entities/user.entity';
 
 @ObjectType()
 export class Payment {
@@ -74,4 +75,7 @@ export class Payment {
 
   @Field(() => Date, { nullable: true })
   deletedAt: Date;
+
+  @Field(() => User, { nullable: true })
+  user: User;
 }

@@ -18,6 +18,9 @@ export class CommonService {
   async getAllCommon() {
     const common = await this.prisma.common.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (common.length == 0)
       throw new BadRequestException('There is no common.');
@@ -37,6 +40,9 @@ export class CommonService {
         include: {
           user: true,
         },
+        orderBy: {
+          updatedAt: 'desc',
+        },
       });
 
       if (results.length == 0)
@@ -49,6 +55,9 @@ export class CommonService {
           where: common,
           include: {
             user: true,
+          },
+          orderBy: {
+            updatedAt: 'desc',
           },
         });
 
@@ -75,6 +84,9 @@ export class CommonService {
             include: {
               user: true,
             },
+            orderBy: {
+              updatedAt: 'desc',
+            },
           });
         } else if (common.department == 'EST') {
           delete common.department;
@@ -90,6 +102,9 @@ export class CommonService {
             },
             include: {
               user: true,
+            },
+            orderBy: {
+              updatedAt: 'desc',
             },
           });
         } else if (common.department == 'CRSR') {
@@ -110,6 +125,9 @@ export class CommonService {
             include: {
               user: true,
             },
+            orderBy: {
+              updatedAt: 'desc',
+            },
           });
         } else if (common.department == 'PWD') {
           delete common.department;
@@ -128,6 +146,9 @@ export class CommonService {
             include: {
               user: true,
             },
+            orderBy: {
+              updatedAt: 'desc',
+            },
           });
         } else if (common.department == 'DMC') {
           delete common.department;
@@ -141,6 +162,9 @@ export class CommonService {
             },
             include: {
               user: true,
+            },
+            orderBy: {
+              updatedAt: 'desc',
             },
           });
         } else if (
@@ -174,6 +198,23 @@ export class CommonService {
             include: {
               user: true,
             },
+            orderBy: {
+              updatedAt: 'desc',
+            },
+          });
+        } else if (common.department == 'FCS') {
+          delete common.department;
+          results = await this.prisma.common.findMany({
+            where: {
+              ...common,
+              OR: [{ form_type: 'NEWRATIONCARD' }],
+            },
+            include: {
+              user: true,
+            },
+            orderBy: {
+              updatedAt: 'desc',
+            },
           });
         }
 
@@ -193,6 +234,9 @@ export class CommonService {
       }
       const result = await this.prisma.common.findMany({
         where: whereClause,
+        orderBy: {
+          updatedAt: 'desc',
+        },
       });
       if (result.length == 0)
         throw new NotFoundException(`NO Common data found for this user. `);
@@ -212,6 +256,9 @@ export class CommonService {
       }
       const result = await this.prisma.common.findMany({
         where: whereClause,
+        orderBy: {
+          updatedAt: 'desc',
+        },
       });
       if (result.length == 0)
         throw new NotFoundException(`NO Common data found for this user. `);
@@ -224,6 +271,9 @@ export class CommonService {
     if (filter.user_type == UserType.USER) {
       const result = await this.prisma.common.findMany({
         where: { user_id: filter.user_id },
+        orderBy: {
+          updatedAt: 'desc',
+        },
       });
       if (result.length == 0)
         throw new NotFoundException(`NO Common data found for this user. `);
@@ -251,6 +301,9 @@ export class CommonService {
               { form_type: 'MARRIAGEREGISTER', OR: whereClause },
             ],
           },
+          orderBy: {
+            updatedAt: 'desc',
+          },
         });
       } else if (filter.department == 'PDA') {
         result = await this.prisma.common.findMany({
@@ -264,6 +317,9 @@ export class CommonService {
               { form_type: 'CP', OR: whereClause },
             ],
           },
+          orderBy: {
+            updatedAt: 'desc',
+          },
         });
       } else if (filter.department == 'EST') {
         result = await this.prisma.common.findMany({
@@ -274,6 +330,9 @@ export class CommonService {
               { form_type: 'ROADSHOW', OR: whereClause },
               { form_type: 'GENERIC', OR: whereClause },
             ],
+          },
+          orderBy: {
+            updatedAt: 'desc',
           },
         });
       } else if (filter.department == 'PWD') {
@@ -288,6 +347,9 @@ export class CommonService {
               { form_type: 'PERMANENTWATERDISCONNECT', OR: whereClause },
             ],
           },
+          orderBy: {
+            updatedAt: 'desc',
+          },
         });
       } else if (filter.department == 'DMC') {
         result = await this.prisma.common.findMany({
@@ -296,6 +358,9 @@ export class CommonService {
               { form_type: 'DEATHREGISTER', OR: whereClause },
               { form_type: 'BIRTHREGISTER', OR: whereClause },
             ],
+          },
+          orderBy: {
+            updatedAt: 'desc',
           },
         });
       } else if (
@@ -324,11 +389,26 @@ export class CommonService {
               { form_type: 'CP', OR: whereClause },
             ],
           },
+          orderBy: {
+            updatedAt: 'desc',
+          },
+        });
+      } else if (filter.department == 'FCS') {
+        result = await this.prisma.common.findMany({
+          where: {
+            OR: [{ form_type: 'NEWRATIONCARD', OR: whereClause }],
+          },
+          orderBy: {
+            updatedAt: 'desc',
+          },
         });
       } else {
         result = await this.prisma.common.findMany({
           where: {
             OR: [{ form_type: 'NONE', OR: whereClause }],
+          },
+          orderBy: {
+            updatedAt: 'desc',
           },
         });
       }
@@ -461,6 +541,8 @@ export class CommonService {
         'CP',
         'PLINTH',
       ];
+    } else if (department == 'FCS') {
+      formTypes = ['NEWRATIONCARD'];
     } else {
       formTypes = ['NONE'];
     }
@@ -618,6 +700,21 @@ export class CommonService {
         count: entry._count._all,
       }));
       return formattedResult;
+    } else if (department == 'FCS') {
+      const count = await this.prisma.common.groupBy({
+        by: ['village'],
+        where: {
+          OR: [{ form_type: 'NEWRATIONCARD' }],
+        },
+        _count: {
+          _all: true,
+        },
+      });
+      const formattedResult = count.map((entry) => ({
+        village: entry.village,
+        count: entry._count._all,
+      }));
+      return formattedResult;
     } else {
       const count = await this.prisma.common.groupBy({
         by: ['village'],
@@ -743,6 +840,16 @@ export class CommonService {
           _all: true,
         },
       });
+    } else if (department == 'FCS') {
+      count = await this.prisma.common.groupBy({
+        by: ['auth_user_id'],
+        where: {
+          OR: [{ form_type: 'NEWRATIONCARD' }],
+        },
+        _count: {
+          _all: true,
+        },
+      });
     } else {
       count = await this.prisma.common.groupBy({
         by: ['auth_user_id'],
@@ -758,6 +865,9 @@ export class CommonService {
     const user = await this.prisma.user.findMany({
       take: 70,
       select: { id: true, name: true },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
 
     const formattedCount = count.reduce((result, item) => {
@@ -826,6 +936,8 @@ export class CommonService {
         'CP',
         'PLINTH',
       ];
+    } else if (department == 'FCS') {
+      formTypes = ['NEWRATIONCARD'];
     } else {
       formTypes = ['NONE'];
     }
@@ -920,6 +1032,8 @@ export class CommonService {
         'CP',
         'PLINTH',
       ];
+    } else if (department == 'FCS') {
+      formTypes = ['NEWRATIONCARD'];
     } else {
       formTypes = ['NONE'];
     }

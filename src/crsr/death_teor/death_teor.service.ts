@@ -14,6 +14,9 @@ export class DeathTeorService {
   async getAllDeathTeor() {
     const deathTeor = await this.prisma.death_teor.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (deathTeor.length == 0)
       throw new BadRequestException('There is no Death Teor.');

@@ -14,6 +14,9 @@ export class BirthRegisterService {
   async getAllBirthRegister() {
     const birthregister = await this.prisma.birth_register.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (birthregister.length == 0)
       throw new BadRequestException('There is no birthregister.');

@@ -14,9 +14,24 @@ export class PaymentResolver {
     return this.paymentService.getAllPayment();
   }
 
+  @Query(() => [Payment])
+  getAllPaidPayment(
+    @Args('department', { type: () => String }) department: string,
+  ) {
+    return this.paymentService.getAllPaidPayment(department);
+  }
+
   @Query(() => Payment)
   getAllPaymentById(@Args('id', { type: () => Int }) id: number) {
     return this.paymentService.getAllPaymentById(id);
+  }
+
+  @Query(() => Payment)
+  getPaymentReceipt(
+    @Args('id', { type: () => Int }) id: number,
+    @Args('type', { type: () => String }) type: string,
+  ) {
+    return this.paymentService.getPaymentReceipt(id, type);
   }
 
   @Query(() => [Payment])

@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateBirthTeorInput } from './dto/create-birth_teor.input';
 import { UpdateBirthTeorInput } from './dto/update-birth_teor.input';
 import { PrismaService } from 'prisma/prisma.service';
@@ -8,30 +12,27 @@ export class BirthTeorService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAllBirthTeor() {
-    const birthTeor =
-      await this.prisma.birth_teor.findMany({
-        where: { deletedAt: null },
-      });
+    const birthTeor = await this.prisma.birth_teor.findMany({
+      where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    });
     if (birthTeor.length == 0)
       throw new BadRequestException('There is no Birth Teor.');
     return birthTeor;
   }
 
   async getBirthTeorById(id: number) {
-    const birthTeor =
-      await this.prisma.birth_teor.findFirst({
-        where: { id, deletedAt: null },
-      });
+    const birthTeor = await this.prisma.birth_teor.findFirst({
+      where: { id, deletedAt: null },
+    });
     if (!birthTeor)
-      throw new BadRequestException(
-        'No Birth Teor exist with this id.',
-      );
+      throw new BadRequestException('No Birth Teor exist with this id.');
     return birthTeor;
   }
 
-  async createBirthTeor(
-    birthTeor: CreateBirthTeorInput,
-  ) {
+  async createBirthTeor(birthTeor: CreateBirthTeorInput) {
     const dataToCreate: any = {};
 
     for (const [key, value] of Object.entries(birthTeor)) {
@@ -40,21 +41,16 @@ export class BirthTeorService {
       }
     }
 
-    const BirthTeor =
-      await this.prisma.birth_teor.create({
-        data: dataToCreate,
-      });
+    const BirthTeor = await this.prisma.birth_teor.create({
+      data: dataToCreate,
+    });
 
     if (!BirthTeor)
-      throw new BadRequestException(
-        'Unable to create Birth Teor',
-      );
+      throw new BadRequestException('Unable to create Birth Teor');
     return BirthTeor;
   }
 
-  async updateBirthTeorById(
-    birthTeor: UpdateBirthTeorInput,
-  ) {
+  async updateBirthTeorById(birthTeor: UpdateBirthTeorInput) {
     const dataToUpdate: {
       [key: string]: any;
     } = {};
@@ -75,21 +71,16 @@ export class BirthTeorService {
       );
     }
 
-    const updatedbirthTeor =
-      this.prisma.birth_teor.update({
-        where: { id: birthTeor.id },
-        data: dataToUpdate,
-      });
+    const updatedbirthTeor = this.prisma.birth_teor.update({
+      where: { id: birthTeor.id },
+      data: dataToUpdate,
+    });
     if (!updatedbirthTeor)
-      throw new BadRequestException(
-        'Birth Teor Permanent Water Disonnect.',
-      );
+      throw new BadRequestException('Birth Teor Permanent Water Disonnect.');
     return updatedbirthTeor;
   }
 
-  async deleteBirthTeorById(
-    birthTeor: UpdateBirthTeorInput,
-  ) {
+  async deleteBirthTeorById(birthTeor: UpdateBirthTeorInput) {
     const existing = await this.prisma.birth_teor.findUnique({
       where: { id: birthTeor.id },
     });
@@ -100,16 +91,13 @@ export class BirthTeorService {
       );
     }
 
-    const deleteBirthTeor =
-      this.prisma.birth_teor.update({
-        where: { id: birthTeor.id },
-        data: { deletedAt: birthTeor.deletedAt },
-      });
+    const deleteBirthTeor = this.prisma.birth_teor.update({
+      where: { id: birthTeor.id },
+      data: { deletedAt: birthTeor.deletedAt },
+    });
 
     if (!deleteBirthTeor)
-      throw new BadRequestException(
-        'Unable to update Birth Teor.',
-      );
+      throw new BadRequestException('Unable to update Birth Teor.');
     return deleteBirthTeor;
   }
 }

@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePlinthInput } from './dto/create-plinth.input';
 import { UpdatePlinthInput } from './dto/update-plinth.input';
 import { PrismaService } from 'prisma/prisma.service';
@@ -10,8 +14,12 @@ export class PlinthService {
   async getAllPlinth() {
     const plinth = await this.prisma.plinth_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
-    if (plinth.length == 0) throw new BadRequestException('There is no plinth.');
+    if (plinth.length == 0)
+      throw new BadRequestException('There is no plinth.');
     return plinth;
   }
 
@@ -63,7 +71,8 @@ export class PlinthService {
       where: { id: plinth.id },
       data: dataToUpdate,
     });
-    if (!updatedplinth) throw new BadRequestException('Unable to update plinth.');
+    if (!updatedplinth)
+      throw new BadRequestException('Unable to update plinth.');
     return updatedplinth;
   }
 
@@ -81,7 +90,8 @@ export class PlinthService {
       data: { deletedAt: plinth.deletedAt },
     });
 
-    if (!deletePlinth) throw new BadRequestException('Unable to update plinth.');
+    if (!deletePlinth)
+      throw new BadRequestException('Unable to update plinth.');
     return deletePlinth;
   }
 }

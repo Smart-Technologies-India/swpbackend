@@ -25,6 +25,9 @@ export class LandsectionService {
   async getAllLand() {
     const land = await this.prisma.land_section_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (land.length == 0) throw new BadRequestException('There is no rti.');
     return land;
@@ -179,7 +182,8 @@ export class LandsectionService {
       fromUserId: '6',
       toUserId: '8',
       documentUrl: sendFileLandsectionInput.documentUrl,
-      remarkComment: 'Illegal construction found on the premisis. Attached photographs of the illegal construction on the site.',
+      remarkComment:
+        'Illegal construction found on the premisis. Attached photographs of the illegal construction on the site.',
       queryType: '20',
       refFormActionId: '1',
       queryStatus: 1,

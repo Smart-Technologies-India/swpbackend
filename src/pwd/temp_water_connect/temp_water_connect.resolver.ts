@@ -6,7 +6,9 @@ import { UpdateTempWaterConnectInput } from './dto/update-temp_water_connect.inp
 
 @Resolver(() => TempWaterConnect)
 export class TempWaterConnectResolver {
-  constructor(private readonly tempWaterConnectService: TempWaterConnectService) {}
+  constructor(
+    private readonly tempWaterConnectService: TempWaterConnectService,
+  ) {}
 
   @Query(() => [TempWaterConnect])
   getAllTempWaterConnect() {

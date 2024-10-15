@@ -14,7 +14,11 @@ export class DealinghandService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAllDealingHand() {
-    const dealingHand = await this.prisma.dealing_hand.findMany();
+    const dealingHand = await this.prisma.dealing_hand.findMany({
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    });
     if (dealingHand.length == 0)
       throw new BadRequestException('There is no Deling Hand.');
     return dealingHand;
@@ -31,6 +35,9 @@ export class DealinghandService {
 
     const results = await this.prisma.dealing_hand.findMany({
       where: dataToSearch,
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
 
     if (results.length == 0)
@@ -85,7 +92,6 @@ export class DealinghandService {
       );
     }
 
-
     const updatedDealingHand = this.prisma.dealing_hand.update({
       where: { id: dealingHand.id },
       data: dataToUpdate,
@@ -136,6 +142,9 @@ export class DealinghandService {
         auth_user_id: {
           in: mappedValues.map(String),
         },
+      },
+      orderBy: {
+        updatedAt: 'desc',
       },
     });
     if (common.length == 0) return Math.max(...mappedValues);

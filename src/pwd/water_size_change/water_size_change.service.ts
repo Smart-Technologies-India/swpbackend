@@ -14,6 +14,9 @@ export class WaterSizeChangeService {
   async getAllWaterSizeChange() {
     const waterSizeChange = await this.prisma.water_size_change.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (waterSizeChange.length == 0)
       throw new BadRequestException('There is no Water Size Change.');

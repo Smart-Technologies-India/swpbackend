@@ -14,6 +14,9 @@ export class MarriageRegisterService {
   async getAllMarriageRegister() {
     const marriageRegister = await this.prisma.marriage_register.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (marriageRegister.length == 0)
       throw new BadRequestException('There is no Marriage Register.');

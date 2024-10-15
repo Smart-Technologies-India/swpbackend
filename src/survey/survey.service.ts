@@ -15,6 +15,9 @@ export class SurveyService {
   async getAllSurvey() {
     const survey = await this.prisma.survey.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (survey.length == 0)
       throw new BadRequestException('There is no survey.');
@@ -35,6 +38,9 @@ export class SurveyService {
         villageId: data.villageId,
       },
       distinct: ['survey_no'],
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (survey.length == 0) throw new NotFoundException(`No survey found`);
     return survey;
@@ -45,6 +51,9 @@ export class SurveyService {
       where: {
         villageId: data.villageId,
         survey_no: data.survey_no,
+      },
+      orderBy: {
+        updatedAt: 'desc',
       },
       // distinct: ['survey_no'],
     });

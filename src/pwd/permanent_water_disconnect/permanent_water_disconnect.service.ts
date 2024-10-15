@@ -15,6 +15,9 @@ export class PermanentWaterDisconnectService {
     const permanentWaterDisconnect =
       await this.prisma.permanent_water_disconnect.findMany({
         where: { deletedAt: null },
+        orderBy: {
+          updatedAt: 'desc',
+        },
       });
     if (permanentWaterDisconnect.length == 0)
       throw new BadRequestException('There is no Permanent Water Disconnect.');

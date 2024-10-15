@@ -14,6 +14,9 @@ export class ReligiousService {
   async getAllReligious() {
     const religious = await this.prisma.religious_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (religious.length == 0)
       throw new BadRequestException('There is no religious form.');

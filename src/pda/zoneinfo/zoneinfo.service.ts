@@ -14,6 +14,9 @@ export class ZoneinfoService {
   async getAllZone() {
     const zone = await this.prisma.zone_info_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (zone.length == 0) throw new BadRequestException('There is no zone.');
     return zone;

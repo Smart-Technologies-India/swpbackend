@@ -6,7 +6,9 @@ import { UpdatePermanentWaterDisconnectInput } from './dto/update-permanent_wate
 
 @Resolver(() => PermanentWaterDisconnect)
 export class PermanentWaterDisconnectResolver {
-  constructor(private readonly permanentWaterDisconnectService: PermanentWaterDisconnectService) {}
+  constructor(
+    private readonly permanentWaterDisconnectService: PermanentWaterDisconnectService,
+  ) {}
 
   @Query(() => [PermanentWaterDisconnect])
   getAllPermanentWaterDisconnect() {
@@ -15,7 +17,9 @@ export class PermanentWaterDisconnectResolver {
 
   @Query(() => PermanentWaterDisconnect)
   getPermanentWaterDisconnectById(@Args('id', { type: () => Int }) id: number) {
-    return this.permanentWaterDisconnectService.getPermanentWaterDisconnectById(id);
+    return this.permanentWaterDisconnectService.getPermanentWaterDisconnectById(
+      id,
+    );
   }
 
   @Mutation(() => PermanentWaterDisconnect)

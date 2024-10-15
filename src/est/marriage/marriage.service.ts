@@ -14,6 +14,9 @@ export class MarriageService {
   async getAllMarriage() {
     const marriage = await this.prisma.marriage_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (marriage.length == 0)
       throw new BadRequestException('There is no marriage.');

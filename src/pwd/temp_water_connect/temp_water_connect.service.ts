@@ -15,6 +15,9 @@ export class TempWaterConnectService {
     const tempWaterConnect = await this.prisma.temp_water_connect_form.findMany(
       {
         where: { deletedAt: null },
+        orderBy: {
+          updatedAt: 'desc',
+        },
       },
     );
     if (tempWaterConnect.length == 0)

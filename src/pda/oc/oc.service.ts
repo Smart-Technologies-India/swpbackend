@@ -14,6 +14,9 @@ export class OcService {
   async getAllOc() {
     const oc = await this.prisma.oc_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (oc.length == 0) throw new BadRequestException('There is no oc.');
     return oc;

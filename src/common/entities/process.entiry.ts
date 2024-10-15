@@ -102,4 +102,7 @@ export class FileProgress {
 
   @Field(() => FileProgressDetails, { nullable: true })
   TEMPWATERCONNECT: FileProgressDetails;
+
+  @Field(() => FileProgressDetails, { nullable: true })
+  NEWRATIONCARD: FileProgressDetails;
 }

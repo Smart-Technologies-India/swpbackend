@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCpInput } from './dto/create-cp.input';
 import { UpdateCpInput } from './dto/update-cp.input';
 import { PrismaService } from 'prisma/prisma.service';
@@ -10,6 +14,9 @@ export class CpService {
   async getAllCp() {
     const cp = await this.prisma.cp_form.findMany({
       where: { deletedAt: null },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
     if (cp.length == 0) throw new BadRequestException('There is no cp.');
     return cp;
